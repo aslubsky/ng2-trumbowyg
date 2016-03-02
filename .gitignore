@@ -6,7 +6,4 @@ npm-debug.log
 # WebStorm
 .idea
 
-# ignore build and dist for now
-/dist
-
 /logs

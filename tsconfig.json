@@ -13,8 +13,9 @@
         "rootDir": "./src",
         "sourceRoot": "./"
     },
-    "files": [
-        "./typings/main.d.ts",
-        "./src/editor.ts"
+    "exclude": [
+        "node_modules",
+        "typings/main",
+        "typings/main.d.ts"
     ]
 }
