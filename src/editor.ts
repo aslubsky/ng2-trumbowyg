@@ -16,7 +16,7 @@ declare var jQuery:any;
 })
 export class TrumbowygEditor implements OnInit,OnDestroy {
     public static modes:any = {};
-    public static langs:any = null;
+    public static langs:any = {};
     public static inited:boolean = false;
     public static localImageRegexp:RegExp = /src\=\"data\:image\/(.*)\"/gi;
 

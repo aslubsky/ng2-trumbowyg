@@ -227,7 +227,7 @@ System.register(['angular2/core', './font-sizes', './fonts', './colors', './inse
                     this.element.trumbowyg('destroy');
                 };
                 TrumbowygEditor.modes = {};
-                TrumbowygEditor.langs = null;
+                TrumbowygEditor.langs = {};
                 TrumbowygEditor.inited = false;
                 TrumbowygEditor.localImageRegexp = /src\=\"data\:image\/(.*)\"/gi;
                 __decorate([
