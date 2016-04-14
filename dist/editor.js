@@ -43,6 +43,7 @@ System.register(['angular2/core', './font-sizes', './fonts', './colors', './inse
                 function TrumbowygEditor(el) {
                     this.el = el;
                     this.ngModelChange = new core_1.EventEmitter();
+                    this.base64ImageInserted = new core_1.EventEmitter();
                     this.onInit = new core_1.EventEmitter();
                     this.dirty = false;
                 }
@@ -168,6 +169,13 @@ System.register(['angular2/core', './font-sizes', './fonts', './colors', './inse
                     };
                 };
                 TrumbowygEditor.prototype.ngOnChanges = function () {
+                    if (this.base64Image) {
+                        //console.log('ngOnChanges base64Image', this.base64Image);
+                        var el = jQuery('<div>' + this.element.trumbowyg('html') + '</div>');
+                        el.find('#' + this.base64Image.uid).attr('src', this.base64Image.file);
+                        this.base64Image = null;
+                        this.element.trumbowyg('html', el.html());
+                    }
                     //console.log('ngOnChanges ngModel', this.dirty);
                     if (this.ngModel && this.element) {
                         if (this.dirty) {
@@ -176,6 +184,32 @@ System.register(['angular2/core', './font-sizes', './fonts', './colors', './inse
                             this.element.trumbowyg('html', this.ngModel);
                         }
                     }
+                };
+                TrumbowygEditor.prototype.detectBase64Insert = function (html) {
+                    var _this = this;
+                    //console.log('detectBase64Insert', html);
+                    if (TrumbowygEditor.localImageRegexp.test(html)) {
+                        var images = [];
+                        var el = jQuery('<div>' + html + '</div>');
+                        var uid;
+                        el.find('img[src^="data:image"]').each(function () {
+                            if (!jQuery(this).attr('id')) {
+                                uid = Math.random().toString(36).substring(2, 9);
+                                jQuery(this).attr('id', uid);
+                                images.push({
+                                    uid: uid,
+                                    src: this.src
+                                });
+                            }
+                        });
+                        this.element.trumbowyg('html', el.html());
+                        //console.log('images', images);
+                        images.forEach(function (image) {
+                            _this.base64ImageInserted.emit(image);
+                        });
+                        return true;
+                    }
+                    return false;
                 };
                 TrumbowygEditor.prototype.ngOnInit = function () {
                     //console.log('TrumbowygEditor ngOnInit');
@@ -201,16 +235,12 @@ System.register(['angular2/core', './font-sizes', './fonts', './colors', './inse
                         .on('tbwchange', function () {
                         var html = self.element.trumbowyg('html');
                         //console.log('tbwchange', html);
+                        if (!self.detectBase64Insert(html)) {
+                            self.dirty = true;
+                            self.ngModelChange.emit(html);
+                        }
+                        //console.log('tbwchange', html);
                         //console.log('self.ngModelChange', self.ngModelChange);
-                        self.dirty = true;
-                        self.ngModelChange.emit(html);
-                    })
-                        .on('tbwpaste', function () {
-                        var html = self.element.trumbowyg('html');
-                        //console.log('tbwpaste', html);
-                        //console.log('self.ngModelChange', self.ngModelChange);
-                        self.dirty = true;
-                        self.ngModelChange.emit(html);
                     });
                     if ((/webkit/i).test(navigator.userAgent)) {
                         jQuery('.trumbowyg-editor', this.element.parent()).on('keyup', function (e) {
@@ -240,12 +270,20 @@ System.register(['angular2/core', './font-sizes', './fonts', './colors', './inse
                 ], TrumbowygEditor.prototype, "lang", void 0);
                 __decorate([
                     core_1.Input(), 
+                    __metadata('design:type', Object)
+                ], TrumbowygEditor.prototype, "base64Image", void 0);
+                __decorate([
+                    core_1.Input(), 
                     __metadata('design:type', String)
                 ], TrumbowygEditor.prototype, "ngModel", void 0);
                 __decorate([
                     core_1.Output(), 
                     __metadata('design:type', Object)
                 ], TrumbowygEditor.prototype, "ngModelChange", void 0);
+                __decorate([
+                    core_1.Output(), 
+                    __metadata('design:type', Object)
+                ], TrumbowygEditor.prototype, "base64ImageInserted", void 0);
                 TrumbowygEditor = __decorate([
                     core_1.Directive({
                         selector: '[trumbowyg-editor]'

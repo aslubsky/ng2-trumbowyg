@@ -22,9 +22,11 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
 
     @Input() mode:string;
     @Input() lang:string;
+    @Input() base64Image:any;
 
     @Input() ngModel:string;
     @Output() ngModelChange:any = new EventEmitter();
+    @Output() base64ImageInserted:any = new EventEmitter();
 
     public onInit:any = new EventEmitter();
 
@@ -161,6 +163,14 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
     }
 
     ngOnChanges() {
+        if (this.base64Image) {
+            //console.log('ngOnChanges base64Image', this.base64Image);
+            var el = jQuery('<div>' + this.element.trumbowyg('html') + '</div>');
+            el.find('#' + this.base64Image.uid).attr('src', this.base64Image.file);
+            this.base64Image = null;
+            this.element.trumbowyg('html', el.html());
+        }
+
         //console.log('ngOnChanges ngModel', this.dirty);
         if (this.ngModel && this.element) {
             if (this.dirty) {
@@ -169,6 +179,33 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
                 this.element.trumbowyg('html', this.ngModel);
             }
         }
+    }
+
+    private detectBase64Insert(html:string) {
+        //console.log('detectBase64Insert', html);
+        if (TrumbowygEditor.localImageRegexp.test(html)) {
+            var images:any[] = [];
+
+            var el = jQuery('<div>' + html + '</div>');
+            var uid;
+            el.find('img[src^="data:image"]').each(function () {
+                if (!jQuery(this).attr('id')) {
+                    uid = Math.random().toString(36).substring(2, 9);
+                    jQuery(this).attr('id', uid);
+                    images.push({
+                        uid: uid,
+                        src: this.src
+                    });
+                }
+            });
+            this.element.trumbowyg('html', el.html());
+            //console.log('images', images);
+            images.forEach(image => {
+                this.base64ImageInserted.emit(image);
+            });
+            return true;
+        }
+        return false;
     }
 
     ngOnInit() {
@@ -198,16 +235,12 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
             .on('tbwchange', function () {
                 var html:string = self.element.trumbowyg('html');
                 //console.log('tbwchange', html);
+                if (!self.detectBase64Insert(html)) {
+                    self.dirty = true;
+                    self.ngModelChange.emit(html);
+                }
+                //console.log('tbwchange', html);
                 //console.log('self.ngModelChange', self.ngModelChange);
-                self.dirty = true;
-                self.ngModelChange.emit(html);
-            })
-            .on('tbwpaste', function () {
-                var html:string = self.element.trumbowyg('html');
-                //console.log('tbwpaste', html);
-                //console.log('self.ngModelChange', self.ngModelChange);
-                self.dirty = true;
-                self.ngModelChange.emit(html);
             });
 
         if ((/webkit/i).test(navigator.userAgent)) {//remove div class after new line
