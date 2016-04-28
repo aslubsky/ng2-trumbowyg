@@ -68,7 +68,10 @@ export class TrumbowygSelectTemplatesPlugin {
             templateSet.elements.forEach((template:any, j) => {
                 template.icon = template.icon || DEFAULT_ICON;
                 html.push('   <li title="' + template.description + '" class="item"><label>' +
-                    '<img src="' + template.icon + '" class="select-template-icon"><input type="radio" value="' + template.id + '" name="template"><span> ' + template.title + '</span></label></li>');
+                    '<img src="' + template.icon + '" class="select-template-icon"><input type="radio" value="' + template.id + '" name="template">' +
+                    '<span class="title"> ' + template.title + '</span>' +
+                    '<span class="description"> ' + template.description + '</span>' +
+                    '</label></li>');
             });
             html.push('   </ul>');
             html.push('   </div>');
