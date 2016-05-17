@@ -1,4 +1,4 @@
-import {Directive, Input, Output, EventEmitter, ElementRef, OnInit, OnDestroy, OnChanges}         from 'angular2/core';
+import {Directive, Input, Output, EventEmitter, ElementRef, OnInit, OnDestroy, OnChanges}         from '@angular/core';
 
 import {TrumbowygFontSizesPlugin} from './font-sizes';
 import {TrumbowygFontsPlugin} from './fonts';

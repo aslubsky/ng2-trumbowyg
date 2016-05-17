@@ -1,4 +1,4 @@
-import { ElementRef, OnInit, OnDestroy } from 'angular2/core';
+import { ElementRef, OnInit, OnDestroy } from '@angular/core';
 export declare class TrumbowygEditor implements OnInit, OnDestroy {
     private el;
     static modes: any;

@@ -1,4 +1,4 @@
-import {EventEmitter}         from 'angular2/core';
+import {EventEmitter}         from '@angular/core';
 
 declare var jQuery:any;
 
