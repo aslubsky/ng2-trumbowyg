@@ -18,16 +18,18 @@ export class TrumbowygSelectResourcesPlugin {
         TrumbowygSelectResourcesPlugin.onSearch = new EventEmitter();
 
         jQuery.extend(true, editor, {
-            selectResources: {},
-            opts: {
-                btnsDef: {
-                    selectResources: {
-                        func: function (params, t) {
-                            //console.log(editorResources);
-                            TrumbowygSelectResourcesPlugin.selectResourcesCb(params, t);
-                        },
-                        ico: 'selectResources'
-                    }
+            plugins: {
+                selectResources: {
+                    init: function (trumbowyg) {
+                        trumbowyg.o.plugins.selectResources = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.selectResources || {});
+                        trumbowyg.addBtnDef('selectResources', {
+                            fn: function (params) {
+                                // console.log('selectImageCb', params, trumbowyg, editorImages);
+                                TrumbowygSelectResourcesPlugin.selectResourcesCb(params, trumbowyg);
+                            }
+                        });
+                    },
+                    tag: 'img'
                 }
             }
         });

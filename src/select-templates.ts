@@ -20,16 +20,18 @@ export class TrumbowygSelectTemplatesPlugin {
         //TrumbowygSelectResourcesPlugin.onSearch = new EventEmitter();
 
         jQuery.extend(true, editor, {
-            selectTemplates: {},
-            opts: {
-                btnsDef: {
-                    selectTemplates: {
-                        func: function (params, t) {
-                            //console.log(editorResources);
-                            TrumbowygSelectTemplatesPlugin.selectTemplatesCb(params, t);
-                        },
-                        ico: 'selectTemplates'
-                    }
+            plugins: {
+                selectTemplates: {
+                    init: function (trumbowyg) {
+                        trumbowyg.o.plugins.selectTemplates = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.selectTemplates || {});
+                        trumbowyg.addBtnDef('selectTemplates', {
+                            fn: function (params) {
+                                // console.log('selectImageCb', params, trumbowyg, editorImages);
+                                TrumbowygSelectTemplatesPlugin.selectTemplatesCb(params, trumbowyg);
+                            }
+                        });
+                    },
+                    tag: 'img'
                 }
             }
         });
@@ -83,27 +85,22 @@ export class TrumbowygSelectTemplatesPlugin {
 
         //console.log('html', html);
         var $modal = t.openModal(TrumbowygSelectTemplatesPlugin.editor.langs[TrumbowygSelectTemplatesPlugin.lang].selectTemplatesHeader, html.join(''))
-            .on(pfx + 'confirm', function () {
+            .on('tbwconfirm', function () {
                 var selected = jQuery('input:checked', $modal);
                 var val = selected.val();
-                //console.log(val, TrumbowygSelectTemplatesPlugin.allTemplates[val]);
-
-                t.restoreSelection();
-                t.syncCode();
+                // console.log(val, allTemplates[val]);
                 jQuery(this).off(pfx + 'confirm');
 
                 if (val) {
-                    TrumbowygSelectTemplatesPlugin.editor.insertHtml(t, TrumbowygSelectTemplatesPlugin.allTemplates[val]);
-
-                    setTimeout(function () {
-                        t.closeModal();
-                    }, 250);
+                    t.execCmd('insertHTML', TrumbowygSelectTemplatesPlugin.allTemplates[val]);
                 }
+
+                setTimeout(function () {
+                    t.closeModal();
+                }, 250);
             })
-            .one(pfx + 'cancel', function () {
-                jQuery(this).off(pfx + 'confirm');
+            .on('tbwcancel', function () {
                 t.closeModal();
-                t.restoreSelection();
             });
         $modal.addClass('big');
 

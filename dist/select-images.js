@@ -11,16 +11,21 @@ System.register([], function(exports_1, context_1) {
                 TrumbowygSelectImagesPlugin.init = function (editor, lang) {
                     TrumbowygSelectImagesPlugin.editor = editor;
                     TrumbowygSelectImagesPlugin.lang = lang;
+                    console.log('TrumbowygSelectImagesPlugin init', editor);
                     jQuery.extend(true, editor, {
-                        selectImage: {},
-                        opts: {
-                            btnsDef: {
-                                selectImage: {
-                                    func: function (params, t) {
-                                        TrumbowygSelectImagesPlugin.selectImageCb(params, t, TrumbowygSelectImagesPlugin.editorImages);
-                                    },
-                                    ico: 'selectImage'
-                                }
+                        plugins: {
+                            selectImage: {
+                                init: function (trumbowyg) {
+                                    trumbowyg.o.plugins.selectImage = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.selectImage || {});
+                                    console.log('selectImage trumbowyg', trumbowyg);
+                                    trumbowyg.addBtnDef('selectImage', {
+                                        fn: function (params) {
+                                            // console.log('selectImageCb', params, trumbowyg, editorImages);
+                                            TrumbowygSelectImagesPlugin.selectImageCb(params, trumbowyg, TrumbowygSelectImagesPlugin.editorImages);
+                                        }
+                                    });
+                                },
+                                tag: 'img'
                             }
                         }
                     });
@@ -44,26 +49,23 @@ System.register([], function(exports_1, context_1) {
                     html.push('</div>');
                     var selectedImageIndex = null;
                     var $modal = t.openModal(TrumbowygSelectImagesPlugin.editor.langs[TrumbowygSelectImagesPlugin.lang].attachedImages, html.join(''))
-                        .on(pfx + 'confirm', function () {
-                        jQuery(this).off(pfx + 'confirm');
+                        .on('tbwconfirm', function () {
+                        // $(this).off(pfx + 'confirm');
                         if (selectedImageIndex != null) {
-                            t.restoreSelection();
-                            t.syncCode();
                             var width = editorImages[selectedImageIndex].width || 1024;
-                            var attr = '';
+                            t.execCmd('insertImage', editorImages[selectedImageIndex].url);
                             if (width > 1024) {
-                                attr += 'width="1024px"';
+                                jQuery('img[src="' + editorImages[selectedImageIndex].url + '"]:not([alt])', t.$box).attr('width', '1024px');
                             }
-                            TrumbowygSelectImagesPlugin.editor.insertHtml(t, '<img ' + attr + ' src="' + editorImages[selectedImageIndex].url + '"/>');
                         }
                         setTimeout(function () {
                             t.closeModal();
                         }, 250);
                     })
-                        .one(pfx + 'cancel', function () {
-                        jQuery(this).off(pfx + 'confirm');
+                        .on('tbwcancel', function () {
+                        // .one(pfx + 'cancel', function () {
+                        //     $(this).off(pfx + 'confirm');
                         t.closeModal();
-                        t.restoreSelection();
                     });
                     jQuery('label', $modal).on('click', function () {
                         jQuery('li', $modal).removeClass('active');

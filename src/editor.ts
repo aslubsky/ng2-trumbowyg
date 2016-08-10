@@ -1,13 +1,14 @@
 import {Directive, Input, Output, EventEmitter, ElementRef, OnInit, OnDestroy, OnChanges}         from '@angular/core';
 
-import {TrumbowygFontSizesPlugin} from './font-sizes';
+import {TrumbowygFontSizePlugin} from './font-size';
 import {TrumbowygFontsPlugin} from './fonts';
-import {TrumbowygColorsPlugin} from './colors';
+// import {TrumbowygColorsPlugin} from './colors';
 import {TrumbowygInsertMediaEmbedPlugin} from './insert-media-embed';
 import {TrumbowygInsertTablePlugin} from './insert-table';
 import {TrumbowygSelectImagesPlugin} from './select-images';
 import {TrumbowygSelectResourcesPlugin} from './select-resources';
 import {TrumbowygSelectTemplatesPlugin} from './select-templates';
+import {TrumbowygSelectStylesPlugin} from './select-styles';
 
 declare var jQuery:any;
 
@@ -43,37 +44,24 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
             jQuery.trumbowyg.langs = TrumbowygEditor.langs;
         }
 
-        jQuery.trumbowyg.insertHtml = function (t, html) {
-            try {
-                try {
-                    // <= IE10
-                    t.doc.selection.createRange().pasteHTML(html);
-                } catch (err) {
-                    // IE 11
-                    var el = document.createElement("div");
-                    el.innerHTML = html;
-                    var frag = document.createDocumentFragment(), node, lastNode;
-                    while ((node = el.firstChild)) {
-                        lastNode = frag.appendChild(node);
-                    }
-                    var range = t.doc.getSelection().getRangeAt(0);
-                    range.deleteContents();
-                    range.insertNode(frag);
-                }
-            } catch (err) {
-                // Not IE
-                t.execCmd('insertHTML', html);
-            }
-            t.syncCode();
-        }
+        jQuery.trumbowyg.svgPath = '/bower_components/trumbowyg/dist/ui/icons.svg';
 
-        TrumbowygFontSizesPlugin.init(jQuery.trumbowyg, lang);
+        var btnsGrps = {
+            design: ['bold', 'italic', 'underline', 'strikethrough'],
+            semantic: ['strong', 'em', 'del'],
+            justify: ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+            lists: ['unorderedList', 'orderedList']
+        };
+
+        TrumbowygFontSizePlugin.init(jQuery.trumbowyg, lang);
         TrumbowygFontsPlugin.init(jQuery.trumbowyg, lang);
-        TrumbowygColorsPlugin.init(jQuery.trumbowyg, lang);
+        // TrumbowygColorsPlugin.init(jQuery.trumbowyg, lang);
+        TrumbowygInsertTablePlugin.init(jQuery.trumbowyg, lang);
         TrumbowygInsertMediaEmbedPlugin.init(jQuery.trumbowyg, lang);
         TrumbowygSelectImagesPlugin.init(jQuery.trumbowyg, lang);
         TrumbowygSelectResourcesPlugin.init(jQuery.trumbowyg, lang);
         TrumbowygSelectTemplatesPlugin.init(jQuery.trumbowyg, lang);
+        TrumbowygSelectStylesPlugin.init(jQuery.trumbowyg, lang);
 
         //console.trace();
         //console.log('init', jQuery.trumbowyg);
@@ -83,38 +71,37 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
             inline: [
                 'removeformat',
                 '|',
-                jQuery.trumbowyg.btnsGrps.design, '|',
+                btnsGrps.design, '|',
                 'fontName',
                 'fontSize',
                 'foreColor',
                 'backColor',
                 '|',
-                'insertImage',
                 'insertMediaEmbed',
                 'selectImage'
             ],
             simple: [
                 'removeformat',
                 '|',
-                jQuery.trumbowyg.btnsGrps.design, '|',
+                btnsGrps.design, '|',
                 'fontName',
                 'fontSize',
                 '|',
-                jQuery.trumbowyg.btnsGrps.justify,
+                btnsGrps.justify,
                 '|',
-                jQuery.trumbowyg.btnsGrps.lists,
+                btnsGrps.lists,
                 '|',
                 'link',
-                'insertImage',
                 'insertMediaEmbed',
                 'selectImage',
-                'horizontalRule'
+                'horizontalRule',
+                'fullscreen'
             ],
             extend: [
                 'viewHTML',
                 'removeformat',
                 '|',
-                jQuery.trumbowyg.btnsGrps.design,
+                btnsGrps.design,
                 '|',
                 'formatting',
                 'fontName',
@@ -122,23 +109,23 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
                 'foreColor',
                 'backColor',
                 '|',
-                jQuery.trumbowyg.btnsGrps.justify,
+                btnsGrps.justify,
                 '|',
-                jQuery.trumbowyg.btnsGrps.lists,
+                btnsGrps.lists,
                 '|',
                 'link',
-                'insertImage',
                 'insertMediaEmbed',
                 'selectImage',
                 'selectTemplates',
                 'insertTable',
-                'horizontalRule'
+                'horizontalRule',
+                'fullscreen'
             ],
             full: [
                 'viewHTML',
                 'removeformat',
                 '|',
-                jQuery.trumbowyg.btnsGrps.design,
+                btnsGrps.design,
                 '|',
                 'formatting',
                 'fontName',
@@ -146,18 +133,18 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
                 'foreColor',
                 'backColor',
                 '|',
-                jQuery.trumbowyg.btnsGrps.justify,
+                btnsGrps.justify,
                 '|',
-                jQuery.trumbowyg.btnsGrps.lists,
+                btnsGrps.lists,
                 '|',
                 'link',
-                'insertImage',
                 'insertMediaEmbed',
                 'selectImage',
                 'selectResources',
                 'selectTemplates',
                 'insertTable',
-                'horizontalRule'
+                'horizontalRule',
+                'fullscreen'
             ]
         };
     }
@@ -229,7 +216,6 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
                 mobile: true,
                 semantic: false,
                 autogrow: this.mode == 'inline',
-                fullscreenable: this.mode != 'inline',
                 tablet: true
             })
             .on('tbwchange', function () {

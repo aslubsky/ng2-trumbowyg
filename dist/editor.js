@@ -1,4 +1,4 @@
-System.register(['@angular/core', './font-sizes', './fonts', './colors', './insert-media-embed', './select-images', './select-resources', './select-templates'], function(exports_1, context_1) {
+System.register(['@angular/core', './font-size', './fonts', './insert-media-embed', './insert-table', './select-images', './select-resources', './select-templates', './select-styles'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,24 +10,24 @@ System.register(['@angular/core', './font-sizes', './fonts', './colors', './inse
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, font_sizes_1, fonts_1, colors_1, insert_media_embed_1, select_images_1, select_resources_1, select_templates_1;
+    var core_1, font_size_1, fonts_1, insert_media_embed_1, insert_table_1, select_images_1, select_resources_1, select_templates_1, select_styles_1;
     var TrumbowygEditor;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (font_sizes_1_1) {
-                font_sizes_1 = font_sizes_1_1;
+            function (font_size_1_1) {
+                font_size_1 = font_size_1_1;
             },
             function (fonts_1_1) {
                 fonts_1 = fonts_1_1;
             },
-            function (colors_1_1) {
-                colors_1 = colors_1_1;
-            },
             function (insert_media_embed_1_1) {
                 insert_media_embed_1 = insert_media_embed_1_1;
+            },
+            function (insert_table_1_1) {
+                insert_table_1 = insert_table_1_1;
             },
             function (select_images_1_1) {
                 select_images_1 = select_images_1_1;
@@ -37,6 +37,9 @@ System.register(['@angular/core', './font-sizes', './fonts', './colors', './inse
             },
             function (select_templates_1_1) {
                 select_templates_1 = select_templates_1_1;
+            },
+            function (select_styles_1_1) {
+                select_styles_1 = select_styles_1_1;
             }],
         execute: function() {
             TrumbowygEditor = (function () {
@@ -52,76 +55,59 @@ System.register(['@angular/core', './font-sizes', './fonts', './colors', './inse
                     if (TrumbowygEditor.langs) {
                         jQuery.trumbowyg.langs = TrumbowygEditor.langs;
                     }
-                    jQuery.trumbowyg.insertHtml = function (t, html) {
-                        try {
-                            try {
-                                // <= IE10
-                                t.doc.selection.createRange().pasteHTML(html);
-                            }
-                            catch (err) {
-                                // IE 11
-                                var el = document.createElement("div");
-                                el.innerHTML = html;
-                                var frag = document.createDocumentFragment(), node, lastNode;
-                                while ((node = el.firstChild)) {
-                                    lastNode = frag.appendChild(node);
-                                }
-                                var range = t.doc.getSelection().getRangeAt(0);
-                                range.deleteContents();
-                                range.insertNode(frag);
-                            }
-                        }
-                        catch (err) {
-                            // Not IE
-                            t.execCmd('insertHTML', html);
-                        }
-                        t.syncCode();
+                    jQuery.trumbowyg.svgPath = '/bower_components/trumbowyg/dist/ui/icons.svg';
+                    var btnsGrps = {
+                        design: ['bold', 'italic', 'underline', 'strikethrough'],
+                        semantic: ['strong', 'em', 'del'],
+                        justify: ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+                        lists: ['unorderedList', 'orderedList']
                     };
-                    font_sizes_1.TrumbowygFontSizesPlugin.init(jQuery.trumbowyg, lang);
+                    font_size_1.TrumbowygFontSizePlugin.init(jQuery.trumbowyg, lang);
                     fonts_1.TrumbowygFontsPlugin.init(jQuery.trumbowyg, lang);
-                    colors_1.TrumbowygColorsPlugin.init(jQuery.trumbowyg, lang);
+                    // TrumbowygColorsPlugin.init(jQuery.trumbowyg, lang);
+                    insert_table_1.TrumbowygInsertTablePlugin.init(jQuery.trumbowyg, lang);
                     insert_media_embed_1.TrumbowygInsertMediaEmbedPlugin.init(jQuery.trumbowyg, lang);
                     select_images_1.TrumbowygSelectImagesPlugin.init(jQuery.trumbowyg, lang);
                     select_resources_1.TrumbowygSelectResourcesPlugin.init(jQuery.trumbowyg, lang);
                     select_templates_1.TrumbowygSelectTemplatesPlugin.init(jQuery.trumbowyg, lang);
+                    select_styles_1.TrumbowygSelectStylesPlugin.init(jQuery.trumbowyg, lang);
                     //console.trace();
                     //console.log('init', jQuery.trumbowyg);
                     TrumbowygEditor.modes = {
                         inline: [
                             'removeformat',
                             '|',
-                            jQuery.trumbowyg.btnsGrps.design, '|',
+                            btnsGrps.design, '|',
                             'fontName',
                             'fontSize',
                             'foreColor',
                             'backColor',
                             '|',
-                            'insertImage',
                             'insertMediaEmbed',
                             'selectImage'
                         ],
                         simple: [
                             'removeformat',
                             '|',
-                            jQuery.trumbowyg.btnsGrps.design, '|',
+                            btnsGrps.design, '|',
                             'fontName',
                             'fontSize',
                             '|',
-                            jQuery.trumbowyg.btnsGrps.justify,
+                            btnsGrps.justify,
                             '|',
-                            jQuery.trumbowyg.btnsGrps.lists,
+                            btnsGrps.lists,
                             '|',
                             'link',
-                            'insertImage',
                             'insertMediaEmbed',
                             'selectImage',
-                            'horizontalRule'
+                            'horizontalRule',
+                            'fullscreen'
                         ],
                         extend: [
                             'viewHTML',
                             'removeformat',
                             '|',
-                            jQuery.trumbowyg.btnsGrps.design,
+                            btnsGrps.design,
                             '|',
                             'formatting',
                             'fontName',
@@ -129,23 +115,23 @@ System.register(['@angular/core', './font-sizes', './fonts', './colors', './inse
                             'foreColor',
                             'backColor',
                             '|',
-                            jQuery.trumbowyg.btnsGrps.justify,
+                            btnsGrps.justify,
                             '|',
-                            jQuery.trumbowyg.btnsGrps.lists,
+                            btnsGrps.lists,
                             '|',
                             'link',
-                            'insertImage',
                             'insertMediaEmbed',
                             'selectImage',
                             'selectTemplates',
                             'insertTable',
-                            'horizontalRule'
+                            'horizontalRule',
+                            'fullscreen'
                         ],
                         full: [
                             'viewHTML',
                             'removeformat',
                             '|',
-                            jQuery.trumbowyg.btnsGrps.design,
+                            btnsGrps.design,
                             '|',
                             'formatting',
                             'fontName',
@@ -153,18 +139,18 @@ System.register(['@angular/core', './font-sizes', './fonts', './colors', './inse
                             'foreColor',
                             'backColor',
                             '|',
-                            jQuery.trumbowyg.btnsGrps.justify,
+                            btnsGrps.justify,
                             '|',
-                            jQuery.trumbowyg.btnsGrps.lists,
+                            btnsGrps.lists,
                             '|',
                             'link',
-                            'insertImage',
                             'insertMediaEmbed',
                             'selectImage',
                             'selectResources',
                             'selectTemplates',
                             'insertTable',
-                            'horizontalRule'
+                            'horizontalRule',
+                            'fullscreen'
                         ]
                     };
                 };
@@ -229,7 +215,6 @@ System.register(['@angular/core', './font-sizes', './fonts', './colors', './inse
                         mobile: true,
                         semantic: false,
                         autogrow: this.mode == 'inline',
-                        fullscreenable: this.mode != 'inline',
                         tablet: true
                     })
                         .on('tbwchange', function () {

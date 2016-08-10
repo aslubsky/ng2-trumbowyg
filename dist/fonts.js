@@ -36,29 +36,33 @@ System.register([], function(exports_1, context_1) {
                     }
                     // Add all fonts in two dropdowns
                     jQuery.extend(true, TrumbowygFontsPlugin.editor, {
-                        opts: {
-                            btnsDef: {
-                                fontName: {
-                                    dropdown: TrumbowygFontsPlugin.buildDropdown('fontName')
+                        plugins: {
+                            fontName: {
+                                init: function (trumbowyg) {
+                                    // console.log('fontName trumbowyg', trumbowyg);
+                                    trumbowyg.o.plugins.fontName = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.fontName || {});
+                                    trumbowyg.addBtnDef('fontName', {
+                                        dropdown: TrumbowygFontsPlugin.buildDropdown('fontName', trumbowyg)
+                                    });
                                 }
                             }
                         }
                     });
                 };
-                TrumbowygFontsPlugin.buildDropdown = function (func) {
+                TrumbowygFontsPlugin.buildDropdown = function (func, trumbowyg) {
                     var dropdown = [];
-                    jQuery.each(TrumbowygFontsPlugin.editor.opts.fonts, function (i, font) {
+                    jQuery.each(jQuery.trumbowyg.opts.fonts, function (i, font) {
                         var fontAlias = font.toLowerCase().replace(' ', '').replace('-', '');
                         var btn = '_' + func + fontAlias;
-                        TrumbowygFontsPlugin.editor.opts.btnsDef[btn] = {
-                            func: function (param, t) {
+                        trumbowyg.addBtnDef(btn, {
+                            fn: function (param, t) {
                                 console.info(param, t);
                                 document.execCommand('fontName', false, param);
                                 t.syncCode();
                             },
                             text: font,
                             param: font
-                        };
+                        });
                         dropdown.push(btn);
                     });
                     return dropdown;
