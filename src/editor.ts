@@ -218,6 +218,16 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
                 autogrow: this.mode == 'inline',
                 tablet: true
             })
+            .on('tbwpaste', function () {
+                var html:string = self.element.trumbowyg('html');
+                //console.log('tbwpaste', html);
+                if (!self.detectBase64Insert(html)) {
+                    self.dirty = true;
+                    self.ngModelChange.emit(html);
+                }
+                //console.log('tbwpaste', html);
+                //console.log('self.ngModelChange', self.ngModelChange);
+            })
             .on('tbwchange', function () {
                 var html:string = self.element.trumbowyg('html');
                 //console.log('tbwchange', html);

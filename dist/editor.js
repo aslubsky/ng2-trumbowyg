@@ -217,6 +217,16 @@ System.register(['@angular/core', './font-size', './fonts', './insert-media-embe
                         autogrow: this.mode == 'inline',
                         tablet: true
                     })
+                        .on('tbwpaste', function () {
+                        var html = self.element.trumbowyg('html');
+                        //console.log('tbwpaste', html);
+                        if (!self.detectBase64Insert(html)) {
+                            self.dirty = true;
+                            self.ngModelChange.emit(html);
+                        }
+                        //console.log('tbwpaste', html);
+                        //console.log('self.ngModelChange', self.ngModelChange);
+                    })
                         .on('tbwchange', function () {
                         var html = self.element.trumbowyg('html');
                         //console.log('tbwchange', html);
