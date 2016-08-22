@@ -16,27 +16,29 @@ System.register([], function(exports_1, context_1) {
                                 init: function (trumbowyg) {
                                     trumbowyg.o.plugins.insertMediaEmbed = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.insertMediaEmbed || {});
                                     trumbowyg.addBtnDef('insertMediaEmbed', {
-                                        dropdown: {
-                                            fn: function (params, t) {
-                                                //console.log('insertMediaEmbed');
-                                                var pfx = t.o.prefix;
-                                                var html = [];
-                                                html.push('<div class="modal-meadia-embed"><textarea></textarea></div>');
-                                                var $modal = t.openModal('Embed Code', html.join(''))
-                                                    .on('tbwconfirm', function () {
-                                                    var code = jQuery('textarea', $modal).val();
-                                                    jQuery(this).off(pfx + 'confirm');
-                                                    if (code) {
-                                                        jQuery.trumbowyg.insertHtml(t, code);
-                                                    }
-                                                    setTimeout(function () {
-                                                        t.closeModal();
-                                                    }, 250);
-                                                })
-                                                    .on('tbwcancel', function () {
+                                        fn: function (params, t) {
+                                            //console.log('insertMediaEmbed');
+                                            var t = trumbowyg;
+                                            var html = [];
+                                            html.push('<div class="modal-container">');
+                                            html.push('<div class="modal-meadia-embed">');
+                                            html.push('<textarea></textarea>');
+                                            html.push('</div>');
+                                            html.push('</div>');
+                                            console.log('insertMediaEmbed');
+                                            var $modal = t.openModal('Embed Code', html.join(''))
+                                                .on('tbwconfirm', function () {
+                                                var code = jQuery('textarea', $modal).val();
+                                                if (code) {
+                                                    t.execCmd('insertHTML', code);
+                                                }
+                                                setTimeout(function () {
                                                     t.closeModal();
-                                                });
-                                            }
+                                                }, 250);
+                                            })
+                                                .on('tbwcancel', function () {
+                                                t.closeModal();
+                                            });
                                         }
                                     });
                                 }
