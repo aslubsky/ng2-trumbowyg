@@ -89,7 +89,7 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                         var val = selected.val();
                         //var i = parseInt(selected.data('i'), 10);
                         var type = selected.data('type');
-                        t.restoreSelection();
+                        t.restoreRange();
                         t.syncCode();
                         jQuery(this).off(pfx + 'confirm');
                         if (val) {
@@ -115,6 +115,7 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                             }
                         }
                         setTimeout(function () {
+                            t.restoreRange();
                             t.closeModal();
                         }, 250);
                     })

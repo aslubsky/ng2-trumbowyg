@@ -27,6 +27,9 @@ export class TrumbowygInsertMediaEmbedPlugin {
 
                                 var $modal = t.openModal('Embed Code', html.join(''))
                                     .on('tbwconfirm', () => {
+                                        t.restoreRange();
+                                        t.syncCode();
+
                                         var code = jQuery('textarea', $modal).val();
                                         if (code) {
                                             t.execCmd('insertHTML', code);
@@ -37,6 +40,7 @@ export class TrumbowygInsertMediaEmbedPlugin {
                                         }, 250);
                                     })
                                     .on('tbwcancel', () => {
+                                        t.restoreRange();
                                         t.closeModal();
                                     });
                             }

@@ -74,6 +74,8 @@ System.register([], function(exports_1, context_1) {
                         var val = selected.val();
                         // console.log(val, allTemplates[val]);
                         jQuery(this).off(pfx + 'confirm');
+                        t.restoreRange();
+                        t.syncCode();
                         if (val) {
                             t.execCmd('insertHTML', TrumbowygSelectTemplatesPlugin.allTemplates[val]);
                         }
@@ -82,6 +84,7 @@ System.register([], function(exports_1, context_1) {
                         }, 250);
                     })
                         .on('tbwcancel', function () {
+                        t.restoreRange();
                         t.closeModal();
                     });
                     $modal.addClass('big');

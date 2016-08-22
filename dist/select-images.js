@@ -50,7 +50,8 @@ System.register([], function(exports_1, context_1) {
                     var selectedImageIndex = null;
                     var $modal = t.openModal(TrumbowygSelectImagesPlugin.editor.langs[TrumbowygSelectImagesPlugin.lang].attachedImages, html.join(''))
                         .on('tbwconfirm', function () {
-                        // $(this).off(pfx + 'confirm');
+                        t.restoreRange();
+                        t.syncCode();
                         if (selectedImageIndex != null) {
                             var width = editorImages[selectedImageIndex].width || 1024;
                             t.execCmd('insertImage', editorImages[selectedImageIndex].url);
@@ -63,8 +64,7 @@ System.register([], function(exports_1, context_1) {
                         }, 250);
                     })
                         .on('tbwcancel', function () {
-                        // .one(pfx + 'cancel', function () {
-                        //     $(this).off(pfx + 'confirm');
+                        t.restoreRange();
                         t.closeModal();
                     });
                     jQuery('label', $modal).on('click', function () {

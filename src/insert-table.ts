@@ -2,7 +2,7 @@ declare var jQuery:any;
 
 export class TrumbowygInsertTablePlugin {
     public static editor:any;
-    
+
     public static elementsCache:any = {};
 
     public static init(editor:any, lang:string) {
@@ -101,9 +101,8 @@ export class TrumbowygInsertTablePlugin {
                         var html = TrumbowygInsertTablePlugin.buildTable(params.r, params.c).join('');
                         // console.info('HTML', params, t, buildTable(params.r, params.c).join(''), html);
 
-                        // t.restoreSelection();
-                        // t.syncCode();
-                        // module.insertHtml(t, html);
+                        t.restoreRange();
+                        t.syncCode();
 
                         trumbowyg.execCmd('insertHTML', html);
                     },

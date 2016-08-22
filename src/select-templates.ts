@@ -91,6 +91,9 @@ export class TrumbowygSelectTemplatesPlugin {
                 // console.log(val, allTemplates[val]);
                 jQuery(this).off(pfx + 'confirm');
 
+                t.restoreRange();
+                t.syncCode();
+
                 if (val) {
                     t.execCmd('insertHTML', TrumbowygSelectTemplatesPlugin.allTemplates[val]);
                 }
@@ -100,6 +103,7 @@ export class TrumbowygSelectTemplatesPlugin {
                 }, 250);
             })
             .on('tbwcancel', function () {
+                t.restoreRange();
                 t.closeModal();
             });
         $modal.addClass('big');

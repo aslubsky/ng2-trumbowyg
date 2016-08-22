@@ -93,9 +93,8 @@ System.register([], function(exports_1, context_1) {
                                 fn: function (params, t) {
                                     var html = TrumbowygInsertTablePlugin.buildTable(params.r, params.c).join('');
                                     // console.info('HTML', params, t, buildTable(params.r, params.c).join(''), html);
-                                    // t.restoreSelection();
-                                    // t.syncCode();
-                                    // module.insertHtml(t, html);
+                                    t.restoreRange();
+                                    t.syncCode();
                                     trumbowyg.execCmd('insertHTML', html);
                                 },
                                 text: ' ',

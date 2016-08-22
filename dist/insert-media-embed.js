@@ -28,6 +28,8 @@ System.register([], function(exports_1, context_1) {
                                             console.log('insertMediaEmbed');
                                             var $modal = t.openModal('Embed Code', html.join(''))
                                                 .on('tbwconfirm', function () {
+                                                t.restoreRange();
+                                                t.syncCode();
                                                 var code = jQuery('textarea', $modal).val();
                                                 if (code) {
                                                     t.execCmd('insertHTML', code);
@@ -37,6 +39,7 @@ System.register([], function(exports_1, context_1) {
                                                 }, 250);
                                             })
                                                 .on('tbwcancel', function () {
+                                                t.restoreRange();
                                                 t.closeModal();
                                             });
                                         }

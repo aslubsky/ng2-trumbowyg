@@ -57,9 +57,9 @@ export class TrumbowygSelectImagesPlugin {
 
         var selectedImageIndex = null;
         var $modal = t.openModal(TrumbowygSelectImagesPlugin.editor.langs[TrumbowygSelectImagesPlugin.lang].attachedImages, html.join(''))
-        // .on(pfx + 'confirm', function () {
             .on('tbwconfirm', function () {
-                // $(this).off(pfx + 'confirm');
+                t.restoreRange();
+                t.syncCode();
 
                 if (selectedImageIndex != null) {
                     var width = editorImages[selectedImageIndex].width || 1024;
@@ -74,8 +74,7 @@ export class TrumbowygSelectImagesPlugin {
                 }, 250);
             })
             .on('tbwcancel', function () {
-                // .one(pfx + 'cancel', function () {
-                //     $(this).off(pfx + 'confirm');
+                t.restoreRange();
                 t.closeModal();
             });
 
