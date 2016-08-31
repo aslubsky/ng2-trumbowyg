@@ -28,6 +28,12 @@ export class TrumbowygInsertTablePlugin {
                                 }
                             }
 
+                            jQuery('.trumbowyg-insertTable-button', trumbowyg.$box)
+                                .off('click')
+                                .on('click', function(){
+                                    jQuery('.trumbowyg-dropdown-insertTable.trumbowyg-dropdown button').removeClass('active');
+                                });
+
                             jQuery('.trumbowyg-dropdown-insertTable.trumbowyg-dropdown button', trumbowyg.$box)
                                 .off('mouseenter mouseleave')
                                 .hover(function (e) {
@@ -74,7 +80,7 @@ export class TrumbowygInsertTablePlugin {
     }
 
     private static fillCells(r, c) {
-        jQuery('.insertTable-trumbowyg-dropdown.trumbowyg-dropdown button').removeClass('active');
+        jQuery('.trumbowyg-dropdown-insertTable.trumbowyg-dropdown button').removeClass('active');
         var i = 1;
         var j = 1;
         for (; i <= r; i++) {
@@ -97,14 +103,14 @@ export class TrumbowygInsertTablePlugin {
                 // console.log('trumbowyg', trumbowyg);
                 trumbowyg.addBtnDef(btn, {
                     forceCss: true,
-                    fn: function (params, t) {
+                    fn: function (params) {
                         var html = TrumbowygInsertTablePlugin.buildTable(params.r, params.c).join('');
                         // console.info('HTML', params, t, buildTable(params.r, params.c).join(''), html);
 
-                        t.restoreRange();
-                        t.syncCode();
+                        trumbowyg.restoreRange();
+                        trumbowyg.syncCode();
 
-                        TrumbowygInsertTablePlugin.editor.insertHtml(t, html);
+                        TrumbowygInsertTablePlugin.editor.insertHtml(trumbowyg, html);
                     },
                     text: ' ',
                     param: {

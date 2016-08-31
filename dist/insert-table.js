@@ -28,6 +28,11 @@ System.register([], function(exports_1, context_1) {
                                                 TrumbowygInsertTablePlugin.elementsCache['r' + i + '_c' + j] = jQuery('.trumbowyg-_r' + i + '_c' + j + '_insertTable-dropdown-button', trumbowyg.$box);
                                             }
                                         }
+                                        jQuery('.trumbowyg-insertTable-button', trumbowyg.$box)
+                                            .off('click')
+                                            .on('click', function () {
+                                            jQuery('.trumbowyg-dropdown-insertTable.trumbowyg-dropdown button').removeClass('active');
+                                        });
                                         jQuery('.trumbowyg-dropdown-insertTable.trumbowyg-dropdown button', trumbowyg.$box)
                                             .off('mouseenter mouseleave')
                                             .hover(function (e) {
@@ -69,7 +74,7 @@ System.register([], function(exports_1, context_1) {
                     return html;
                 };
                 TrumbowygInsertTablePlugin.fillCells = function (r, c) {
-                    jQuery('.insertTable-trumbowyg-dropdown.trumbowyg-dropdown button').removeClass('active');
+                    jQuery('.trumbowyg-dropdown-insertTable.trumbowyg-dropdown button').removeClass('active');
                     var i = 1;
                     var j = 1;
                     for (; i <= r; i++) {
@@ -90,12 +95,12 @@ System.register([], function(exports_1, context_1) {
                             // console.log('trumbowyg', trumbowyg);
                             trumbowyg.addBtnDef(btn, {
                                 forceCss: true,
-                                fn: function (params, t) {
+                                fn: function (params) {
                                     var html = TrumbowygInsertTablePlugin.buildTable(params.r, params.c).join('');
                                     // console.info('HTML', params, t, buildTable(params.r, params.c).join(''), html);
-                                    t.restoreRange();
-                                    t.syncCode();
-                                    TrumbowygInsertTablePlugin.editor.insertHtml(t, html);
+                                    trumbowyg.restoreRange();
+                                    trumbowyg.syncCode();
+                                    TrumbowygInsertTablePlugin.editor.insertHtml(trumbowyg, html);
                                 },
                                 text: ' ',
                                 param: {
