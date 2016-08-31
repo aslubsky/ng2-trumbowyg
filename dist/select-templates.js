@@ -77,7 +77,7 @@ System.register([], function(exports_1, context_1) {
                         t.restoreRange();
                         t.syncCode();
                         if (val) {
-                            t.execCmd('insertHTML', TrumbowygSelectTemplatesPlugin.allTemplates[val]);
+                            TrumbowygSelectTemplatesPlugin.editor.insertHtml(t, TrumbowygSelectTemplatesPlugin.allTemplates[val]);
                         }
                         setTimeout(function () {
                             t.closeModal();

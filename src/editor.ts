@@ -46,6 +46,30 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
 
         jQuery.trumbowyg.svgPath = '/bower_components/trumbowyg/dist/ui/icons.svg';
 
+        jQuery.trumbowyg.insertHtml = function (t, html) {
+            try {
+                try {
+                    // <= IE10
+                    t.doc.selection.createRange().pasteHTML(html);
+                } catch (err) {
+                    // IE 11
+                    var el = document.createElement("div");
+                    el.innerHTML = html;
+                    var frag = document.createDocumentFragment(), node, lastNode;
+                    while ((node = el.firstChild)) {
+                        lastNode = frag.appendChild(node);
+                    }
+                    var range = t.doc.getSelection().getRangeAt(0);
+                    range.deleteContents();
+                    range.insertNode(frag);
+                }
+            } catch (err) {
+                // Not IE
+                t.execCmd('insertHTML', html);
+            }
+            t.syncCode();
+        }
+
         var btnsGrps = {
             design: ['bold', 'italic', 'underline', 'strikethrough'],
             semantic: ['strong', 'em', 'del'],

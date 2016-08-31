@@ -104,7 +104,7 @@ export class TrumbowygInsertTablePlugin {
                         t.restoreRange();
                         t.syncCode();
 
-                        trumbowyg.execCmd('insertHTML', html);
+                        TrumbowygInsertTablePlugin.editor.insertHtml(t, html);
                     },
                     text: ' ',
                     param: {

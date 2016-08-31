@@ -32,7 +32,7 @@ System.register([], function(exports_1, context_1) {
                                                 t.syncCode();
                                                 var code = jQuery('textarea', $modal).val();
                                                 if (code) {
-                                                    t.execCmd('insertHTML', code);
+                                                    TrumbowygInsertMediaEmbedPlugin.editor.insertHtml(t, code);
                                                 }
                                                 setTimeout(function () {
                                                     t.closeModal();

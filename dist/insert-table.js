@@ -95,7 +95,7 @@ System.register([], function(exports_1, context_1) {
                                     // console.info('HTML', params, t, buildTable(params.r, params.c).join(''), html);
                                     t.restoreRange();
                                     t.syncCode();
-                                    trumbowyg.execCmd('insertHTML', html);
+                                    TrumbowygInsertTablePlugin.editor.insertHtml(t, html);
                                 },
                                 text: ' ',
                                 param: {

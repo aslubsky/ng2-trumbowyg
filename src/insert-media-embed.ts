@@ -32,7 +32,7 @@ export class TrumbowygInsertMediaEmbedPlugin {
 
                                         var code = jQuery('textarea', $modal).val();
                                         if (code) {
-                                            t.execCmd('insertHTML', code);
+                                            TrumbowygInsertMediaEmbedPlugin.editor.insertHtml(t, code);
                                         }
 
                                         setTimeout(() => {
