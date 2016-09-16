@@ -2,7 +2,7 @@ import {Directive, Input, Output, EventEmitter, ElementRef, OnInit, OnDestroy, O
 
 import {TrumbowygFontSizePlugin} from './font-size';
 import {TrumbowygFontsPlugin} from './fonts';
-// import {TrumbowygColorsPlugin} from './colors';
+import {TrumbowygInsertLeadPlugin} from './insert-lead';
 import {TrumbowygInsertMediaEmbedPlugin} from './insert-media-embed';
 import {TrumbowygInsertTablePlugin} from './insert-table';
 import {TrumbowygSelectImagesPlugin} from './select-images';
@@ -79,7 +79,7 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
 
         TrumbowygFontSizePlugin.init(jQuery.trumbowyg, lang);
         TrumbowygFontsPlugin.init(jQuery.trumbowyg, lang);
-        // TrumbowygColorsPlugin.init(jQuery.trumbowyg, lang);
+        TrumbowygInsertLeadPlugin.init(jQuery.trumbowyg, lang);
         TrumbowygInsertTablePlugin.init(jQuery.trumbowyg, lang);
         TrumbowygInsertMediaEmbedPlugin.init(jQuery.trumbowyg, lang);
         TrumbowygSelectImagesPlugin.init(jQuery.trumbowyg, lang);
