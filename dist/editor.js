@@ -1,4 +1,4 @@
-System.register(['@angular/core', './font-size', './fonts', './insert-lead', './insert-media-embed', './insert-table', './select-images', './select-resources', './select-templates', './select-styles'], function(exports_1, context_1) {
+System.register(['@angular/core', './codemirror', './font-size', './fonts', './insert-lead', './insert-media-embed', './insert-table', './select-images', './select-resources', './select-templates', './select-styles'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,12 +10,15 @@ System.register(['@angular/core', './font-size', './fonts', './insert-lead', './
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, font_size_1, fonts_1, insert_lead_1, insert_media_embed_1, insert_table_1, select_images_1, select_resources_1, select_templates_1, select_styles_1;
+    var core_1, codemirror_1, font_size_1, fonts_1, insert_lead_1, insert_media_embed_1, insert_table_1, select_images_1, select_resources_1, select_templates_1, select_styles_1;
     var TrumbowygEditor;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (codemirror_1_1) {
+                codemirror_1 = codemirror_1_1;
             },
             function (font_size_1_1) {
                 font_size_1 = font_size_1_1;
@@ -90,6 +93,7 @@ System.register(['@angular/core', './font-size', './fonts', './insert-lead', './
                         justify: ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
                         lists: ['unorderedList', 'orderedList']
                     };
+                    codemirror_1.TrumbowygCodemirrorPlugin.init(jQuery.trumbowyg, lang);
                     font_size_1.TrumbowygFontSizePlugin.init(jQuery.trumbowyg, lang);
                     fonts_1.TrumbowygFontsPlugin.init(jQuery.trumbowyg, lang);
                     insert_lead_1.TrumbowygInsertLeadPlugin.init(jQuery.trumbowyg, lang);

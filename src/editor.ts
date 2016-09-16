@@ -1,5 +1,6 @@
 import {Directive, Input, Output, EventEmitter, ElementRef, OnInit, OnDestroy, OnChanges}         from '@angular/core';
 
+import {TrumbowygCodemirrorPlugin} from './codemirror';
 import {TrumbowygFontSizePlugin} from './font-size';
 import {TrumbowygFontsPlugin} from './fonts';
 import {TrumbowygInsertLeadPlugin} from './insert-lead';
@@ -77,6 +78,7 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
             lists: ['unorderedList', 'orderedList']
         };
 
+        TrumbowygCodemirrorPlugin.init(jQuery.trumbowyg, lang);
         TrumbowygFontSizePlugin.init(jQuery.trumbowyg, lang);
         TrumbowygFontsPlugin.init(jQuery.trumbowyg, lang);
         TrumbowygInsertLeadPlugin.init(jQuery.trumbowyg, lang);
