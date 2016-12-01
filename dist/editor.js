@@ -199,7 +199,12 @@ System.register(['@angular/core', './codemirror', './font-size', './fonts', './i
                         if (this.dirty) {
                         }
                         else {
-                            this.element.trumbowyg('html', this.ngModel);
+                            if (this.ngModel.length == 0 && (/webkit/i).test(navigator.userAgent)) {
+                                this.element.trumbowyg('html', '<p></p>');
+                            }
+                            else {
+                                this.element.trumbowyg('html', this.ngModel);
+                            }
                         }
                     }
                 };
@@ -269,16 +274,6 @@ System.register(['@angular/core', './codemirror', './font-size', './fonts', './i
                         //console.log('tbwchange', html);
                         //console.log('self.ngModelChange', self.ngModelChange);
                     });
-                    if ((/webkit/i).test(navigator.userAgent)) {
-                        jQuery('.trumbowyg-editor', this.element.parent()).on('keyup', function (e) {
-                            if (e.keyCode == 13) {
-                                if (window.getSelection) {
-                                    var selection = window.getSelection(), range = selection.getRangeAt(0);
-                                    jQuery(range.endContainer).attr('class', '');
-                                }
-                            }
-                        });
-                    }
                 };
                 TrumbowygEditor.prototype.ngOnDestroy = function () {
                     this.element.trumbowyg('destroy');

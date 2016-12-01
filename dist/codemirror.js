@@ -18,7 +18,7 @@ System.register(['codemirror'], function(exports_1, context_1) {
                         plugins: {
                             codemirror: {
                                 init: function (t) {
-                                    console.log('TrumbowygCodemirrorPlugin');
+                                    // console.log('TrumbowygCodemirrorPlugin');
                                     t.toggle = function () {
                                         var prefix = t.o.prefix;
                                         t.semanticCode(false, true);

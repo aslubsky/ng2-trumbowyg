@@ -11,34 +11,34 @@ import {TrumbowygSelectResourcesPlugin} from './select-resources';
 import {TrumbowygSelectTemplatesPlugin} from './select-templates';
 import {TrumbowygSelectStylesPlugin} from './select-styles';
 
-declare var jQuery:any;
+declare var jQuery: any;
 
 @Directive({
     selector: '[trumbowyg-editor]'
 })
 export class TrumbowygEditor implements OnInit,OnDestroy {
-    public static modes:any = {};
-    public static langs:any = {};
-    public static inited:boolean = false;
-    public static localImageRegexp:RegExp = /src\=\"data\:image\/(.*)\"/gi;
+    public static modes: any = {};
+    public static langs: any = {};
+    public static inited: boolean = false;
+    public static localImageRegexp: RegExp = /src\=\"data\:image\/(.*)\"/gi;
 
-    @Input() mode:string;
-    @Input() lang:string;
-    @Input() base64Image:any;
+    @Input() mode: string;
+    @Input() lang: string;
+    @Input() base64Image: any;
 
-    @Input() ngModel:string;
-    @Output() ngModelChange:any = new EventEmitter();
-    @Output() base64ImageInserted:any = new EventEmitter();
+    @Input() ngModel: string;
+    @Output() ngModelChange: any = new EventEmitter();
+    @Output() base64ImageInserted: any = new EventEmitter();
 
-    public onInit:any = new EventEmitter();
+    public onInit: any = new EventEmitter();
 
-    private element:any;
-    private dirty:boolean = false;
+    private element: any;
+    private dirty: boolean = false;
 
-    constructor(private el:ElementRef) {
+    constructor(private el: ElementRef) {
     }
 
-    private static init(lang:string) {
+    private static init(lang: string) {
         TrumbowygEditor.inited = true;
 
         if (TrumbowygEditor.langs) {
@@ -189,15 +189,19 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
             if (this.dirty) {
                 //this.dirty = false;
             } else {
-                this.element.trumbowyg('html', this.ngModel);
+                if (this.ngModel.length == 0 && (/webkit/i).test(navigator.userAgent)) {
+                    this.element.trumbowyg('html', '<p></p>');
+                } else {
+                    this.element.trumbowyg('html', this.ngModel);
+                }
             }
         }
     }
 
-    private detectBase64Insert(html:string) {
+    private detectBase64Insert(html: string) {
         //console.log('detectBase64Insert', html);
         if (TrumbowygEditor.localImageRegexp.test(html)) {
-            var images:any[] = [];
+            var images: any[] = [];
 
             var el = jQuery('<div>' + html + '</div>');
             var uid;
@@ -237,15 +241,15 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
         var self = this;
         this.element.trumbowyg('destroy');
         this.element.trumbowyg({
-                btns: TrumbowygEditor.modes[this.mode],
-                lang: this.lang,
-                mobile: true,
-                semantic: false,
-                autogrow: this.mode == 'inline',
-                tablet: true
-            })
+            btns: TrumbowygEditor.modes[this.mode],
+            lang: this.lang,
+            mobile: true,
+            semantic: false,
+            autogrow: this.mode == 'inline',
+            tablet: true
+        })
             .on('tbwpaste', function () {
-                var html:string = self.element.trumbowyg('html');
+                var html: string = self.element.trumbowyg('html');
                 //console.log('tbwpaste', html);
                 if (!self.detectBase64Insert(html)) {
                     self.dirty = true;
@@ -255,7 +259,7 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
                 //console.log('self.ngModelChange', self.ngModelChange);
             })
             .on('tbwchange', function () {
-                var html:string = self.element.trumbowyg('html');
+                var html: string = self.element.trumbowyg('html');
                 //console.log('tbwchange', html);
                 if (!self.detectBase64Insert(html)) {
                     self.dirty = true;
@@ -264,19 +268,6 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
                 //console.log('tbwchange', html);
                 //console.log('self.ngModelChange', self.ngModelChange);
             });
-
-        if ((/webkit/i).test(navigator.userAgent)) {//remove div class after new line
-            jQuery('.trumbowyg-editor', this.element.parent()).on('keyup', function (e) {
-                if (e.keyCode == 13) {
-                    if (window.getSelection) {
-                        var selection = window.getSelection(),
-                            range = selection.getRangeAt(0);
-
-                        jQuery(range.endContainer).attr('class', '');
-                    }
-                }
-            });
-        }
     }
 
     ngOnDestroy() {
