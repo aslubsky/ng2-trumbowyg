@@ -1,22 +1,22 @@
-declare var jQuery:any;
+declare var jQuery: any;
 
 export class TrumbowygInsertMediaEmbedPlugin {
-    public static editor:any;
+    public static editor: any;
 
-    public static init(editor:any, lang:string) {
+    public static init(editor: any, lang: string) {
         TrumbowygInsertMediaEmbedPlugin.editor = editor;
 
         jQuery.extend(true, jQuery.trumbowyg, {
             plugins: {
                 insertMediaEmbed: {
-                    init: (trumbowyg) => {
+                    init: (trumbowyg: any) => {
                         trumbowyg.o.plugins.insertMediaEmbed = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.insertMediaEmbed || {});
                         trumbowyg.addBtnDef('insertMediaEmbed', {
-                            fn: (params, t) => {
+                            fn: (params: any, t: any) => {
                                 //console.log('insertMediaEmbed');
                                 var t = trumbowyg;
 
-                                var html = [];
+                                var html: string[] = [];
                                 html.push('<div class="modal-container">');
                                 html.push('<div class="modal-meadia-embed">');
                                 html.push('<textarea></textarea>');

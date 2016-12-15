@@ -1,23 +1,28 @@
 {
-    "name": "ng2-trumbowyg",
-    "version": "1.0.0",
-    "description": "Angular2 bind for trumbowyg",
-    "scripts": {
-    },
-    "main": "ng2-trumbowyg.js",
-    "typings": "ng2-trumbowyg.d.ts",
-    "keywords": [
-        "angular2",
-        "trumbowyg"
-    ],
-    "author": "aslubsky@gmail.com",
-    "license": "MIT",
-    "dependencies": {
-        "trumbowyg": "git://github.com/davintoo/Trumbowyg.git#master"
-    },
-    "devDependencies": {
-        "@angular/core": "^2.0.0",
-        "rxjs": "^5.0.0-beta.12",
-        "codemirror": "^5.16.0"
-    }
+  "name": "ng2-trumbowyg",
+  "version": "1.0.0",
+  "description": "Angular2 bind for trumbowyg",
+  "scripts": {},
+  "main": "ng2-trumbowyg.js",
+  "typings": "ng2-trumbowyg.d.ts",
+  "keywords": [
+    "angular2",
+    "trumbowyg"
+  ],
+  "author": "aslubsky@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "@types/codemirror": "0.0.35",
+    "trumbowyg": "git://github.com/davintoo/Trumbowyg.git#master"
+  },
+  "devDependencies": {
+    "@angular/compiler": "2.3.1",
+    "@angular/compiler-cli": "2.3.1",
+    "@angular/core": "2.3.1",
+    "@angular/platform-server": "2.3.1",
+    "rxjs": ">=5.0.0-beta.12",
+    "typescript": "2.0.3",
+    "typings": "^1.4.0",
+    "codemirror": "^5.16.0"
+  }
 }

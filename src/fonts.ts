@@ -1,9 +1,9 @@
-declare var jQuery:any;
+declare var jQuery: any;
 
 export class TrumbowygFontsPlugin {
-    public static editor:any;
+    public static editor: any;
 
-    public static init(editor:any, lang:string) {
+    public static init(editor: any, lang: string) {
         TrumbowygFontsPlugin.editor = editor;
 
         // Create btnsDef entry
@@ -36,7 +36,7 @@ export class TrumbowygFontsPlugin {
         jQuery.extend(true, TrumbowygFontsPlugin.editor, {
             plugins: {
                 fontName: {
-                    init: function (trumbowyg) {
+                    init: function (trumbowyg: any) {
                         // console.log('fontName trumbowyg', trumbowyg);
                         trumbowyg.o.plugins.fontName = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.fontName || {});
                         trumbowyg.addBtnDef('fontName', {
@@ -49,14 +49,14 @@ export class TrumbowygFontsPlugin {
 
     }
 
-    private static buildDropdown(func, trumbowyg) {
-        var dropdown = [];
+    private static buildDropdown(func:any, trumbowyg:any) {
+        var dropdown:string[] = [];
 
-        jQuery.each(jQuery.trumbowyg.opts.fonts, function (i, font) {
+        jQuery.each(jQuery.trumbowyg.opts.fonts, function (i: number, font: string) {
             var fontAlias = font.toLowerCase().replace(' ', '').replace('-', '');
             var btn = '_' + func + fontAlias;
             trumbowyg.addBtnDef(btn, {
-                fn: function (param, t) {
+                fn: function (param: any, t: any) {
                     console.info(param, t);
                     document.execCommand('fontName', false, param);
                     t.syncCode();

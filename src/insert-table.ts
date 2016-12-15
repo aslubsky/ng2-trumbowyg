@@ -1,17 +1,17 @@
-declare var jQuery:any;
+declare var jQuery: any;
 
 export class TrumbowygInsertTablePlugin {
-    public static editor:any;
+    public static editor: any;
 
-    public static elementsCache:any = {};
+    public static elementsCache: any = {};
 
-    public static init(editor:any, lang:string) {
+    public static init(editor: any, lang: string) {
         TrumbowygInsertTablePlugin.editor = editor;
 
         jQuery.extend(true, jQuery.trumbowyg, {
             plugins: {
                 insertTable: {
-                    init: function (trumbowyg) {
+                    init: function (trumbowyg: any) {
                         // console.log('trumbowyg', trumbowyg);
                         trumbowyg.o.plugins.insertTable = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.insertTable || {});
                         trumbowyg.addBtnDef('insertTable', {
@@ -20,8 +20,8 @@ export class TrumbowygInsertTablePlugin {
                         });
 
                         setTimeout(function () {
-                            var i = 1;
-                            var j = 1;
+                            var i: number = 1;
+                            var j: number = 1;
                             for (; i <= 10; i++) {
                                 for (j = 1; j <= 10; j++) {
                                     TrumbowygInsertTablePlugin.elementsCache['r' + i + '_c' + j] = jQuery('.trumbowyg-_r' + i + '_c' + j + '_insertTable-dropdown-button', trumbowyg.$box);
@@ -30,13 +30,13 @@ export class TrumbowygInsertTablePlugin {
 
                             jQuery('.trumbowyg-insertTable-button', trumbowyg.$box)
                                 .off('click')
-                                .on('click', function(){
+                                .on('click', function () {
                                     jQuery('.trumbowyg-dropdown-insertTable.trumbowyg-dropdown button').removeClass('active');
                                 });
 
                             jQuery('.trumbowyg-dropdown-insertTable.trumbowyg-dropdown button', trumbowyg.$box)
                                 .off('mouseenter mouseleave')
-                                .hover(function (e) {
+                                .hover(function (e: any) {
                                     //console.log(e.target.classList);
                                     //$(e.target).attr('class').split('_')
                                     var tmp = jQuery(e.target).attr('class').split('_');
@@ -46,7 +46,7 @@ export class TrumbowygInsertTablePlugin {
                                     TrumbowygInsertTablePlugin.fillCells(r, c);
 
                                     //console.log($(e.target).attr('class').split('_'));
-                                }, function (e) {
+                                }, function (e: any) {
                                     // console.log(e);
 
                                     var tmp = jQuery(e.target).attr('class').split('_');
@@ -63,11 +63,11 @@ export class TrumbowygInsertTablePlugin {
         });
     }
 
-    private static buildTable(r, c) {
-        var html = [];
+    private static buildTable(r: number, c: number) {
+        var html: string[] = [];
         html.push('<table border="1" width="100%">');
-        var i = 1;
-        var j = 1;
+        var i: number = 1;
+        var j: number = 1;
         for (; i <= r; i++) {
             html.push('<tr>');
             for (j = 1; j <= c; j++) {
@@ -79,10 +79,10 @@ export class TrumbowygInsertTablePlugin {
         return html;
     }
 
-    private static fillCells(r, c) {
+    private static fillCells(r: number, c: number) {
         jQuery('.trumbowyg-dropdown-insertTable.trumbowyg-dropdown button').removeClass('active');
-        var i = 1;
-        var j = 1;
+        var i: number = 1;
+        var j: number = 1;
         for (; i <= r; i++) {
             for (j = 1; j <= c; j++) {
                 //console.log(jQuery('.trumbowyg-_r'+r+'_c'+c+'_insertTable-dropdown-button'));
@@ -91,19 +91,19 @@ export class TrumbowygInsertTablePlugin {
         }
     }
 
-    private static buildDropdown(func, trumbowyg) {
-        var dropdown = [];
+    private static buildDropdown(func: any, trumbowyg: any) {
+        var dropdown: string[] = [];
 
-        var i = 1;
-        var j = 1;
+        var i: number = 1;
+        var j: number = 1;
         for (; i <= 10; i++) {
             for (j = 1; j <= 10; j++) {
-                var btn = '_r' + i + '_c' + j + '_' + func;
+                var btn: string = '_r' + i + '_c' + j + '_' + func;
                 // trumbowyg.addBtnDef()
                 // console.log('trumbowyg', trumbowyg);
                 trumbowyg.addBtnDef(btn, {
                     forceCss: true,
-                    fn: function (params) {
+                    fn: function (params: any) {
                         var html = TrumbowygInsertTablePlugin.buildTable(params.r, params.c).join('');
                         // console.info('HTML', params, t, buildTable(params.r, params.c).join(''), html);
 

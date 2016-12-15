@@ -1,18 +1,18 @@
 import {EventEmitter}         from '@angular/core';
 
-declare var jQuery:any;
+declare var jQuery: any;
 
 export class TrumbowygSelectResourcesPlugin {
-    public static editorResources:any[] = [];
+    public static editorResources: any[] = [];
 
-    public static onSearch:any;
+    public static onSearch: any;
 
-    public static editor:any;
-    public static $modal:any;
-    public static lang:string;
-    public static pfx:string;
+    public static editor: any;
+    public static $modal: any;
+    public static lang: string;
+    public static pfx: string;
 
-    public static init(editor:any, lang:string) {
+    public static init(editor: any, lang: string) {
         TrumbowygSelectResourcesPlugin.editor = editor;
         TrumbowygSelectResourcesPlugin.lang = lang;
         TrumbowygSelectResourcesPlugin.onSearch = new EventEmitter();
@@ -20,10 +20,10 @@ export class TrumbowygSelectResourcesPlugin {
         jQuery.extend(true, editor, {
             plugins: {
                 selectResources: {
-                    init: function (trumbowyg) {
+                    init: function (trumbowyg: any) {
                         trumbowyg.o.plugins.selectResources = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.selectResources || {});
                         trumbowyg.addBtnDef('selectResources', {
-                            fn: function (params) {
+                            fn: function (params: any) {
                                 // console.log('selectImageCb', params, trumbowyg, editorImages);
                                 TrumbowygSelectResourcesPlugin.selectResourcesCb(params, trumbowyg);
                             }
@@ -35,12 +35,12 @@ export class TrumbowygSelectResourcesPlugin {
         });
     }
 
-    private static translate(str) {
+    private static translate(str: string) {
         return TrumbowygSelectResourcesPlugin.editor.langs[TrumbowygSelectResourcesPlugin.lang][str]
     }
 
-    private static renderList(pfx, html, items) {
-        items.forEach((resource:any) => {
+    private static renderList(pfx: string, html: string[], items: any[]) {
+        items.forEach((resource: any) => {
             //console.log('resource', resource);
             html.push('<li class="item">');
             html.push('<label>');
@@ -55,11 +55,11 @@ export class TrumbowygSelectResourcesPlugin {
     }
 
 
-    private static selectResourcesCb(params, t) {
+    private static selectResourcesCb(params: any, t: any) {
         var pfx = TrumbowygSelectResourcesPlugin.pfx = t.o.prefix;
         //console.log('editorResources', editorResources);
 
-        var html = [];
+        var html: string[] = [];
 
         html.push('<div class="resources-select modal-container">');
         html.push('<div class="input-group resources-search">');
@@ -141,7 +141,7 @@ export class TrumbowygSelectResourcesPlugin {
                 t.restoreSelection();
             });
 
-        jQuery('.nav.nav-tabs a', $modal).off('click').on('click', function (e) {
+        jQuery('.nav.nav-tabs a', $modal).off('click').on('click', function (e: any) {
             e.preventDefault();
             //console.log('O_O', $(this).attr('data-type'));
             //$('.tab-content .tab-pane', $modal).removeClass('active');
@@ -189,11 +189,11 @@ export class TrumbowygSelectResourcesPlugin {
         });
     }
 
-    public static updateResources(editorResources:any[]) {
+    public static updateResources(editorResources: any[]) {
         TrumbowygSelectResourcesPlugin.editorResources = editorResources;
         //
         jQuery('.resources-list', TrumbowygSelectResourcesPlugin.$modal).empty();
-        var lhtml = [];
+        var lhtml: string[] = [];
         TrumbowygSelectResourcesPlugin.renderList(TrumbowygSelectResourcesPlugin.pfx, lhtml, editorResources);
         jQuery('.resources-list', TrumbowygSelectResourcesPlugin.$modal).append(lhtml.join(''));
     }

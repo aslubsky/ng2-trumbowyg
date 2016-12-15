@@ -1,5 +1,5 @@
-import { ElementRef, OnInit, OnDestroy } from '@angular/core';
-export declare class TrumbowygEditor implements OnInit, OnDestroy {
+import { ElementRef, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+export declare class TrumbowygEditor implements OnInit, OnChanges, OnDestroy {
     private el;
     static modes: any;
     static langs: any;
@@ -16,7 +16,7 @@ export declare class TrumbowygEditor implements OnInit, OnDestroy {
     private dirty;
     constructor(el: ElementRef);
     private static init(lang);
-    ngOnChanges(): void;
+    ngOnChanges(changes: SimpleChanges): void;
     private detectBase64Insert(html);
     ngOnInit(): void;
     ngOnDestroy(): void;

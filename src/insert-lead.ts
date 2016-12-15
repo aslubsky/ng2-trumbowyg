@@ -9,7 +9,7 @@ export class TrumbowygInsertLeadPlugin {
         jQuery.extend(true, jQuery.trumbowyg, {
             plugins: {
                 lead: {
-                    init: (trumbowyg) => {
+                    init: (trumbowyg:any) => {
                         // console.log('lead addBtnDef');
 
                         trumbowyg.addBtnDef('lead', {

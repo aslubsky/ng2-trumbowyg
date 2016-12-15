@@ -1,21 +1,30 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "module": "system",
+        "module": "commonjs",
         "moduleResolution": "node",
-        "sourceMap": true,
-        "declaration": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "removeComments": false,
-        "noImplicitAny": false,
+        "sourceMap": false,
+        "noEmitHelpers": false,
+        "noImplicitAny": true,
+        "declaration": true,
+        "skipLibCheck": true,
+        "stripInternal": true,
         "outDir": "./dist",
         "rootDir": "./src",
-        "sourceRoot": "./"
+        "lib": [
+            "dom",
+            "es6"
+        ]
     },
     "exclude": [
         "node_modules",
-        "typings/main",
-        "typings/main.d.ts"
+        "dist"
+    ],
+    "files": [
+        "./src/module.ts",
+        "./src/select-templates.ts",
+        "./src/select-images.ts"
     ]
 }

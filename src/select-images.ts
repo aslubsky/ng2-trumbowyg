@@ -1,15 +1,15 @@
 import {Directive, Input, Output, EventEmitter, ElementRef, OnInit, OnChanges}         from '@angular/core';
 
-declare var jQuery:any;
+declare var jQuery: any;
 
 export class TrumbowygSelectImagesPlugin {
-    public static editorImages:any[] = [];
+    public static editorImages: any[] = [];
 
-    public static editor:any;
-    public static lang:string;
-    public static imagesExtensions:string[] = ['jpg', 'png', 'jpeg', 'bmp', 'gif', 'svg'];
+    public static editor: any;
+    public static lang: string;
+    public static imagesExtensions: string[] = ['jpg', 'png', 'jpeg', 'bmp', 'gif', 'svg'];
 
-    public static init(editor:any, lang:string) {
+    public static init(editor: any, lang: string) {
         TrumbowygSelectImagesPlugin.editor = editor;
         TrumbowygSelectImagesPlugin.lang = lang;
 
@@ -18,11 +18,11 @@ export class TrumbowygSelectImagesPlugin {
         jQuery.extend(true, editor, {
             plugins: {
                 selectImage: {
-                    init: function (trumbowyg) {
+                    init: function (trumbowyg: any) {
                         trumbowyg.o.plugins.selectImage = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.selectImage || {});
                         // console.log('selectImage trumbowyg', trumbowyg);
                         trumbowyg.addBtnDef('selectImage', {
-                            fn: function (params) {
+                            fn: function (params: any) {
                                 // console.log('selectImageCb', params, trumbowyg, editorImages);
                                 TrumbowygSelectImagesPlugin.selectImageCb(params, trumbowyg, TrumbowygSelectImagesPlugin.editorImages);
                             }
@@ -34,16 +34,16 @@ export class TrumbowygSelectImagesPlugin {
         });
     }
 
-    private static selectImageCb(params, t, editorImages) {
-        var pfx = t.o.prefix;
-        var i = 0,
-            l = editorImages.length;
+    private static selectImageCb(params: any, t: any, editorImages: any[]) {
+        var pfx: string = t.o.prefix;
+        var i: number = 0,
+            l: number = editorImages.length;
         if (l == 0) {
             return;
         }
 
-        var html = [];
-        var file = null;
+        var html: string[] = [];
+        var file: any = null;
         html.push('<div class="modal-container">');
         html.push('<ul class="' + pfx + 'select-images gallery">');
         for (; i < l; i++) {
@@ -55,7 +55,7 @@ export class TrumbowygSelectImagesPlugin {
         html.push('</ul>');
         html.push('</div>');
 
-        var selectedImageIndex = null;
+        var selectedImageIndex: number = null;
         var $modal = t.openModal(TrumbowygSelectImagesPlugin.editor.langs[TrumbowygSelectImagesPlugin.lang].attachedImages, html.join(''))
             .on('tbwconfirm', function () {
                 t.restoreRange();
@@ -85,9 +85,9 @@ export class TrumbowygSelectImagesPlugin {
         });
     };
 
-    public static updateImages(files:any[]) {
+    public static updateImages(files: any[]) {
         TrumbowygSelectImagesPlugin.editorImages = [];
-        files.forEach((img:any) => {
+        files.forEach((img: any) => {
             img.extension = img.extension || img.url.split('.').pop();
             if (TrumbowygSelectImagesPlugin.imagesExtensions.indexOf(img.extension) != -1) {
                 if (img.url.substring(0, 8) != '/uploads') {

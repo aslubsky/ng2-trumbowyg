@@ -11,7 +11,7 @@ export class TrumbowygCodemirrorPlugin {
         jQuery.extend(true, jQuery.trumbowyg, {
             plugins: {
                 codemirror: {
-                    init: (t) => {
+                    init: (t: any) => {
                         // console.log('TrumbowygCodemirrorPlugin');
 
                         t.toggle = function () {
@@ -55,7 +55,7 @@ export class TrumbowygCodemirrorPlugin {
 
                             t.$codeMirror = null;
                             if (t.o.btns.indexOf('viewHTML') !== -1) {
-                                t.$codeMirror = CodeMirror.fromTextArea(t.$ta[0], {
+                                t.$codeMirror = CodeMirror.fromTextArea(t.$ta[0], <CodeMirror.EditorConfiguration>{
                                     lineNumbers: true,
                                     theme: 'default',
                                     mode: 'htmlmixed',
@@ -64,7 +64,7 @@ export class TrumbowygCodemirrorPlugin {
                                 });
                                 t.$codeMirrorEl = jQuery('.CodeMirror', t.$box);
                                 t.$codeMirrorEl.hide();
-                                t.$codeMirror.on('change', function (inst) {
+                                t.$codeMirror.on('change', function (inst: any) {
                                     // console.log('myCodeMirror change', inst.doc.getValue());
                                     t.$ta.val(inst.doc.getValue());
                                     t.$c.trigger('tbwchange');

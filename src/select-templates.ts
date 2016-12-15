@@ -1,17 +1,17 @@
-import {EventEmitter}         from '@angular/core';
+// import {EventEmitter}         from '@angular/core';
 
-declare var jQuery:any;
+declare var jQuery: any;
 
 const DEFAULT_ICON = 'themes/default/assets/img/t-icon.png';
 
 export class TrumbowygSelectTemplatesPlugin {
-    public static templates:any[] = [];
-    public static allTemplates:any = {};
+    public static templates: any[] = [];
+    public static allTemplates: any = {};
 
-    public static editor:any;
-    public static lang:string;
+    public static editor: any;
+    public static lang: string;
 
-    public static init(editor:any, lang:string) {
+    public static init(editor: any, lang: string) {
         TrumbowygSelectTemplatesPlugin.editor = editor;
         TrumbowygSelectTemplatesPlugin.lang = lang;
 
@@ -22,10 +22,10 @@ export class TrumbowygSelectTemplatesPlugin {
         jQuery.extend(true, editor, {
             plugins: {
                 selectTemplates: {
-                    init: function (trumbowyg) {
+                    init: function (trumbowyg: any) {
                         trumbowyg.o.plugins.selectTemplates = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.selectTemplates || {});
                         trumbowyg.addBtnDef('selectTemplates', {
-                            fn: function (params) {
+                            fn: function (params: any) {
                                 // console.log('selectImageCb', params, trumbowyg, editorImages);
                                 TrumbowygSelectTemplatesPlugin.selectTemplatesCb(params, trumbowyg);
                             }
@@ -46,11 +46,11 @@ export class TrumbowygSelectTemplatesPlugin {
             '<div>' + editor.langs[lang].selectTemplatesNoData + '</div>';
     }
 
-    private static selectTemplatesCb(params, t) {
-        var pfx = t.o.prefix;
+    private static selectTemplatesCb(params: any, t: any) {
+        var pfx: string = t.o.prefix;
         //console.log('editorResources', editorResources);
 
-        var html = [];
+        var html: string[] = [];
 
         html.push('<div class="modal-container templates-select">');
         html.push('<ul class="nav nav-tabs" role="tablist">');
@@ -67,7 +67,7 @@ export class TrumbowygSelectTemplatesPlugin {
         TrumbowygSelectTemplatesPlugin.templates.forEach((templateSet, i) => {
             html.push('   <div role="tabpanel" id="' + templateSet.id + '" class="tab-pane ' + (i == 0 ? 'active' : '') + '">');
             html.push('   <ul class="templates-list template-gallery list-unstyled">');
-            templateSet.elements.forEach((template:any, j) => {
+            templateSet.elements.forEach((template: any, j: number) => {
                 template.icon = template.icon || DEFAULT_ICON;
                 html.push('   <li title="' + template.description + '" class="item"><label>' +
                     '<img src="' + template.icon + '" class="select-template-icon"><input type="radio" value="' + template.id + '" name="template">' +
@@ -108,21 +108,21 @@ export class TrumbowygSelectTemplatesPlugin {
             });
         $modal.addClass('big');
 
-        jQuery('.nav.nav-tabs a', $modal).off('click').on('click', function (e) {
+        jQuery('.nav.nav-tabs a', $modal).off('click').on('click', function (e: any) {
             e.preventDefault();
             //    console.log('O_O', $(this).attr('data-tab'));
             jQuery('.tab-content .tab-pane', $modal).removeClass('active');
             jQuery('#' + jQuery(this).attr('data-tab')).addClass('active');
             jQuery(this).tab('show');
         });
-        jQuery('.template-gallery li label', $modal).off('click').on('click', function (e) {
+        jQuery('.template-gallery li label', $modal).off('click').on('click', function (e: any) {
             //console.log('O_O', e, $(this));
             jQuery('.template-gallery li', $modal).removeClass('active');
             jQuery(this).parent().addClass('active');
         });
     }
 
-    public static setTemplates(templates:any[], allTemplates:any) {
+    public static setTemplates(templates: any[], allTemplates: any) {
         TrumbowygSelectTemplatesPlugin.templates = templates;
         TrumbowygSelectTemplatesPlugin.allTemplates = allTemplates;
     }

@@ -1,4 +1,14 @@
-import {Directive, Input, Output, EventEmitter, ElementRef, OnInit, OnDestroy, OnChanges}         from '@angular/core';
+import {
+    Directive,
+    Input,
+    Output,
+    EventEmitter,
+    ElementRef,
+    OnInit,
+    OnDestroy,
+    OnChanges,
+    SimpleChanges
+}         from '@angular/core';
 
 import {TrumbowygCodemirrorPlugin} from './codemirror';
 import {TrumbowygFontSizePlugin} from './font-size';
@@ -16,7 +26,7 @@ declare var jQuery: any;
 @Directive({
     selector: '[trumbowyg-editor]'
 })
-export class TrumbowygEditor implements OnInit,OnDestroy {
+export class TrumbowygEditor implements OnInit,OnChanges,OnDestroy {
     public static modes: any = {};
     public static langs: any = {};
     public static inited: boolean = false;
@@ -47,7 +57,7 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
 
         jQuery.trumbowyg.svgPath = '/bower_components/trumbowyg/dist/ui/icons.svg';
 
-        jQuery.trumbowyg.insertHtml = function (t, html) {
+        jQuery.trumbowyg.insertHtml = function (t: any, html: string) {
             try {
                 try {
                     // <= IE10
@@ -56,7 +66,9 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
                     // IE 11
                     var el = document.createElement("div");
                     el.innerHTML = html;
-                    var frag = document.createDocumentFragment(), node, lastNode;
+                    var frag: any = document.createDocumentFragment(),
+                        node: any,
+                        lastNode: any;
                     while ((node = el.firstChild)) {
                         lastNode = frag.appendChild(node);
                     }
@@ -175,7 +187,7 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
         };
     }
 
-    ngOnChanges() {
+    ngOnChanges(changes: SimpleChanges) {
         if (this.base64Image) {
             //console.log('ngOnChanges base64Image', this.base64Image);
             var el = jQuery('<div>' + this.element.trumbowyg('html') + '</div>');
@@ -204,7 +216,7 @@ export class TrumbowygEditor implements OnInit,OnDestroy {
             var images: any[] = [];
 
             var el = jQuery('<div>' + html + '</div>');
-            var uid;
+            var uid: string;
             el.find('img[src^="data:image"]').each(function () {
                 if (!jQuery(this).attr('id')) {
                     uid = Math.random().toString(36).substring(2, 9);

@@ -1,9 +1,9 @@
-declare var jQuery:any;
+declare var jQuery: any;
 
 export class TrumbowygFontSizePlugin {
-    public static editor:any;
+    public static editor: any;
 
-    public static init(editor:any, lang:string) {
+    public static init(editor: any, lang: string) {
         TrumbowygFontSizePlugin.editor = editor;
 
         // Create btnsDef entry
@@ -17,7 +17,7 @@ export class TrumbowygFontSizePlugin {
         jQuery.extend(true, editor, {
             plugins: {
                 fontSize: {
-                    init: (trumbowyg) => {
+                    init: (trumbowyg: any) => {
                         // Set default fonts
                         if (!jQuery.trumbowyg.opts.fontSizes) {
                             jQuery.trumbowyg.opts.fontSizes = [];
@@ -39,14 +39,14 @@ export class TrumbowygFontSizePlugin {
         });
     }
 
-    private static buildDropdown(func, trumbowyg) {
-        var dropdown = [];
+    private static buildDropdown(func: any, trumbowyg: any) {
+        var dropdown:string[] = [];
 
-        jQuery.trumbowyg.opts.fontSizes.forEach((size, i) => {
+        jQuery.trumbowyg.opts.fontSizes.forEach((size: string, i: number) => {
             var sizeAlias = size.replace('px', '');
             var btn = '_' + func + sizeAlias;
             trumbowyg.addBtnDef(btn, {
-                fn: (param, t) => {
+                fn: (param: any, t: any) => {
                     //console.info(param, t);
                     document.execCommand('fontSize', false, param);
                     t.syncCode();

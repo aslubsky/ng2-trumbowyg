@@ -1,22 +1,22 @@
 import {Directive, Input, Output, EventEmitter, ElementRef, OnInit, OnChanges}         from '@angular/core';
 
-declare var jQuery:any;
+declare var jQuery: any;
 
 export class TrumbowygSelectStylesPlugin {
-    public static editorImages:any[] = [];
+    public static editorImages: any[] = [];
 
-    public static editor:any;
+    public static editor: any;
 
-    public static init(editor:any, lang:string) {
+    public static init(editor: any, lang: string) {
 
         jQuery.extend(true, editor, {
             plugins: {
                 selectStyles: {
-                    init: function (trumbowyg) {
+                    init: function (trumbowyg: any) {
                         trumbowyg.o.plugins.selectStyles = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.selectStyles || {});
                         // console.log('selectStyles trumbowyg', trumbowyg);
                         trumbowyg.addBtnDef('selectStyles', {
-                            fn: function (params) {
+                            fn: function (params: any) {
                                 // console.log('selectImageCb', params, trumbowyg, editorImages);
                                 // TrumbowygSelectStylesPlugin.selectImageCb(params, trumbowyg, TrumbowygSelectImagesPlugin.editorImages);
                             }
