@@ -35,7 +35,7 @@ export class TrumbowygTidyPlugin {
 
     private static sendToTidy(t: any, html: string) {
         let xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
+        xhr.onreadystatechange = () => {
             if (xhr.readyState == XMLHttpRequest.DONE) {
                 // console.log(xhr.responseText);
                 t.$ta.val(xhr.responseText);

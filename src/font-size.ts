@@ -16,7 +16,7 @@ export class TrumbowygFontSizePlugin {
         // Add all fonts in two dropdowns
         editor.plugins.fontSize = {
             init: (trumbowyg: any) => {
-                console.log('fontSize init');
+                // console.log('fontSize init');
                 // trumbowyg.o.plugins.fontSize = trumbowyg.o.plugins.fontSize || {};
                 trumbowyg.addBtnDef('fontSize', {
                     dropdown: TrumbowygFontSizePlugin.buildDropdown('fontSize', trumbowyg)

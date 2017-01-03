@@ -12,7 +12,7 @@ var TrumbowygFontSizePlugin = (function () {
         // Add all fonts in two dropdowns
         editor.plugins.fontSize = {
             init: function (trumbowyg) {
-                console.log('fontSize init');
+                // console.log('fontSize init');
                 // trumbowyg.o.plugins.fontSize = trumbowyg.o.plugins.fontSize || {};
                 trumbowyg.addBtnDef('fontSize', {
                     dropdown: TrumbowygFontSizePlugin.buildDropdown('fontSize', trumbowyg)
