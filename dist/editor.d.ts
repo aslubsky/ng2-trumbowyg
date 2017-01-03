@@ -3,6 +3,7 @@ export declare class TrumbowygEditor implements OnInit, OnChanges, OnDestroy {
     private el;
     static modes: any;
     static langs: any;
+    static tidyUrl: string;
     static inited: boolean;
     static localImageRegexp: RegExp;
     mode: string;

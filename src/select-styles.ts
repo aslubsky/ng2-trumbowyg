@@ -9,22 +9,18 @@ export class TrumbowygSelectStylesPlugin {
 
     public static init(editor: any, lang: string) {
 
-        jQuery.extend(true, editor, {
-            plugins: {
-                selectStyles: {
-                    init: function (trumbowyg: any) {
-                        trumbowyg.o.plugins.selectStyles = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.selectStyles || {});
-                        // console.log('selectStyles trumbowyg', trumbowyg);
-                        trumbowyg.addBtnDef('selectStyles', {
-                            fn: function (params: any) {
-                                // console.log('selectImageCb', params, trumbowyg, editorImages);
-                                // TrumbowygSelectStylesPlugin.selectImageCb(params, trumbowyg, TrumbowygSelectImagesPlugin.editorImages);
-                            }
-                        });
-                    },
-                    tag: 'img'
-                }
-            }
-        });
+        editor.plugins.selectStyles = {
+            init: function (trumbowyg: any) {
+                trumbowyg.o.plugins.selectStyles = trumbowyg.o.plugins.selectStyles || {};
+                // console.log('selectStyles trumbowyg', trumbowyg);
+                trumbowyg.addBtnDef('selectStyles', {
+                    fn: function (params: any) {
+                        // console.log('selectImageCb', params, trumbowyg, editorImages);
+                        // TrumbowygSelectStylesPlugin.selectImageCb(params, trumbowyg, TrumbowygSelectImagesPlugin.editorImages);
+                    }
+                });
+            },
+            tag: 'img'
+        }
     }
 }

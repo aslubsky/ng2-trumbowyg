@@ -8,59 +8,55 @@ export class TrumbowygInsertTablePlugin {
     public static init(editor: any, lang: string) {
         TrumbowygInsertTablePlugin.editor = editor;
 
-        jQuery.extend(true, jQuery.trumbowyg, {
-            plugins: {
-                insertTable: {
-                    init: function (trumbowyg: any) {
-                        // console.log('trumbowyg', trumbowyg);
-                        trumbowyg.o.plugins.insertTable = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.insertTable || {});
-                        trumbowyg.addBtnDef('insertTable', {
-                            dropdown: TrumbowygInsertTablePlugin.buildDropdown('insertTable', trumbowyg),
-                            tag: 'table'
+        editor.plugins.insertTable = {
+            init: function (trumbowyg: any) {
+                // console.log('trumbowyg', trumbowyg);
+                trumbowyg.o.plugins.insertTable = trumbowyg.o.plugins.insertTable || {};
+                trumbowyg.addBtnDef('insertTable', {
+                    dropdown: TrumbowygInsertTablePlugin.buildDropdown('insertTable', trumbowyg),
+                    tag: 'table'
+                });
+
+                setTimeout(function () {
+                    var i: number = 1;
+                    var j: number = 1;
+                    for (; i <= 10; i++) {
+                        for (j = 1; j <= 10; j++) {
+                            TrumbowygInsertTablePlugin.elementsCache['r' + i + '_c' + j] = trumbowyg.$box.find('.trumbowyg-_r' + i + '_c' + j + '_insertTable-dropdown-button');
+                        }
+                    }
+
+                    trumbowyg.$box.find('.trumbowyg-insertTable-button')
+                        .off('click')
+                        .on('click', function () {
+                            jQuery('.trumbowyg-dropdown-insertTable.trumbowyg-dropdown button').removeClass('active');
                         });
 
-                        setTimeout(function () {
-                            var i: number = 1;
-                            var j: number = 1;
-                            for (; i <= 10; i++) {
-                                for (j = 1; j <= 10; j++) {
-                                    TrumbowygInsertTablePlugin.elementsCache['r' + i + '_c' + j] = jQuery('.trumbowyg-_r' + i + '_c' + j + '_insertTable-dropdown-button', trumbowyg.$box);
-                                }
-                            }
+                    trumbowyg.$box.find('.trumbowyg-dropdown-insertTable.trumbowyg-dropdown button')
+                        .off('mouseenter mouseleave')
+                        .on('hover', (e: any) => {
+                            //console.log(e.target.classList);
+                            //$(e.target).attr('class').split('_')
+                            var tmp = jQuery(e.target).attr('class').split('_');
+                            var r = parseInt(tmp[1].replace('r', ''), 10);
+                            var c = parseInt(tmp[2].replace('c', ''), 10);
+                            // console.log('i', tmp, r, c);
+                            TrumbowygInsertTablePlugin.fillCells(r, c);
 
-                            jQuery('.trumbowyg-insertTable-button', trumbowyg.$box)
-                                .off('click')
-                                .on('click', function () {
-                                    jQuery('.trumbowyg-dropdown-insertTable.trumbowyg-dropdown button').removeClass('active');
-                                });
+                            //console.log($(e.target).attr('class').split('_'));
+                        // }, function (e: any) {
+                            // console.log(e);
 
-                            jQuery('.trumbowyg-dropdown-insertTable.trumbowyg-dropdown button', trumbowyg.$box)
-                                .off('mouseenter mouseleave')
-                                .hover(function (e: any) {
-                                    //console.log(e.target.classList);
-                                    //$(e.target).attr('class').split('_')
-                                    var tmp = jQuery(e.target).attr('class').split('_');
-                                    var r = parseInt(tmp[1].replace('r', ''), 10);
-                                    var c = parseInt(tmp[2].replace('c', ''), 10);
-                                    // console.log('i', tmp, r, c);
-                                    TrumbowygInsertTablePlugin.fillCells(r, c);
-
-                                    //console.log($(e.target).attr('class').split('_'));
-                                }, function (e: any) {
-                                    // console.log(e);
-
-                                    var tmp = jQuery(e.target).attr('class').split('_');
-                                    var r = parseInt(tmp[1].replace('r', ''), 10);
-                                    var c = parseInt(tmp[2].replace('c', ''), 10);
-                                    // console.log('o', tmp, r, c);
-                                    TrumbowygInsertTablePlugin.fillCells(r, c);
-                                });
-                        }, 1000);
-                    },
-                    //tagHandler: colorTagHandler
-                }
-            }
-        });
+                            // var tmp = jQuery(e.target).attr('class').split('_');
+                            // var r = parseInt(tmp[1].replace('r', ''), 10);
+                            // var c = parseInt(tmp[2].replace('c', ''), 10);
+                            // console.log('o', tmp, r, c);
+                            // TrumbowygInsertTablePlugin.fillCells(r, c);
+                        });
+                }, 1000);
+            },
+            //tagHandler: colorTagHandler
+        }
     }
 
     private static buildTable(r: number, c: number) {
@@ -98,7 +94,7 @@ export class TrumbowygInsertTablePlugin {
         var j: number = 1;
         for (; i <= 10; i++) {
             for (j = 1; j <= 10; j++) {
-                var btn: string = '_r' + i + '_c' + j + '_' + func;
+                var btn: string = 'insertTable_r' + i + '_c' + j + '_' + func;
                 // trumbowyg.addBtnDef()
                 // console.log('trumbowyg', trumbowyg);
                 trumbowyg.addBtnDef(btn, {

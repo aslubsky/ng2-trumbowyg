@@ -4,40 +4,26 @@ var TrumbowygFontSizePlugin = (function () {
     }
     TrumbowygFontSizePlugin.init = function (editor, lang) {
         TrumbowygFontSizePlugin.editor = editor;
-        // Create btnsDef entry
-        jQuery.extend(true, editor, {
-            opts: {
-                btnsDef: {}
-            }
-        });
+        var i = 1;
+        for (; i <= 7; i++) {
+            //jQuery.trumbowyg.opts.fontSize.push($filter('translate')("Размер") + ' ' + i);
+            TrumbowygFontSizePlugin.fontSizes.push(editor.langs[lang]['fontSize' + i]);
+        }
         // Add all fonts in two dropdowns
-        jQuery.extend(true, editor, {
-            plugins: {
-                fontSize: {
-                    init: function (trumbowyg) {
-                        // Set default fonts
-                        if (!jQuery.trumbowyg.opts.fontSizes) {
-                            jQuery.trumbowyg.opts.fontSizes = [];
-                        }
-                        var i = 1;
-                        for (; i <= 7; i++) {
-                            //jQuery.trumbowyg.opts.fontSize.push($filter('translate')("Размер") + ' ' + i);
-                            jQuery.trumbowyg.opts.fontSizes.push(editor.langs[lang]['fontSize' + i]);
-                        }
-                        trumbowyg.o.plugins.fontSize = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.fontSize || {});
-                        trumbowyg.addBtnDef('fontSize', {
-                            dropdown: TrumbowygFontSizePlugin.buildDropdown('fontSize', trumbowyg)
-                        });
-                    }
-                }
+        editor.plugins.fontSize = {
+            init: function (trumbowyg) {
+                console.log('fontSize init');
+                // trumbowyg.o.plugins.fontSize = trumbowyg.o.plugins.fontSize || {};
+                trumbowyg.addBtnDef('fontSize', {
+                    dropdown: TrumbowygFontSizePlugin.buildDropdown('fontSize', trumbowyg)
+                });
             }
-        });
+        };
     };
     TrumbowygFontSizePlugin.buildDropdown = function (func, trumbowyg) {
         var dropdown = [];
-        jQuery.trumbowyg.opts.fontSizes.forEach(function (size, i) {
-            var sizeAlias = size.replace('px', '');
-            var btn = '_' + func + sizeAlias;
+        TrumbowygFontSizePlugin.fontSizes.forEach(function (size, i) {
+            var btn = func + '_' + i;
             trumbowyg.addBtnDef(btn, {
                 fn: function (param, t) {
                     //console.info(param, t);
@@ -51,6 +37,7 @@ var TrumbowygFontSizePlugin = (function () {
         });
         return dropdown;
     };
+    TrumbowygFontSizePlugin.fontSizes = [];
     return TrumbowygFontSizePlugin;
 }());
 exports.TrumbowygFontSizePlugin = TrumbowygFontSizePlugin;

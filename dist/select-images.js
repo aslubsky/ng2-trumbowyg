@@ -6,23 +6,19 @@ var TrumbowygSelectImagesPlugin = (function () {
         TrumbowygSelectImagesPlugin.editor = editor;
         TrumbowygSelectImagesPlugin.lang = lang;
         // console.log('TrumbowygSelectImagesPlugin init', editor);
-        jQuery.extend(true, editor, {
-            plugins: {
-                selectImage: {
-                    init: function (trumbowyg) {
-                        trumbowyg.o.plugins.selectImage = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.selectImage || {});
-                        // console.log('selectImage trumbowyg', trumbowyg);
-                        trumbowyg.addBtnDef('selectImage', {
-                            fn: function (params) {
-                                // console.log('selectImageCb', params, trumbowyg, editorImages);
-                                TrumbowygSelectImagesPlugin.selectImageCb(params, trumbowyg, TrumbowygSelectImagesPlugin.editorImages);
-                            }
-                        });
-                    },
-                    tag: 'img'
-                }
-            }
-        });
+        editor.plugins.selectImage = {
+            init: function (trumbowyg) {
+                trumbowyg.o.plugins.selectImage = trumbowyg.o.plugins.selectImage || {};
+                // console.log('selectImage trumbowyg', trumbowyg);
+                trumbowyg.addBtnDef('selectImage', {
+                    fn: function (params) {
+                        // console.log('selectImageCb', params, trumbowyg, editorImages);
+                        TrumbowygSelectImagesPlugin.selectImageCb(params, trumbowyg, TrumbowygSelectImagesPlugin.editorImages);
+                    }
+                });
+            },
+            tag: 'img'
+        };
     };
     TrumbowygSelectImagesPlugin.selectImageCb = function (params, t, editorImages) {
         var pfx = t.o.prefix;

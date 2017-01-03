@@ -7,22 +7,18 @@ var TrumbowygSelectResourcesPlugin = (function () {
         TrumbowygSelectResourcesPlugin.editor = editor;
         TrumbowygSelectResourcesPlugin.lang = lang;
         TrumbowygSelectResourcesPlugin.onSearch = new core_1.EventEmitter();
-        jQuery.extend(true, editor, {
-            plugins: {
-                selectResources: {
-                    init: function (trumbowyg) {
-                        trumbowyg.o.plugins.selectResources = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.selectResources || {});
-                        trumbowyg.addBtnDef('selectResources', {
-                            fn: function (params) {
-                                // console.log('selectImageCb', params, trumbowyg, editorImages);
-                                TrumbowygSelectResourcesPlugin.selectResourcesCb(params, trumbowyg);
-                            }
-                        });
-                    },
-                    tag: 'img'
-                }
-            }
-        });
+        editor.plugins.selectResources = {
+            init: function (trumbowyg) {
+                trumbowyg.o.plugins.selectResources = trumbowyg.o.plugins.selectResources || {};
+                trumbowyg.addBtnDef('selectResources', {
+                    fn: function (params) {
+                        // console.log('selectImageCb', params, trumbowyg, editorImages);
+                        TrumbowygSelectResourcesPlugin.selectResourcesCb(params, trumbowyg);
+                    }
+                });
+            },
+            tag: 'img'
+        };
     };
     TrumbowygSelectResourcesPlugin.translate = function (str) {
         return TrumbowygSelectResourcesPlugin.editor.langs[TrumbowygSelectResourcesPlugin.lang][str];

@@ -17,22 +17,18 @@ export class TrumbowygSelectResourcesPlugin {
         TrumbowygSelectResourcesPlugin.lang = lang;
         TrumbowygSelectResourcesPlugin.onSearch = new EventEmitter();
 
-        jQuery.extend(true, editor, {
-            plugins: {
-                selectResources: {
-                    init: function (trumbowyg: any) {
-                        trumbowyg.o.plugins.selectResources = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.selectResources || {});
-                        trumbowyg.addBtnDef('selectResources', {
-                            fn: function (params: any) {
-                                // console.log('selectImageCb', params, trumbowyg, editorImages);
-                                TrumbowygSelectResourcesPlugin.selectResourcesCb(params, trumbowyg);
-                            }
-                        });
-                    },
-                    tag: 'img'
-                }
-            }
-        });
+        editor.plugins.selectResources = {
+            init: function (trumbowyg: any) {
+                trumbowyg.o.plugins.selectResources = trumbowyg.o.plugins.selectResources || {};
+                trumbowyg.addBtnDef('selectResources', {
+                    fn: function (params: any) {
+                        // console.log('selectImageCb', params, trumbowyg, editorImages);
+                        TrumbowygSelectResourcesPlugin.selectResourcesCb(params, trumbowyg);
+                    }
+                });
+            },
+            tag: 'img'
+        }
     }
 
     private static translate(str: string) {

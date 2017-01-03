@@ -10,7 +10,7 @@ import {
     SimpleChanges
 }         from '@angular/core';
 
-import {TrumbowygCodemirrorPlugin} from './codemirror';
+import {TrumbowygTidyPlugin} from './tidy';
 import {TrumbowygFontSizePlugin} from './font-size';
 import {TrumbowygFontsPlugin} from './fonts';
 import {TrumbowygInsertLeadPlugin} from './insert-lead';
@@ -29,6 +29,7 @@ declare var jQuery: any;
 export class TrumbowygEditor implements OnInit,OnChanges,OnDestroy {
     public static modes: any = {};
     public static langs: any = {};
+    public static tidyUrl: string = '';
     public static inited: boolean = false;
     public static localImageRegexp: RegExp = /src\=\"data\:image\/(.*)\"/gi;
 
@@ -90,7 +91,7 @@ export class TrumbowygEditor implements OnInit,OnChanges,OnDestroy {
             lists: ['unorderedList', 'orderedList']
         };
 
-        TrumbowygCodemirrorPlugin.init(jQuery.trumbowyg, lang);
+        TrumbowygTidyPlugin.init(jQuery.trumbowyg, lang);
         TrumbowygFontSizePlugin.init(jQuery.trumbowyg, lang);
         TrumbowygFontsPlugin.init(jQuery.trumbowyg, lang);
         TrumbowygInsertLeadPlugin.init(jQuery.trumbowyg, lang);
@@ -250,7 +251,6 @@ export class TrumbowygEditor implements OnInit,OnChanges,OnDestroy {
         this.mode = this.mode || 'simple';
         this.element = jQuery(this.el.nativeElement);
 
-        var self = this;
         this.element.trumbowyg('destroy');
         this.element.trumbowyg({
             btns: TrumbowygEditor.modes[this.mode],
@@ -260,25 +260,34 @@ export class TrumbowygEditor implements OnInit,OnChanges,OnDestroy {
             autogrow: this.mode == 'inline',
             tablet: true
         })
-            .on('tbwpaste', function () {
-                var html: string = self.element.trumbowyg('html');
+            .on('tbwpaste', () => {
+                var html: string = this.element.trumbowyg('html');
                 //console.log('tbwpaste', html);
-                if (!self.detectBase64Insert(html)) {
-                    self.dirty = true;
-                    self.ngModelChange.emit(html);
+                if (!this.detectBase64Insert(html)) {
+                    this.dirty = true;
+                    this.ngModelChange.emit(html);
                 }
                 //console.log('tbwpaste', html);
                 //console.log('self.ngModelChange', self.ngModelChange);
             })
-            .on('tbwchange', function () {
-                var html: string = self.element.trumbowyg('html');
+            .on('tbwchange', () => {
+                var html: string = this.element.trumbowyg('html');
                 //console.log('tbwchange', html);
-                if (!self.detectBase64Insert(html)) {
-                    self.dirty = true;
-                    self.ngModelChange.emit(html);
+                if (!this.detectBase64Insert(html)) {
+                    this.dirty = true;
+                    this.ngModelChange.emit(html);
                 }
                 //console.log('tbwchange', html);
                 //console.log('self.ngModelChange', self.ngModelChange);
+            })
+            .on('tbwinit', (e: any) => {
+                let t: any = this.element.data('trumbowyg');
+                t.$box.addClass('trumbowyg-' + this.mode);
+                t.$ed.addClass('page-container');
+                // console.log('tbwinit', e, t, t.$ed, t.$box);
+                if (t.$box.width() >= 1200) {
+                    t.$ed.addClass('bordered');
+                }
             });
     }
 

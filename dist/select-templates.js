@@ -9,22 +9,18 @@ var TrumbowygSelectTemplatesPlugin = (function () {
         TrumbowygSelectTemplatesPlugin.lang = lang;
         //console.log('init', editor, editor.langs, lang, editor.langs[lang].selectTemplatesNoData);
         //TrumbowygSelectResourcesPlugin.onSearch = new EventEmitter();
-        jQuery.extend(true, editor, {
-            plugins: {
-                selectTemplates: {
-                    init: function (trumbowyg) {
-                        trumbowyg.o.plugins.selectTemplates = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.selectTemplates || {});
-                        trumbowyg.addBtnDef('selectTemplates', {
-                            fn: function (params) {
-                                // console.log('selectImageCb', params, trumbowyg, editorImages);
-                                TrumbowygSelectTemplatesPlugin.selectTemplatesCb(params, trumbowyg);
-                            }
-                        });
-                    },
-                    tag: 'img'
-                }
-            }
-        });
+        editor.plugins.selectTemplates = {
+            init: function (trumbowyg) {
+                trumbowyg.o.plugins.selectTemplates = trumbowyg.o.plugins.selectTemplates || {};
+                trumbowyg.addBtnDef('selectTemplates', {
+                    fn: function (params) {
+                        // console.log('selectImageCb', params, trumbowyg, editorImages);
+                        TrumbowygSelectTemplatesPlugin.selectTemplatesCb(params, trumbowyg);
+                    }
+                });
+            },
+            tag: 'img'
+        };
         TrumbowygSelectTemplatesPlugin.templates.push({
             id: 'tab-no-data',
             label: editor.langs[lang].selectTemplatesNoData,

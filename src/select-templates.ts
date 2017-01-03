@@ -19,22 +19,18 @@ export class TrumbowygSelectTemplatesPlugin {
 
         //TrumbowygSelectResourcesPlugin.onSearch = new EventEmitter();
 
-        jQuery.extend(true, editor, {
-            plugins: {
-                selectTemplates: {
-                    init: function (trumbowyg: any) {
-                        trumbowyg.o.plugins.selectTemplates = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.selectTemplates || {});
-                        trumbowyg.addBtnDef('selectTemplates', {
-                            fn: function (params: any) {
-                                // console.log('selectImageCb', params, trumbowyg, editorImages);
-                                TrumbowygSelectTemplatesPlugin.selectTemplatesCb(params, trumbowyg);
-                            }
-                        });
-                    },
-                    tag: 'img'
-                }
-            }
-        });
+        editor.plugins.selectTemplates = {
+            init: function (trumbowyg: any) {
+                trumbowyg.o.plugins.selectTemplates = trumbowyg.o.plugins.selectTemplates || {};
+                trumbowyg.addBtnDef('selectTemplates', {
+                    fn: function (params: any) {
+                        // console.log('selectImageCb', params, trumbowyg, editorImages);
+                        TrumbowygSelectTemplatesPlugin.selectTemplatesCb(params, trumbowyg);
+                    }
+                });
+            },
+            tag: 'img'
+        }
 
 
         TrumbowygSelectTemplatesPlugin.templates.push({

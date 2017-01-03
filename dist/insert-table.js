@@ -4,53 +4,49 @@ var TrumbowygInsertTablePlugin = (function () {
     }
     TrumbowygInsertTablePlugin.init = function (editor, lang) {
         TrumbowygInsertTablePlugin.editor = editor;
-        jQuery.extend(true, jQuery.trumbowyg, {
-            plugins: {
-                insertTable: {
-                    init: function (trumbowyg) {
-                        // console.log('trumbowyg', trumbowyg);
-                        trumbowyg.o.plugins.insertTable = jQuery.extend(true, {}, {}, trumbowyg.o.plugins.insertTable || {});
-                        trumbowyg.addBtnDef('insertTable', {
-                            dropdown: TrumbowygInsertTablePlugin.buildDropdown('insertTable', trumbowyg),
-                            tag: 'table'
-                        });
-                        setTimeout(function () {
-                            var i = 1;
-                            var j = 1;
-                            for (; i <= 10; i++) {
-                                for (j = 1; j <= 10; j++) {
-                                    TrumbowygInsertTablePlugin.elementsCache['r' + i + '_c' + j] = jQuery('.trumbowyg-_r' + i + '_c' + j + '_insertTable-dropdown-button', trumbowyg.$box);
-                                }
-                            }
-                            jQuery('.trumbowyg-insertTable-button', trumbowyg.$box)
-                                .off('click')
-                                .on('click', function () {
-                                jQuery('.trumbowyg-dropdown-insertTable.trumbowyg-dropdown button').removeClass('active');
-                            });
-                            jQuery('.trumbowyg-dropdown-insertTable.trumbowyg-dropdown button', trumbowyg.$box)
-                                .off('mouseenter mouseleave')
-                                .hover(function (e) {
-                                //console.log(e.target.classList);
-                                //$(e.target).attr('class').split('_')
-                                var tmp = jQuery(e.target).attr('class').split('_');
-                                var r = parseInt(tmp[1].replace('r', ''), 10);
-                                var c = parseInt(tmp[2].replace('c', ''), 10);
-                                // console.log('i', tmp, r, c);
-                                TrumbowygInsertTablePlugin.fillCells(r, c);
-                                //console.log($(e.target).attr('class').split('_'));
-                            }, function (e) {
-                                // console.log(e);
-                                var tmp = jQuery(e.target).attr('class').split('_');
-                                var r = parseInt(tmp[1].replace('r', ''), 10);
-                                var c = parseInt(tmp[2].replace('c', ''), 10);
-                                // console.log('o', tmp, r, c);
-                                TrumbowygInsertTablePlugin.fillCells(r, c);
-                            });
-                        }, 1000);
-                    },
-                }
-            }
-        });
+        editor.plugins.insertTable = {
+            init: function (trumbowyg) {
+                // console.log('trumbowyg', trumbowyg);
+                trumbowyg.o.plugins.insertTable = trumbowyg.o.plugins.insertTable || {};
+                trumbowyg.addBtnDef('insertTable', {
+                    dropdown: TrumbowygInsertTablePlugin.buildDropdown('insertTable', trumbowyg),
+                    tag: 'table'
+                });
+                setTimeout(function () {
+                    var i = 1;
+                    var j = 1;
+                    for (; i <= 10; i++) {
+                        for (j = 1; j <= 10; j++) {
+                            TrumbowygInsertTablePlugin.elementsCache['r' + i + '_c' + j] = trumbowyg.$box.find('.trumbowyg-_r' + i + '_c' + j + '_insertTable-dropdown-button');
+                        }
+                    }
+                    trumbowyg.$box.find('.trumbowyg-insertTable-button')
+                        .off('click')
+                        .on('click', function () {
+                        jQuery('.trumbowyg-dropdown-insertTable.trumbowyg-dropdown button').removeClass('active');
+                    });
+                    trumbowyg.$box.find('.trumbowyg-dropdown-insertTable.trumbowyg-dropdown button')
+                        .off('mouseenter mouseleave')
+                        .on('hover', function (e) {
+                        //console.log(e.target.classList);
+                        //$(e.target).attr('class').split('_')
+                        var tmp = jQuery(e.target).attr('class').split('_');
+                        var r = parseInt(tmp[1].replace('r', ''), 10);
+                        var c = parseInt(tmp[2].replace('c', ''), 10);
+                        // console.log('i', tmp, r, c);
+                        TrumbowygInsertTablePlugin.fillCells(r, c);
+                        //console.log($(e.target).attr('class').split('_'));
+                        // }, function (e: any) {
+                        // console.log(e);
+                        // var tmp = jQuery(e.target).attr('class').split('_');
+                        // var r = parseInt(tmp[1].replace('r', ''), 10);
+                        // var c = parseInt(tmp[2].replace('c', ''), 10);
+                        // console.log('o', tmp, r, c);
+                        // TrumbowygInsertTablePlugin.fillCells(r, c);
+                    });
+                }, 1000);
+            },
+        };
     };
     TrumbowygInsertTablePlugin.buildTable = function (r, c) {
         var html = [];
@@ -84,7 +80,7 @@ var TrumbowygInsertTablePlugin = (function () {
         var j = 1;
         for (; i <= 10; i++) {
             for (j = 1; j <= 10; j++) {
-                var btn = '_r' + i + '_c' + j + '_' + func;
+                var btn = 'insertTable_r' + i + '_c' + j + '_' + func;
                 // trumbowyg.addBtnDef()
                 // console.log('trumbowyg', trumbowyg);
                 trumbowyg.addBtnDef(btn, {

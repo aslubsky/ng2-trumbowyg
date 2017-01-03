@@ -1,6 +1,15 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var core_1 = require('@angular/core');
-var codemirror_1 = require('./codemirror');
+var tidy_1 = require('./tidy');
 var font_size_1 = require('./font-size');
 var fonts_1 = require('./fonts');
 var insert_lead_1 = require('./insert-lead');
@@ -55,7 +64,7 @@ var TrumbowygEditor = (function () {
             justify: ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
             lists: ['unorderedList', 'orderedList']
         };
-        codemirror_1.TrumbowygCodemirrorPlugin.init(jQuery.trumbowyg, lang);
+        tidy_1.TrumbowygTidyPlugin.init(jQuery.trumbowyg, lang);
         font_size_1.TrumbowygFontSizePlugin.init(jQuery.trumbowyg, lang);
         fonts_1.TrumbowygFontsPlugin.init(jQuery.trumbowyg, lang);
         insert_lead_1.TrumbowygInsertLeadPlugin.init(jQuery.trumbowyg, lang);
@@ -197,6 +206,7 @@ var TrumbowygEditor = (function () {
         return false;
     };
     TrumbowygEditor.prototype.ngOnInit = function () {
+        var _this = this;
         //console.log('TrumbowygEditor ngOnInit');
         //console.log('TrumbowygEditor langs', TrumbowygEditor.langs);
         this.lang = this.lang || 'en';
@@ -206,7 +216,6 @@ var TrumbowygEditor = (function () {
         }
         this.mode = this.mode || 'simple';
         this.element = jQuery(this.el.nativeElement);
-        var self = this;
         this.element.trumbowyg('destroy');
         this.element.trumbowyg({
             btns: TrumbowygEditor.modes[this.mode],
@@ -217,24 +226,33 @@ var TrumbowygEditor = (function () {
             tablet: true
         })
             .on('tbwpaste', function () {
-            var html = self.element.trumbowyg('html');
+            var html = _this.element.trumbowyg('html');
             //console.log('tbwpaste', html);
-            if (!self.detectBase64Insert(html)) {
-                self.dirty = true;
-                self.ngModelChange.emit(html);
+            if (!_this.detectBase64Insert(html)) {
+                _this.dirty = true;
+                _this.ngModelChange.emit(html);
             }
             //console.log('tbwpaste', html);
             //console.log('self.ngModelChange', self.ngModelChange);
         })
             .on('tbwchange', function () {
-            var html = self.element.trumbowyg('html');
+            var html = _this.element.trumbowyg('html');
             //console.log('tbwchange', html);
-            if (!self.detectBase64Insert(html)) {
-                self.dirty = true;
-                self.ngModelChange.emit(html);
+            if (!_this.detectBase64Insert(html)) {
+                _this.dirty = true;
+                _this.ngModelChange.emit(html);
             }
             //console.log('tbwchange', html);
             //console.log('self.ngModelChange', self.ngModelChange);
+        })
+            .on('tbwinit', function (e) {
+            var t = _this.element.data('trumbowyg');
+            t.$box.addClass('trumbowyg-' + _this.mode);
+            t.$ed.addClass('page-container');
+            // console.log('tbwinit', e, t, t.$ed, t.$box);
+            if (t.$box.width() >= 1200) {
+                t.$ed.addClass('bordered');
+            }
         });
     };
     TrumbowygEditor.prototype.ngOnDestroy = function () {
@@ -242,25 +260,39 @@ var TrumbowygEditor = (function () {
     };
     TrumbowygEditor.modes = {};
     TrumbowygEditor.langs = {};
+    TrumbowygEditor.tidyUrl = '';
     TrumbowygEditor.inited = false;
     TrumbowygEditor.localImageRegexp = /src\=\"data\:image\/(.*)\"/gi;
-    TrumbowygEditor.decorators = [
-        { type: core_1.Directive, args: [{
-                    selector: '[trumbowyg-editor]'
-                },] },
-    ];
-    /** @nocollapse */
-    TrumbowygEditor.ctorParameters = function () { return [
-        { type: core_1.ElementRef, },
-    ]; };
-    TrumbowygEditor.propDecorators = {
-        'mode': [{ type: core_1.Input },],
-        'lang': [{ type: core_1.Input },],
-        'base64Image': [{ type: core_1.Input },],
-        'ngModel': [{ type: core_1.Input },],
-        'ngModelChange': [{ type: core_1.Output },],
-        'base64ImageInserted': [{ type: core_1.Output },],
-    };
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', String)
+    ], TrumbowygEditor.prototype, "mode", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', String)
+    ], TrumbowygEditor.prototype, "lang", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], TrumbowygEditor.prototype, "base64Image", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', String)
+    ], TrumbowygEditor.prototype, "ngModel", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], TrumbowygEditor.prototype, "ngModelChange", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], TrumbowygEditor.prototype, "base64ImageInserted", void 0);
+    TrumbowygEditor = __decorate([
+        core_1.Directive({
+            selector: '[trumbowyg-editor]'
+        }), 
+        __metadata('design:paramtypes', [core_1.ElementRef])
+    ], TrumbowygEditor);
     return TrumbowygEditor;
 }());
 exports.TrumbowygEditor = TrumbowygEditor;
