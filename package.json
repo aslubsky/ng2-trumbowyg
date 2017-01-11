@@ -2,7 +2,9 @@
   "name": "ng2-trumbowyg",
   "version": "1.0.0",
   "description": "Angular2 bind for trumbowyg",
-  "scripts": {},
+  "scripts": {
+      "build": "ngc && tsc"
+  },
   "main": "ng2-trumbowyg.js",
   "typings": "ng2-trumbowyg.d.ts",
   "keywords": [

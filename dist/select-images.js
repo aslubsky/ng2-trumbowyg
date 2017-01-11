@@ -45,9 +45,11 @@ var TrumbowygSelectImagesPlugin = (function () {
             if (selectedImageIndex != null) {
                 var width = editorImages[selectedImageIndex].width || 1024;
                 t.execCmd('insertImage', editorImages[selectedImageIndex].url);
+                var insertedImg = jQuery('img[src="' + editorImages[selectedImageIndex].url + '"]:not([alt])', t.$box);
                 if (width > 1024) {
-                    jQuery('img[src="' + editorImages[selectedImageIndex].url + '"]:not([alt])', t.$box).attr('width', '1024px');
+                    insertedImg.attr('width', '1024px');
                 }
+                insertedImg.css('padding', '0px 10px 10px 0px');
             }
             setTimeout(function () {
                 t.closeModal();
