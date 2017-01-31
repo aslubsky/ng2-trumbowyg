@@ -29,7 +29,7 @@ declare var jQuery: any;
 export class TrumbowygEditor implements OnInit,OnChanges,OnDestroy {
     public static modes: any = {};
     public static langs: any = {};
-    public static tidyUrl: string = '';
+    public static tidyUrl: string = '/api/rest.php/trumbowyg?action=tidy';
     public static inited: boolean = false;
     public static localImageRegexp: RegExp = /src\=\"data\:image\/(.*)\"/gi;
 

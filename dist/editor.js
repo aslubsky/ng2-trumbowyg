@@ -260,7 +260,7 @@ var TrumbowygEditor = (function () {
     };
     TrumbowygEditor.modes = {};
     TrumbowygEditor.langs = {};
-    TrumbowygEditor.tidyUrl = '';
+    TrumbowygEditor.tidyUrl = '/api/rest.php/trumbowyg?action=tidy';
     TrumbowygEditor.inited = false;
     TrumbowygEditor.localImageRegexp = /src\=\"data\:image\/(.*)\"/gi;
     __decorate([
