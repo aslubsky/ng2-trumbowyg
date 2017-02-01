@@ -21,7 +21,7 @@ export class TrumbowygTidyPlugin {
                         if (t.$box.hasClass(prefix + 'editor-visible')) {
                             t.$ta.attr('tabindex', -1);
                         } else {
-                            if (TrumbowygEditor.tidyUrl) {
+                            if (TrumbowygTidyPlugin.editor.tidyUrl) {
                                 // console.log(t.$ed.html());
                                 TrumbowygTidyPlugin.sendToTidy(t, t.$ed.html());
                             }
@@ -41,7 +41,7 @@ export class TrumbowygTidyPlugin {
                 t.$ta.val(xhr.responseText);
             }
         }
-        xhr.open('POST', TrumbowygEditor.tidyUrl, true);
+        xhr.open('POST', TrumbowygTidyPlugin.editor.tidyUrl, true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send('html=' + encodeURIComponent(html));
     }

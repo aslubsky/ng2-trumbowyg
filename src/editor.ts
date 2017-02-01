@@ -29,7 +29,6 @@ declare var jQuery: any;
 export class TrumbowygEditor implements OnInit,OnChanges,OnDestroy {
     public static modes: any = {};
     public static langs: any = {};
-    public static tidyUrl: string = '/api/rest.php/trumbowyg?action=tidy';
     public static inited: boolean = false;
     public static localImageRegexp: RegExp = /src\=\"data\:image\/(.*)\"/gi;
 
@@ -57,6 +56,7 @@ export class TrumbowygEditor implements OnInit,OnChanges,OnDestroy {
         }
 
         jQuery.trumbowyg.svgPath = '/bower_components/trumbowyg/dist/ui/icons.svg';
+        jQuery.trumbowyg.tidyUrl = '/api/rest.php/trumbowyg?action=tidy';
 
         jQuery.trumbowyg.insertHtml = function (t: any, html: string) {
             try {

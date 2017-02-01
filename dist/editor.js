@@ -33,6 +33,7 @@ var TrumbowygEditor = (function () {
             jQuery.trumbowyg.langs = TrumbowygEditor.langs;
         }
         jQuery.trumbowyg.svgPath = '/bower_components/trumbowyg/dist/ui/icons.svg';
+        jQuery.trumbowyg.tidyUrl = '/api/rest.php/trumbowyg?action=tidy';
         jQuery.trumbowyg.insertHtml = function (t, html) {
             try {
                 try {
@@ -260,7 +261,6 @@ var TrumbowygEditor = (function () {
     };
     TrumbowygEditor.modes = {};
     TrumbowygEditor.langs = {};
-    TrumbowygEditor.tidyUrl = '/api/rest.php/trumbowyg?action=tidy';
     TrumbowygEditor.inited = false;
     TrumbowygEditor.localImageRegexp = /src\=\"data\:image\/(.*)\"/gi;
     __decorate([

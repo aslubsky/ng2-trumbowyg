@@ -1,5 +1,4 @@
 "use strict";
-var editor_1 = require('./editor');
 var TrumbowygTidyPlugin = (function () {
     function TrumbowygTidyPlugin() {
     }
@@ -20,7 +19,7 @@ var TrumbowygTidyPlugin = (function () {
                             t.$ta.attr('tabindex', -1);
                         }
                         else {
-                            if (editor_1.TrumbowygEditor.tidyUrl) {
+                            if (TrumbowygTidyPlugin.editor.tidyUrl) {
                                 // console.log(t.$ed.html());
                                 TrumbowygTidyPlugin.sendToTidy(t, t.$ed.html());
                             }
@@ -39,7 +38,7 @@ var TrumbowygTidyPlugin = (function () {
                 t.$ta.val(xhr.responseText);
             }
         };
-        xhr.open('POST', editor_1.TrumbowygEditor.tidyUrl, true);
+        xhr.open('POST', TrumbowygTidyPlugin.editor.tidyUrl, true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send('html=' + encodeURIComponent(html));
     };
