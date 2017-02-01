@@ -1,5 +1,3 @@
-import {TrumbowygEditor} from './editor';
-
 export class TrumbowygTidyPlugin {
     public static editor: any;
 
