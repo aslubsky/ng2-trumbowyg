@@ -1,6 +1,7 @@
+import { EventEmitter } from '@angular/core';
 export declare class TrumbowygSelectResourcesPlugin {
     static editorResources: any[];
-    static onSearch: any;
+    static onSearch: EventEmitter<any>;
     static editor: any;
     static $modal: any;
     static lang: string;

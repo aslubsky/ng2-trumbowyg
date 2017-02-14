@@ -85,7 +85,7 @@ export class TrumbowygSelectTemplatesPlugin {
                 var selected = jQuery('input:checked', $modal);
                 var val = selected.val();
                 // console.log(val, allTemplates[val]);
-                jQuery(this).off(pfx + 'confirm');
+                // jQuery(this).off(pfx + 'confirm');
 
                 t.restoreRange();
                 t.syncCode();

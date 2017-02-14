@@ -5,7 +5,7 @@ declare var jQuery: any;
 export class TrumbowygSelectResourcesPlugin {
     public static editorResources: any[] = [];
 
-    public static onSearch: any;
+    public static onSearch: EventEmitter<any> = new EventEmitter();
 
     public static editor: any;
     public static $modal: any;
@@ -15,7 +15,7 @@ export class TrumbowygSelectResourcesPlugin {
     public static init(editor: any, lang: string) {
         TrumbowygSelectResourcesPlugin.editor = editor;
         TrumbowygSelectResourcesPlugin.lang = lang;
-        TrumbowygSelectResourcesPlugin.onSearch = new EventEmitter();
+        // TrumbowygSelectResourcesPlugin.onSearch = new EventEmitter();
 
         editor.plugins.selectResources = {
             init: function (trumbowyg: any) {
@@ -89,16 +89,17 @@ export class TrumbowygSelectResourcesPlugin {
 
         //console.log('html', html);
         var $modal = TrumbowygSelectResourcesPlugin.$modal = t.openModal(TrumbowygSelectResourcesPlugin.translate('selectResourcesHeader'), html.join(''))
-            .on(pfx + 'confirm', function () {
+            .on('tbwconfirm', function () {
+
                 var selected = jQuery('input:checked', $modal);
+                console.log('selected', selected);
+
                 var val = selected.val();
                 //var i = parseInt(selected.data('i'), 10);
                 var type = selected.data('type');
 
                 t.restoreRange();
                 t.syncCode();
-
-                jQuery(this).off(pfx + 'confirm');
 
                 if (val) {
                     if (type === 'mp4') {
@@ -127,61 +128,32 @@ export class TrumbowygSelectResourcesPlugin {
                 }
 
                 setTimeout(function () {
-                    t.restoreRange();
                     t.closeModal();
                 }, 250);
             })
-            .one(pfx + 'cancel', function () {
-                jQuery(this).off(pfx + 'confirm');
+            .on('tbwcancel', function () {
+                t.restoreRange();
                 t.closeModal();
-                t.restoreSelection();
             });
 
         jQuery('.nav.nav-tabs a', $modal).off('click').on('click', function (e: any) {
             e.preventDefault();
-            //console.log('O_O', $(this).attr('data-type'));
-            //$('.tab-content .tab-pane', $modal).removeClass('active');
-            jQuery(this).tab('show');
-            //    .addClass('active');
+            // console.log('O_O', jQuery(this).attr('data-type'));
+            jQuery('.tab-content .tab-pane', $modal).removeClass('active');
+            jQuery(this).tab('show')
+                .addClass('active');
 
             TrumbowygSelectResourcesPlugin.onSearch.emit({
-                type: jQuery(this).attr('data-type'),
+                type: jQuery(this).attr('data-type') || 'all',
                 title: jQuery('.resources-search-field', $modal).val()
             });
-
-            //filter.type = $(this).attr('data-type');
-            //PageModel.searchResourceForEditor({
-            //    type: filter.type,
-            //    title: filter.title
-            //}, function (res) {
-            //    editorResources = res.data.data;
-            //
-            //    $('.resources-list', $modal).empty();
-            //    var lhtml = [];
-            //    renderList(pfx, lhtml, editorResources);
-            //    $('.resources-list', $modal).append(lhtml.join(''));
-            //});
         });
 
         jQuery('.btn-find', $modal).off('click').on('click', function () {
-
             TrumbowygSelectResourcesPlugin.onSearch.emit({
-                type: jQuery(this).attr('data-type'),
+                type: jQuery(this).attr('data-type') || 'all',
                 title: jQuery('.resources-search-field', $modal).val()
             });
-
-            //filter.title = $('.resources-search-field', $modal).val();
-            //PageModel.searchResourceForEditor({
-            //    type: filter.type,
-            //    title: filter.title
-            //}, function (res) {
-            //    editorResources = res.data.data;
-            //
-            //    $('.resources-list', $modal).empty();
-            //    var lhtml = [];
-            //    renderList(pfx, lhtml, editorResources);
-            //    $('.resources-list', $modal).append(lhtml.join(''));
-            //});
         });
     }
 
