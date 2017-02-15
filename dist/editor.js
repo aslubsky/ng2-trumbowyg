@@ -58,6 +58,7 @@ var TrumbowygEditor = (function () {
                 t.execCmd('insertHTML', html);
             }
             t.syncCode();
+            t.$c.trigger('tbwchange');
         };
         var btnsGrps = {
             design: ['bold', 'italic', 'underline', 'strikethrough'],

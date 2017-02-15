@@ -82,6 +82,7 @@ export class TrumbowygEditor implements OnInit,OnChanges,OnDestroy {
                 t.execCmd('insertHTML', html);
             }
             t.syncCode();
+            t.$c.trigger('tbwchange');
         }
 
         var btnsGrps = {
