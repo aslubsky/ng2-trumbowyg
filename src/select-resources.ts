@@ -76,6 +76,9 @@ export class TrumbowygSelectResourcesPlugin {
         html.push('<li role="video">');
         html.push('   <a href="#" data-type="video" role="tab" data-toggle="tab">' + TrumbowygSelectResourcesPlugin.translate('selectResourcesVideo') + '</a>');
         html.push('</li>');
+        html.push('<li role="audio">');
+        html.push('   <a href="#" data-type="audio" role="tab" data-toggle="tab">' + TrumbowygSelectResourcesPlugin.translate('selectResourcesAudio') + '</a>');
+        html.push('</li>');
         html.push('</ul>');
         html.push('<div class="tab-content">');
         html.push('   <div role="tabpanel" class="tab-pane active">');
@@ -105,6 +108,9 @@ export class TrumbowygSelectResourcesPlugin {
                     if (type === 'mp4') {
                         type = 'video';
                     }
+                    if (type === 'mp3' || type === 'acc') {
+                        type = 'audio';
+                    }
 
                     switch (type) {
                         case 'gallery':
@@ -112,13 +118,16 @@ export class TrumbowygSelectResourcesPlugin {
                                 'data-item-id="' + val + '" data-type="gallery" data-ext="' + type + '" data-gallery-src="' + val + '"' +
                                 'src="/themes/default/assets/img/inline-gallery.png" />');
                             break;
-
                         case 'video':
                             TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<img resource-in-resource-render ' +
                                 'data-item-id="' + val + '" data-type="video" data-ext="' + type + '" data-video-src="' + val + '"' +
                                 'src="/themes/default/assets/img/inline-video.png" />');
                             break;
-
+                        case 'audio':
+                            TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<img resource-in-resource-render ' +
+                                'data-item-id="' + val + '" data-type="audio" data-ext="' + type + '" data-src="' + val + '"' +
+                                'src="/themes/default/assets/img/inline-audio.png" />');
+                            break;
                         case 'html':
                             TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<img resource-in-resource-render ' +
                                 'data-item-id="' + val + '" data-type="html" data-ext="' + type + '" data-src="' + val + '"' +
