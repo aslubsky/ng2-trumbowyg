@@ -1,6 +1,7 @@
 import {
     Directive,
     Input,
+    forwardRef,
     Output,
     EventEmitter,
     ElementRef,
@@ -9,6 +10,7 @@ import {
     OnChanges,
     SimpleChanges
 }         from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 import {TrumbowygTidyPlugin} from './tidy';
 import {TrumbowygFontSizePlugin} from './font-size';
@@ -24,9 +26,16 @@ import {TrumbowygSelectStylesPlugin} from './select-styles';
 declare var jQuery: any;
 
 @Directive({
-    selector: '[trumbowyg-editor]'
+    selector: '[trumbowyg-editor]',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => TrumbowygEditor),
+            multi: true
+        }
+    ]
 })
-export class TrumbowygEditor implements OnInit,OnChanges,OnDestroy {
+export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,OnDestroy {
     public static modes: any = {};
     public static langs: any = {};
     public static inited: boolean = false;
@@ -36,8 +45,8 @@ export class TrumbowygEditor implements OnInit,OnChanges,OnDestroy {
     @Input() lang: string;
     @Input() base64Image: any;
 
-    @Input() ngModel: string;
-    @Output() ngModelChange: any = new EventEmitter();
+    private _value: string;
+
     @Output() base64ImageInserted: any = new EventEmitter();
 
     public onInit: any = new EventEmitter();
@@ -46,6 +55,33 @@ export class TrumbowygEditor implements OnInit,OnChanges,OnDestroy {
     private dirty: boolean = false;
 
     constructor(private el: ElementRef) {
+    }
+
+    propagateChange = (_: any) => {
+    };
+
+    registerOnChange(fn: any) {
+        this.propagateChange = fn;
+    }
+
+    registerOnTouched() {
+        // console.log('registerOnTouched');
+    }
+
+    writeValue(value: any) {
+        if (value != null) {
+            this._value = value;
+
+            if (this.dirty) {
+                //this.dirty = false;
+            } else {
+                if (this._value.length == 0 && (/webkit/i).test(navigator.userAgent)) {
+                    this.element.trumbowyg('html', '<p></p>');
+                } else {
+                    this.element.trumbowyg('html', this._value);
+                }
+            }
+        }
     }
 
     private static init(lang: string) {
@@ -197,19 +233,6 @@ export class TrumbowygEditor implements OnInit,OnChanges,OnDestroy {
             this.base64Image = null;
             this.element.trumbowyg('html', el.html());
         }
-
-        //console.log('ngOnChanges ngModel', this.dirty);
-        if (this.ngModel && this.element) {
-            if (this.dirty) {
-                //this.dirty = false;
-            } else {
-                if (this.ngModel.length == 0 && (/webkit/i).test(navigator.userAgent)) {
-                    this.element.trumbowyg('html', '<p></p>');
-                } else {
-                    this.element.trumbowyg('html', this.ngModel);
-                }
-            }
-        }
     }
 
     private detectBase64Insert(html: string) {
@@ -266,7 +289,7 @@ export class TrumbowygEditor implements OnInit,OnChanges,OnDestroy {
                 //console.log('tbwpaste', html);
                 if (!this.detectBase64Insert(html)) {
                     this.dirty = true;
-                    this.ngModelChange.emit(html);
+                    this.propagateChange(html);
                 }
                 //console.log('tbwpaste', html);
                 //console.log('self.ngModelChange', self.ngModelChange);
@@ -276,7 +299,7 @@ export class TrumbowygEditor implements OnInit,OnChanges,OnDestroy {
                 //console.log('tbwchange', html);
                 if (!this.detectBase64Insert(html)) {
                     this.dirty = true;
-                    this.ngModelChange.emit(html);
+                    this.propagateChange(html);
                 }
                 //console.log('tbwchange', html);
                 //console.log('self.ngModelChange', self.ngModelChange);

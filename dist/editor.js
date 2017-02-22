@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var forms_1 = require('@angular/forms');
 var tidy_1 = require('./tidy');
 var font_size_1 = require('./font-size');
 var fonts_1 = require('./fonts');
@@ -22,11 +23,33 @@ var select_styles_1 = require('./select-styles');
 var TrumbowygEditor = (function () {
     function TrumbowygEditor(el) {
         this.el = el;
-        this.ngModelChange = new core_1.EventEmitter();
         this.base64ImageInserted = new core_1.EventEmitter();
         this.onInit = new core_1.EventEmitter();
         this.dirty = false;
+        this.propagateChange = function (_) {
+        };
     }
+    TrumbowygEditor.prototype.registerOnChange = function (fn) {
+        this.propagateChange = fn;
+    };
+    TrumbowygEditor.prototype.registerOnTouched = function () {
+        // console.log('registerOnTouched');
+    };
+    TrumbowygEditor.prototype.writeValue = function (value) {
+        if (value != null) {
+            this._value = value;
+            if (this.dirty) {
+            }
+            else {
+                if (this._value.length == 0 && (/webkit/i).test(navigator.userAgent)) {
+                    this.element.trumbowyg('html', '<p></p>');
+                }
+                else {
+                    this.element.trumbowyg('html', this._value);
+                }
+            }
+        }
+    };
     TrumbowygEditor.init = function (lang) {
         TrumbowygEditor.inited = true;
         if (TrumbowygEditor.langs) {
@@ -167,19 +190,6 @@ var TrumbowygEditor = (function () {
             this.base64Image = null;
             this.element.trumbowyg('html', el.html());
         }
-        //console.log('ngOnChanges ngModel', this.dirty);
-        if (this.ngModel && this.element) {
-            if (this.dirty) {
-            }
-            else {
-                if (this.ngModel.length == 0 && (/webkit/i).test(navigator.userAgent)) {
-                    this.element.trumbowyg('html', '<p></p>');
-                }
-                else {
-                    this.element.trumbowyg('html', this.ngModel);
-                }
-            }
-        }
     };
     TrumbowygEditor.prototype.detectBase64Insert = function (html) {
         var _this = this;
@@ -232,7 +242,7 @@ var TrumbowygEditor = (function () {
             //console.log('tbwpaste', html);
             if (!_this.detectBase64Insert(html)) {
                 _this.dirty = true;
-                _this.ngModelChange.emit(html);
+                _this.propagateChange(html);
             }
             //console.log('tbwpaste', html);
             //console.log('self.ngModelChange', self.ngModelChange);
@@ -242,7 +252,7 @@ var TrumbowygEditor = (function () {
             //console.log('tbwchange', html);
             if (!_this.detectBase64Insert(html)) {
                 _this.dirty = true;
-                _this.ngModelChange.emit(html);
+                _this.propagateChange(html);
             }
             //console.log('tbwchange', html);
             //console.log('self.ngModelChange', self.ngModelChange);
@@ -277,20 +287,19 @@ var TrumbowygEditor = (function () {
         __metadata('design:type', Object)
     ], TrumbowygEditor.prototype, "base64Image", void 0);
     __decorate([
-        core_1.Input(), 
-        __metadata('design:type', String)
-    ], TrumbowygEditor.prototype, "ngModel", void 0);
-    __decorate([
-        core_1.Output(), 
-        __metadata('design:type', Object)
-    ], TrumbowygEditor.prototype, "ngModelChange", void 0);
-    __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
     ], TrumbowygEditor.prototype, "base64ImageInserted", void 0);
     TrumbowygEditor = __decorate([
         core_1.Directive({
-            selector: '[trumbowyg-editor]'
+            selector: '[trumbowyg-editor]',
+            providers: [
+                {
+                    provide: forms_1.NG_VALUE_ACCESSOR,
+                    useExisting: core_1.forwardRef(function () { return TrumbowygEditor; }),
+                    multi: true
+                }
+            ]
         }), 
         __metadata('design:paramtypes', [core_1.ElementRef])
     ], TrumbowygEditor);

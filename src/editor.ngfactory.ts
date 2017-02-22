@@ -17,9 +17,7 @@ export class Wrapper_TrumbowygEditor {
   /*private*/ _expr_0:any;
   /*private*/ _expr_1:any;
   /*private*/ _expr_2:any;
-  /*private*/ _expr_3:any;
   subscription0:any;
-  subscription1:any;
   constructor(p0:any) {
     this._changed = false;
     this._changes = {};
@@ -27,14 +25,12 @@ export class Wrapper_TrumbowygEditor {
     this._expr_0 = import1.UNINITIALIZED;
     this._expr_1 = import1.UNINITIALIZED;
     this._expr_2 = import1.UNINITIALIZED;
-    this._expr_3 = import1.UNINITIALIZED;
   }
   ngOnDetach(view:import2.AppView<any>,componentView:import2.AppView<any>,el:any):void {
   }
   ngOnDestroy():void {
     this.context.ngOnDestroy();
     (this.subscription0 && this.subscription0.unsubscribe());
-    (this.subscription1 && this.subscription1.unsubscribe());
   }
   check_mode(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_0,currValue))) {
@@ -60,14 +56,6 @@ export class Wrapper_TrumbowygEditor {
       this._expr_2 = currValue;
     }
   }
-  check_ngModel(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
-    if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_3,currValue))) {
-      this._changed = true;
-      this.context.ngModel = currValue;
-      this._changes['ngModel'] = new import1.SimpleChange(this._expr_3,currValue);
-      this._expr_3 = currValue;
-    }
-  }
   ngDoCheck(view:import2.AppView<any>,el:any,throwOnChange:boolean):boolean {
     var changed:any = this._changed;
     this._changed = false;
@@ -86,9 +74,8 @@ export class Wrapper_TrumbowygEditor {
     var result:boolean = true;
     return result;
   }
-  subscribe(view:import2.AppView<any>,_eventHandler:any,emit0:boolean,emit1:boolean):void {
+  subscribe(view:import2.AppView<any>,_eventHandler:any,emit0:boolean):void {
     this._eventHandler = _eventHandler;
-    if (emit0) { (this.subscription0 = this.context.ngModelChange.subscribe(_eventHandler.bind(view,'ngModelChange'))); }
-    if (emit1) { (this.subscription1 = this.context.base64ImageInserted.subscribe(_eventHandler.bind(view,'base64ImageInserted'))); }
+    if (emit0) { (this.subscription0 = this.context.base64ImageInserted.subscribe(_eventHandler.bind(view,'base64ImageInserted'))); }
   }
 }
