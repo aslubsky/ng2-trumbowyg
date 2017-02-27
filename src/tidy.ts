@@ -1,7 +1,10 @@
+import {Http} from '@angular/http';
+import 'rxjs/add/operator/toPromise';
+
 export class TrumbowygTidyPlugin {
     public static editor: any;
 
-    public static init(editor: any, lang: string) {
+    public static init(editor: any, lang: string, http: Http) {
         TrumbowygTidyPlugin.editor = editor;
 
         editor.plugins.tidy = {
@@ -21,7 +24,11 @@ export class TrumbowygTidyPlugin {
                         } else {
                             if (TrumbowygTidyPlugin.editor.tidyUrl) {
                                 // console.log(t.$ed.html());
-                                TrumbowygTidyPlugin.sendToTidy(t, t.$ed.html());
+                                http.post(TrumbowygTidyPlugin.editor.tidyUrl, t.$ed.html()).toPromise()
+                                    .then((res: any) => {
+                                        // console.log('tidy res', res.text());
+                                        t.$ta.val(res.text());
+                                    });
                             }
                             t.$ta.removeAttr('tabindex');
                         }
@@ -29,18 +36,5 @@ export class TrumbowygTidyPlugin {
                 };
             }
         }
-    }
-
-    private static sendToTidy(t: any, html: string) {
-        let xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState == XMLHttpRequest.DONE) {
-                // console.log(xhr.responseText);
-                t.$ta.val(xhr.responseText);
-            }
-        }
-        xhr.open('POST', TrumbowygTidyPlugin.editor.tidyUrl, true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send('html=' + encodeURIComponent(html));
     }
 }

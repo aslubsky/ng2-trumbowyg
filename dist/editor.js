@@ -9,7 +9,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var http_1 = require('@angular/http');
 var forms_1 = require('@angular/forms');
+require('rxjs/add/operator/toPromise');
 var tidy_1 = require('./tidy');
 var font_size_1 = require('./font-size');
 var fonts_1 = require('./fonts');
@@ -21,11 +23,17 @@ var select_resources_1 = require('./select-resources');
 var select_templates_1 = require('./select-templates');
 var select_styles_1 = require('./select-styles');
 var TrumbowygEditor = (function () {
-    function TrumbowygEditor(el) {
+    function TrumbowygEditor(el, http) {
         this.el = el;
+        this.http = http;
+        this.hasAutoSave = false;
+        this.autoSaveKey = '';
+        this.lastUpdate = 0;
         this.base64ImageInserted = new core_1.EventEmitter();
         this.onInit = new core_1.EventEmitter();
         this.dirty = false;
+        this._autoSaveTimer = null;
+        this._autoSaved = null;
         this.propagateChange = function (_) {
         };
     }
@@ -35,7 +43,91 @@ var TrumbowygEditor = (function () {
     TrumbowygEditor.prototype.registerOnTouched = function () {
         // console.log('registerOnTouched');
     };
+    TrumbowygEditor.prototype.onChange = function (value) {
+        // console.log('onChange', this._value, value);
+        this._value = value;
+        if (this.hasAutoSave) {
+            this._autoSave();
+        }
+    };
+    TrumbowygEditor.prototype._autoSave = function () {
+        var _this = this;
+        clearTimeout(this._autoSaveTimer);
+        this._autoSaveTimer = setTimeout(function () {
+            _this._saveToServer();
+        }, 500);
+    };
+    TrumbowygEditor.prototype._saveToServer = function () {
+        var headers = new http_1.Headers({
+            'Content-Type': 'application/json',
+            'If-Modified-Since': 'Mon, 26 Jul 1997 05:00:00 GMT',
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache' //no cache
+        });
+        this.http.post(tidy_1.TrumbowygTidyPlugin.editor.autoSaveUrl + '?action=auto-save', JSON.stringify({
+            key: this.autoSaveKey,
+            content: this._value
+        }), {
+            headers: headers
+        }).toPromise()
+            .then(function (res) {
+            // console.log('_autoSave res', res.json());
+        });
+    };
+    TrumbowygEditor.prototype._checkAutoSave = function () {
+        var _this = this;
+        this.http.get(tidy_1.TrumbowygTidyPlugin.editor.autoSaveUrl +
+            '?action=check-auto-save&key=' + this.autoSaveKey).toPromise()
+            .then(function (res) {
+            _this._autoSaved = res.json();
+            // console.log('_checkAutoSave res', this._autoSaved, this.lastUpdate);
+            if (_this._autoSaved && parseInt(_this._autoSaved.date, 10) > _this.lastUpdate) {
+                _this._buildAutoSaveToolbar();
+            }
+        });
+    };
+    TrumbowygEditor.prototype._buildAutoSaveToolbar = function () {
+        var _this = this;
+        this.element.data('trumbowyg').$box.append('<div class="trumbowyg-auto-save">' +
+            '<button type="button" class="btn btn-sm btn-default">cancel</button>' +
+            '<button type="button" class="btn btn-sm btn-success">ok</button>' +
+            '</div>');
+        setTimeout(function () {
+            jQuery('.trumbowyg-auto-save .btn-default', _this.element.data('trumbowyg').$box)
+                .on('click', function (e) {
+                // console.log('cancel');
+                e.target.innerHTML = '...';
+                _this.clearAutoSaved();
+            });
+            jQuery('.trumbowyg-auto-save .btn-success', _this.element.data('trumbowyg').$box)
+                .on('click', function (e) {
+                // console.log('restore');
+                e.target.innerHTML = '...';
+                _this.restoreAutoSave();
+                jQuery('.trumbowyg-auto-save').hide();
+            });
+        }, 200);
+    };
+    TrumbowygEditor.prototype.clearAutoSaved = function () {
+        var _this = this;
+        this.http.get(tidy_1.TrumbowygTidyPlugin.editor.autoSaveUrl +
+            '?action=clear-auto-save&key=' + this.autoSaveKey).toPromise()
+            .then(function (res) {
+            // console.log('_checkAutoSave res', res.json());
+            _this._autoSaved = null;
+            jQuery('.trumbowyg-auto-save').hide();
+        });
+    };
+    TrumbowygEditor.prototype.restoreAutoSave = function () {
+        if (this._autoSaved) {
+            this._value = this._autoSaved.content;
+            this.element.trumbowyg('html', this._value);
+            this.propagateChange(this._value);
+            this.lastUpdate = parseInt(this._autoSaved.date, 10);
+        }
+    };
     TrumbowygEditor.prototype.writeValue = function (value) {
+        // console.log('writeValue', value);
         if (value != null) {
             this._value = value;
             if (this.dirty) {
@@ -50,13 +142,16 @@ var TrumbowygEditor = (function () {
             }
         }
     };
-    TrumbowygEditor.init = function (lang) {
+    TrumbowygEditor.prototype.init = function (lang) {
         TrumbowygEditor.inited = true;
+        // console.log('init', lang);
+        // console.log('TrumbowygEditor.langs', TrumbowygEditor.langs);
         if (TrumbowygEditor.langs) {
             jQuery.trumbowyg.langs = TrumbowygEditor.langs;
         }
         jQuery.trumbowyg.svgPath = '/bower_components/trumbowyg/dist/ui/icons.svg';
         jQuery.trumbowyg.tidyUrl = '/api/rest.php/trumbowyg?action=tidy';
+        jQuery.trumbowyg.autoSaveUrl = '/api/rest.php/trumbowyg';
         jQuery.trumbowyg.insertHtml = function (t, html) {
             try {
                 try {
@@ -89,7 +184,7 @@ var TrumbowygEditor = (function () {
             justify: ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
             lists: ['unorderedList', 'orderedList']
         };
-        tidy_1.TrumbowygTidyPlugin.init(jQuery.trumbowyg, lang);
+        tidy_1.TrumbowygTidyPlugin.init(jQuery.trumbowyg, lang, this.http);
         font_size_1.TrumbowygFontSizePlugin.init(jQuery.trumbowyg, lang);
         fonts_1.TrumbowygFontsPlugin.init(jQuery.trumbowyg, lang);
         insert_lead_1.TrumbowygInsertLeadPlugin.init(jQuery.trumbowyg, lang);
@@ -222,10 +317,8 @@ var TrumbowygEditor = (function () {
         //console.log('TrumbowygEditor ngOnInit');
         //console.log('TrumbowygEditor langs', TrumbowygEditor.langs);
         this.lang = this.lang || 'en';
-        if (!TrumbowygEditor.inited) {
-            TrumbowygEditor.init(this.lang);
-            this.onInit.emit();
-        }
+        this.init(this.lang);
+        this.onInit.emit();
         this.mode = this.mode || 'simple';
         this.element = jQuery(this.el.nativeElement);
         this.element.trumbowyg('destroy');
@@ -243,6 +336,7 @@ var TrumbowygEditor = (function () {
             if (!_this.detectBase64Insert(html)) {
                 _this.dirty = true;
                 _this.propagateChange(html);
+                _this.onChange(html);
             }
             //console.log('tbwpaste', html);
             //console.log('self.ngModelChange', self.ngModelChange);
@@ -253,6 +347,7 @@ var TrumbowygEditor = (function () {
             if (!_this.detectBase64Insert(html)) {
                 _this.dirty = true;
                 _this.propagateChange(html);
+                _this.onChange(html);
             }
             //console.log('tbwchange', html);
             //console.log('self.ngModelChange', self.ngModelChange);
@@ -266,6 +361,12 @@ var TrumbowygEditor = (function () {
                 t.$ed.addClass('bordered');
             }
         });
+        setTimeout(function () {
+            // console.log('hasAutoSave', this.hasAutoSave);
+            if (_this.hasAutoSave) {
+                _this._checkAutoSave();
+            }
+        }, 500);
     };
     TrumbowygEditor.prototype.ngOnDestroy = function () {
         this.element.trumbowyg('destroy');
@@ -274,6 +375,18 @@ var TrumbowygEditor = (function () {
     TrumbowygEditor.langs = {};
     TrumbowygEditor.inited = false;
     TrumbowygEditor.localImageRegexp = /src\=\"data\:image\/(.*)\"/gi;
+    __decorate([
+        core_1.Input('has-auto-save'), 
+        __metadata('design:type', Boolean)
+    ], TrumbowygEditor.prototype, "hasAutoSave", void 0);
+    __decorate([
+        core_1.Input('auto-save-key'), 
+        __metadata('design:type', String)
+    ], TrumbowygEditor.prototype, "autoSaveKey", void 0);
+    __decorate([
+        core_1.Input('last-update'), 
+        __metadata('design:type', Number)
+    ], TrumbowygEditor.prototype, "lastUpdate", void 0);
     __decorate([
         core_1.Input(), 
         __metadata('design:type', String)
@@ -301,7 +414,7 @@ var TrumbowygEditor = (function () {
                 }
             ]
         }), 
-        __metadata('design:paramtypes', [core_1.ElementRef])
+        __metadata('design:paramtypes', [core_1.ElementRef, http_1.Http])
     ], TrumbowygEditor);
     return TrumbowygEditor;
 }());

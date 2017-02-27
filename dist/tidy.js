@@ -1,8 +1,9 @@
 "use strict";
+require('rxjs/add/operator/toPromise');
 var TrumbowygTidyPlugin = (function () {
     function TrumbowygTidyPlugin() {
     }
-    TrumbowygTidyPlugin.init = function (editor, lang) {
+    TrumbowygTidyPlugin.init = function (editor, lang, http) {
         TrumbowygTidyPlugin.editor = editor;
         editor.plugins.tidy = {
             init: function (t) {
@@ -21,7 +22,11 @@ var TrumbowygTidyPlugin = (function () {
                         else {
                             if (TrumbowygTidyPlugin.editor.tidyUrl) {
                                 // console.log(t.$ed.html());
-                                TrumbowygTidyPlugin.sendToTidy(t, t.$ed.html());
+                                http.post(TrumbowygTidyPlugin.editor.tidyUrl, t.$ed.html()).toPromise()
+                                    .then(function (res) {
+                                    // console.log('tidy res', res.text());
+                                    t.$ta.val(res.text());
+                                });
                             }
                             t.$ta.removeAttr('tabindex');
                         }
@@ -29,18 +34,6 @@ var TrumbowygTidyPlugin = (function () {
                 };
             }
         };
-    };
-    TrumbowygTidyPlugin.sendToTidy = function (t, html) {
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == XMLHttpRequest.DONE) {
-                // console.log(xhr.responseText);
-                t.$ta.val(xhr.responseText);
-            }
-        };
-        xhr.open('POST', TrumbowygTidyPlugin.editor.tidyUrl, true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send('html=' + encodeURIComponent(html));
     };
     return TrumbowygTidyPlugin;
 }());

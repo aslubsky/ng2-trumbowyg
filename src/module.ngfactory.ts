@@ -7,18 +7,64 @@
 
 import * as import0 from '@angular/core/src/linker/ng_module_factory';
 import * as import1 from './module';
-import * as import2 from '@angular/core/src/di/injector';
+import * as import2 from '@angular/http/src/http_module';
+import * as import3 from '@angular/http/src/backends/browser_xhr';
+import * as import4 from '@angular/http/src/base_response_options';
+import * as import5 from '@angular/http/src/backends/xhr_backend';
+import * as import6 from '@angular/http/src/base_request_options';
+import * as import7 from '@angular/core/src/di/injector';
+import * as import8 from '@angular/http/src/interfaces';
+import * as import9 from '@angular/http/src/http';
 class TrumbowygEditorModuleInjector extends import0.NgModuleInjector<import1.TrumbowygEditorModule> {
-  _TrumbowygEditorModule_0:import1.TrumbowygEditorModule;
-  constructor(parent:import2.Injector) {
+  _HttpModule_0:import2.HttpModule;
+  _TrumbowygEditorModule_1:import1.TrumbowygEditorModule;
+  __BrowserXhr_2:import3.BrowserXhr;
+  __ResponseOptions_3:import4.BaseResponseOptions;
+  __XSRFStrategy_4:any;
+  __XHRBackend_5:import5.XHRBackend;
+  __RequestOptions_6:import6.BaseRequestOptions;
+  __Http_7:any;
+  constructor(parent:import7.Injector) {
     super(parent,([] as any[]),([] as any[]));
   }
+  get _BrowserXhr_2():import3.BrowserXhr {
+    if ((this.__BrowserXhr_2 == null)) { (this.__BrowserXhr_2 = new import3.BrowserXhr()); }
+    return this.__BrowserXhr_2;
+  }
+  get _ResponseOptions_3():import4.BaseResponseOptions {
+    if ((this.__ResponseOptions_3 == null)) { (this.__ResponseOptions_3 = new import4.BaseResponseOptions()); }
+    return this.__ResponseOptions_3;
+  }
+  get _XSRFStrategy_4():any {
+    if ((this.__XSRFStrategy_4 == null)) { (this.__XSRFStrategy_4 = import2._createDefaultCookieXSRFStrategy()); }
+    return this.__XSRFStrategy_4;
+  }
+  get _XHRBackend_5():import5.XHRBackend {
+    if ((this.__XHRBackend_5 == null)) { (this.__XHRBackend_5 = new import5.XHRBackend(this._BrowserXhr_2,this._ResponseOptions_3,this._XSRFStrategy_4)); }
+    return this.__XHRBackend_5;
+  }
+  get _RequestOptions_6():import6.BaseRequestOptions {
+    if ((this.__RequestOptions_6 == null)) { (this.__RequestOptions_6 = new import6.BaseRequestOptions()); }
+    return this.__RequestOptions_6;
+  }
+  get _Http_7():any {
+    if ((this.__Http_7 == null)) { (this.__Http_7 = import2.httpFactory(this._XHRBackend_5,this._RequestOptions_6)); }
+    return this.__Http_7;
+  }
   createInternal():import1.TrumbowygEditorModule {
-    this._TrumbowygEditorModule_0 = new import1.TrumbowygEditorModule();
-    return this._TrumbowygEditorModule_0;
+    this._HttpModule_0 = new import2.HttpModule();
+    this._TrumbowygEditorModule_1 = new import1.TrumbowygEditorModule();
+    return this._TrumbowygEditorModule_1;
   }
   getInternal(token:any,notFoundResult:any):any {
-    if ((token === import1.TrumbowygEditorModule)) { return this._TrumbowygEditorModule_0; }
+    if ((token === import2.HttpModule)) { return this._HttpModule_0; }
+    if ((token === import1.TrumbowygEditorModule)) { return this._TrumbowygEditorModule_1; }
+    if ((token === import3.BrowserXhr)) { return this._BrowserXhr_2; }
+    if ((token === import4.ResponseOptions)) { return this._ResponseOptions_3; }
+    if ((token === import8.XSRFStrategy)) { return this._XSRFStrategy_4; }
+    if ((token === import5.XHRBackend)) { return this._XHRBackend_5; }
+    if ((token === import6.RequestOptions)) { return this._RequestOptions_6; }
+    if ((token === import9.Http)) { return this._Http_7; }
     return notFoundResult;
   }
   destroyInternal():void {

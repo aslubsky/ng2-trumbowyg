@@ -10,7 +10,10 @@ import {
     OnChanges,
     SimpleChanges
 }         from '@angular/core';
+import {Http, Headers} from '@angular/http';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+
+import 'rxjs/add/operator/toPromise';
 
 import {TrumbowygTidyPlugin} from './tidy';
 import {TrumbowygFontSizePlugin} from './font-size';
@@ -41,6 +44,10 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
     public static inited: boolean = false;
     public static localImageRegexp: RegExp = /src\=\"data\:image\/(.*)\"/gi;
 
+    @Input('has-auto-save') hasAutoSave: boolean = false;
+    @Input('auto-save-key') autoSaveKey: string = '';
+    @Input('last-update') lastUpdate: number = 0;
+
     @Input() mode: string;
     @Input() lang: string;
     @Input() base64Image: any;
@@ -54,7 +61,10 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
     private element: any;
     private dirty: boolean = false;
 
-    constructor(private el: ElementRef) {
+    private _autoSaveTimer: number = null;
+    private _autoSaved: any = null;
+
+    constructor(private el: ElementRef, private http: Http) {
     }
 
     propagateChange = (_: any) => {
@@ -68,7 +78,101 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
         // console.log('registerOnTouched');
     }
 
+    onChange(value: any) {
+        // console.log('onChange', this._value, value);
+        this._value = value;
+
+        if (this.hasAutoSave) {
+            this._autoSave();
+        }
+    }
+
+    private _autoSave() {
+        clearTimeout(this._autoSaveTimer);
+        this._autoSaveTimer = setTimeout(() => {
+            this._saveToServer();
+        }, 500);
+    }
+
+    private _saveToServer() {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'If-Modified-Since': 'Mon, 26 Jul 1997 05:00:00 GMT',//no cache
+            'Cache-Control': 'no-cache',//no cache
+            'Pragma': 'no-cache'//no cache
+        });
+
+        this.http.post(TrumbowygTidyPlugin.editor.autoSaveUrl + '?action=auto-save', JSON.stringify({
+            key: this.autoSaveKey,
+            content: this._value
+        }), {
+            headers: headers
+        }).toPromise()
+            .then((res: any) => {
+                // console.log('_autoSave res', res.json());
+            });
+    }
+
+    private _checkAutoSave() {
+        this.http.get(TrumbowygTidyPlugin.editor.autoSaveUrl +
+            '?action=check-auto-save&key=' + this.autoSaveKey).toPromise()
+            .then((res: any) => {
+                this._autoSaved = res.json();
+                // console.log('_checkAutoSave res', this._autoSaved, this.lastUpdate);
+
+                if (this._autoSaved && parseInt(this._autoSaved.date, 10) > this.lastUpdate) {
+                    this._buildAutoSaveToolbar();
+                    // console.log('_hasAutoSave');
+                }
+            });
+    }
+
+    private _buildAutoSaveToolbar() {
+        this.element.data('trumbowyg').$box.append('<div class="trumbowyg-auto-save">' +
+            '<button type="button" class="btn btn-sm btn-default">cancel</button>' +
+            '<button type="button" class="btn btn-sm btn-success">ok</button>' +
+            '</div>');
+
+        setTimeout(()=> {
+            jQuery('.trumbowyg-auto-save .btn-default', this.element.data('trumbowyg').$box)
+                .on('click', (e: any) => {
+                    // console.log('cancel');
+                    e.target.innerHTML = '...';
+                    this.clearAutoSaved();
+                });
+
+            jQuery('.trumbowyg-auto-save .btn-success', this.element.data('trumbowyg').$box)
+                .on('click', (e: any) => {
+                    // console.log('restore');
+                    e.target.innerHTML = '...';
+                    this.restoreAutoSave();
+                    jQuery('.trumbowyg-auto-save').hide();
+                });
+        }, 200);
+    }
+
+    public clearAutoSaved() {
+        this.http.get(TrumbowygTidyPlugin.editor.autoSaveUrl +
+            '?action=clear-auto-save&key=' + this.autoSaveKey).toPromise()
+            .then((res: any) => {
+                // console.log('_checkAutoSave res', res.json());
+                this._autoSaved = null;
+                jQuery('.trumbowyg-auto-save').hide();
+            });
+    }
+
+    public restoreAutoSave() {
+        if (this._autoSaved) {
+            this._value = this._autoSaved.content;
+            this.element.trumbowyg('html', this._value);
+            this.propagateChange(this._value);
+            this.lastUpdate = parseInt(this._autoSaved.date, 10);
+        }
+    }
+
     writeValue(value: any) {
+        // console.log('writeValue', value);
+
         if (value != null) {
             this._value = value;
 
@@ -84,15 +188,17 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
         }
     }
 
-    private static init(lang: string) {
+    private init(lang: string) {
         TrumbowygEditor.inited = true;
-
+// console.log('init', lang);
+// console.log('TrumbowygEditor.langs', TrumbowygEditor.langs);
         if (TrumbowygEditor.langs) {
             jQuery.trumbowyg.langs = TrumbowygEditor.langs;
         }
 
         jQuery.trumbowyg.svgPath = '/bower_components/trumbowyg/dist/ui/icons.svg';
         jQuery.trumbowyg.tidyUrl = '/api/rest.php/trumbowyg?action=tidy';
+        jQuery.trumbowyg.autoSaveUrl = '/api/rest.php/trumbowyg';
 
         jQuery.trumbowyg.insertHtml = function (t: any, html: string) {
             try {
@@ -128,7 +234,7 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
             lists: ['unorderedList', 'orderedList']
         };
 
-        TrumbowygTidyPlugin.init(jQuery.trumbowyg, lang);
+        TrumbowygTidyPlugin.init(jQuery.trumbowyg, lang, this.http);
         TrumbowygFontSizePlugin.init(jQuery.trumbowyg, lang);
         TrumbowygFontsPlugin.init(jQuery.trumbowyg, lang);
         TrumbowygInsertLeadPlugin.init(jQuery.trumbowyg, lang);
@@ -267,10 +373,8 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
         //console.log('TrumbowygEditor langs', TrumbowygEditor.langs);
         this.lang = this.lang || 'en';
 
-        if (!TrumbowygEditor.inited) {
-            TrumbowygEditor.init(this.lang);
-            this.onInit.emit();
-        }
+        this.init(this.lang);
+        this.onInit.emit();
 
         this.mode = this.mode || 'simple';
         this.element = jQuery(this.el.nativeElement);
@@ -290,6 +394,7 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
                 if (!this.detectBase64Insert(html)) {
                     this.dirty = true;
                     this.propagateChange(html);
+                    this.onChange(html);
                 }
                 //console.log('tbwpaste', html);
                 //console.log('self.ngModelChange', self.ngModelChange);
@@ -300,6 +405,7 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
                 if (!this.detectBase64Insert(html)) {
                     this.dirty = true;
                     this.propagateChange(html);
+                    this.onChange(html);
                 }
                 //console.log('tbwchange', html);
                 //console.log('self.ngModelChange', self.ngModelChange);
@@ -313,6 +419,13 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
                     t.$ed.addClass('bordered');
                 }
             });
+
+        setTimeout(() => {
+            // console.log('hasAutoSave', this.hasAutoSave);
+            if (this.hasAutoSave) {
+                this._checkAutoSave();
+            }
+        }, 500);
     }
 
     ngOnDestroy() {
