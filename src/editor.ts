@@ -11,7 +11,7 @@ import {
     SimpleChanges
 }         from '@angular/core';
 import {Http, Headers} from '@angular/http';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl} from '@angular/forms';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -35,6 +35,11 @@ declare var jQuery: any;
             provide: NG_VALUE_ACCESSOR,
             useExisting: forwardRef(() => TrumbowygEditor),
             multi: true
+        },
+        {
+            provide: NG_VALIDATORS,
+            useExisting: forwardRef(() => TrumbowygEditor),
+            multi: true
         }
     ]
 })
@@ -52,19 +57,40 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
     @Input() lang: string;
     @Input() base64Image: any;
 
+    private _name: string;
     private _value: string;
+
+    private _required: boolean = false;
 
     @Output() base64ImageInserted: any = new EventEmitter();
 
     public onInit: any = new EventEmitter();
 
     private element: any;
-    private dirty: boolean = false;
 
     private _autoSaveTimer: number = null;
     private _autoSaved: any = null;
 
     constructor(private el: ElementRef, private http: Http) {
+        this._required = this.el.nativeElement.hasAttribute('required');
+        this._name = this.el.nativeElement.getAttribute('name');
+        // console.log('el', this._name, this._required);
+    }
+
+    validate(c: FormControl) {
+        if(!this._required) {
+            return null;
+        }
+
+        if (c.value && c.value.length > 0) {
+            return null;
+        }
+
+        // console.log('TrumbowygEditor NG_VALIDATORS', this._name, c.value, 'invalid');
+
+        return {
+            required: true
+        };
     }
 
     propagateChange = (_: any) => {
@@ -174,20 +200,16 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
     }
 
     writeValue(value: any) {
-        // console.log('writeValue', value);
+        // console.log('writeValue', this._name, value);
 
         if (value != null) {
             this._value = value;
 
-            if (this.dirty) {
-                //this.dirty = false;
-            } else {
-                if (this._value.length == 0 && (/webkit/i).test(navigator.userAgent)) {
-                    this.element.trumbowyg('html', '<p></p>');
-                } else {
-                    this.element.trumbowyg('html', this._value);
-                }
-            }
+            // if (this._value.length == 0 && (/webkit/i).test(navigator.userAgent)) {
+            //     this.element.trumbowyg('html', '<p></p>');
+            // } else {
+                this.element.trumbowyg('html', this._value);
+            // }
         }
     }
 
@@ -395,7 +417,6 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
                 var html: string = this.element.trumbowyg('html');
                 //console.log('tbwpaste', html);
                 if (!this.detectBase64Insert(html)) {
-                    this.dirty = true;
                     this.propagateChange(html);
                     this.onChange(html);
                 }
@@ -406,7 +427,6 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
                 var html: string = this.element.trumbowyg('html');
                 //console.log('tbwchange', html);
                 if (!this.detectBase64Insert(html)) {
-                    this.dirty = true;
                     this.propagateChange(html);
                     this.onChange(html);
                 }

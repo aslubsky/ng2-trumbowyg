@@ -29,14 +29,29 @@ var TrumbowygEditor = (function () {
         this.hasAutoSave = false;
         this.autoSaveKey = '';
         this.lastUpdate = 0;
+        this._required = false;
         this.base64ImageInserted = new core_1.EventEmitter();
         this.onInit = new core_1.EventEmitter();
-        this.dirty = false;
         this._autoSaveTimer = null;
         this._autoSaved = null;
         this.propagateChange = function (_) {
         };
+        this._required = this.el.nativeElement.hasAttribute('required');
+        this._name = this.el.nativeElement.getAttribute('name');
+        // console.log('el', this._name, this._required);
     }
+    TrumbowygEditor.prototype.validate = function (c) {
+        if (!this._required) {
+            return null;
+        }
+        if (c.value && c.value.length > 0) {
+            return null;
+        }
+        // console.log('TrumbowygEditor NG_VALIDATORS', this._name, c.value, 'invalid');
+        return {
+            required: true
+        };
+    };
     TrumbowygEditor.prototype.registerOnChange = function (fn) {
         this.propagateChange = fn;
     };
@@ -130,19 +145,13 @@ var TrumbowygEditor = (function () {
         }
     };
     TrumbowygEditor.prototype.writeValue = function (value) {
-        // console.log('writeValue', value);
+        // console.log('writeValue', this._name, value);
         if (value != null) {
             this._value = value;
-            if (this.dirty) {
-            }
-            else {
-                if (this._value.length == 0 && (/webkit/i).test(navigator.userAgent)) {
-                    this.element.trumbowyg('html', '<p></p>');
-                }
-                else {
-                    this.element.trumbowyg('html', this._value);
-                }
-            }
+            // if (this._value.length == 0 && (/webkit/i).test(navigator.userAgent)) {
+            //     this.element.trumbowyg('html', '<p></p>');
+            // } else {
+            this.element.trumbowyg('html', this._value);
         }
     };
     TrumbowygEditor.prototype.init = function (lang) {
@@ -337,7 +346,6 @@ var TrumbowygEditor = (function () {
             var html = _this.element.trumbowyg('html');
             //console.log('tbwpaste', html);
             if (!_this.detectBase64Insert(html)) {
-                _this.dirty = true;
                 _this.propagateChange(html);
                 _this.onChange(html);
             }
@@ -348,7 +356,6 @@ var TrumbowygEditor = (function () {
             var html = _this.element.trumbowyg('html');
             //console.log('tbwchange', html);
             if (!_this.detectBase64Insert(html)) {
-                _this.dirty = true;
                 _this.propagateChange(html);
                 _this.onChange(html);
             }
@@ -415,6 +422,11 @@ var TrumbowygEditor = (function () {
             providers: [
                 {
                     provide: forms_1.NG_VALUE_ACCESSOR,
+                    useExisting: core_1.forwardRef(function () { return TrumbowygEditor; }),
+                    multi: true
+                },
+                {
+                    provide: forms_1.NG_VALIDATORS,
                     useExisting: core_1.forwardRef(function () { return TrumbowygEditor; }),
                     multi: true
                 }

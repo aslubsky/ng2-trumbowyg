@@ -1,6 +1,6 @@
 import { ElementRef, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { Http } from '@angular/http';
-import { ControlValueAccessor } from '@angular/forms';
+import { ControlValueAccessor, FormControl } from '@angular/forms';
 import 'rxjs/add/operator/toPromise';
 export declare class TrumbowygEditor implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
     private el;
@@ -15,14 +15,18 @@ export declare class TrumbowygEditor implements ControlValueAccessor, OnInit, On
     mode: string;
     lang: string;
     base64Image: any;
+    private _name;
     private _value;
+    private _required;
     base64ImageInserted: any;
     onInit: any;
     private element;
-    private dirty;
     private _autoSaveTimer;
     private _autoSaved;
     constructor(el: ElementRef, http: Http);
+    validate(c: FormControl): {
+        required: boolean;
+    };
     propagateChange: (_: any) => void;
     registerOnChange(fn: any): void;
     registerOnTouched(): void;
