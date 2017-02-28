@@ -129,8 +129,11 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
 
     private _buildAutoSaveToolbar() {
         this.element.data('trumbowyg').$box.append('<div class="trumbowyg-auto-save">' +
-            '<button type="button" class="btn btn-sm btn-default">cancel</button>' +
-            '<button type="button" class="btn btn-sm btn-success">ok</button>' +
+            '<span class="title">' + TrumbowygEditor.langs[this.lang].hasAutoSavedMsg + '</span>' +
+            '<span class="buttons">' +
+            '<button type="button" class="btn btn-sm btn-default">' + TrumbowygEditor.langs[this.lang].autoSaveCancel + '</button>' +
+            '<button type="button" class="btn btn-sm btn-success">' + TrumbowygEditor.langs[this.lang].autoSaveRestore + '</button>' +
+            '</span>' +
             '</div>');
 
         setTimeout(()=> {
@@ -412,11 +415,14 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
             })
             .on('tbwinit', (e: any) => {
                 let t: any = this.element.data('trumbowyg');
-                t.$box.addClass('trumbowyg-' + this.mode);
-                t.$ed.addClass('page-container');
-                // console.log('tbwinit', e, t, t.$ed, t.$box);
-                if (t.$box.width() >= 1200) {
-                    t.$ed.addClass('bordered');
+                // console.log('tbwinit', e, t, this.element);
+                if(t) {
+                    t.$box.addClass('trumbowyg-' + this.mode);
+                    t.$ed.addClass('page-container');
+                    // console.log('tbwinit', e, t, t.$ed, t.$box);
+                    if (t.$box.width() >= 1200) {
+                        t.$ed.addClass('bordered');
+                    }
                 }
             });
 

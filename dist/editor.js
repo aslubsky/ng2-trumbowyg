@@ -89,8 +89,11 @@ var TrumbowygEditor = (function () {
     TrumbowygEditor.prototype._buildAutoSaveToolbar = function () {
         var _this = this;
         this.element.data('trumbowyg').$box.append('<div class="trumbowyg-auto-save">' +
-            '<button type="button" class="btn btn-sm btn-default">cancel</button>' +
-            '<button type="button" class="btn btn-sm btn-success">ok</button>' +
+            '<span class="title">' + TrumbowygEditor.langs[this.lang].hasAutoSavedMsg + '</span>' +
+            '<span class="buttons">' +
+            '<button type="button" class="btn btn-sm btn-default">' + TrumbowygEditor.langs[this.lang].autoSaveCancel + '</button>' +
+            '<button type="button" class="btn btn-sm btn-success">' + TrumbowygEditor.langs[this.lang].autoSaveRestore + '</button>' +
+            '</span>' +
             '</div>');
         setTimeout(function () {
             jQuery('.trumbowyg-auto-save .btn-default', _this.element.data('trumbowyg').$box)
@@ -354,11 +357,14 @@ var TrumbowygEditor = (function () {
         })
             .on('tbwinit', function (e) {
             var t = _this.element.data('trumbowyg');
-            t.$box.addClass('trumbowyg-' + _this.mode);
-            t.$ed.addClass('page-container');
-            // console.log('tbwinit', e, t, t.$ed, t.$box);
-            if (t.$box.width() >= 1200) {
-                t.$ed.addClass('bordered');
+            // console.log('tbwinit', e, t, this.element);
+            if (t) {
+                t.$box.addClass('trumbowyg-' + _this.mode);
+                t.$ed.addClass('page-container');
+                // console.log('tbwinit', e, t, t.$ed, t.$box);
+                if (t.$box.width() >= 1200) {
+                    t.$ed.addClass('bordered');
+                }
             }
         });
         setTimeout(function () {
