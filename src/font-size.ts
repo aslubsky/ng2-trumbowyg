@@ -7,6 +7,8 @@ export class TrumbowygFontSizePlugin {
     public static init(editor: any, lang: string) {
         TrumbowygFontSizePlugin.editor = editor;
 
+        TrumbowygFontSizePlugin.fontSizes = [];
+
         var i = 1;
         for (; i <= 7; i++) {
             //jQuery.trumbowyg.opts.fontSize.push($filter('translate')("Размер") + ' ' + i);

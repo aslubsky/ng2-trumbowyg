@@ -4,6 +4,7 @@ var TrumbowygFontSizePlugin = (function () {
     }
     TrumbowygFontSizePlugin.init = function (editor, lang) {
         TrumbowygFontSizePlugin.editor = editor;
+        TrumbowygFontSizePlugin.fontSizes = [];
         var i = 1;
         for (; i <= 7; i++) {
             //jQuery.trumbowyg.opts.fontSize.push($filter('translate')("Размер") + ' ' + i);
