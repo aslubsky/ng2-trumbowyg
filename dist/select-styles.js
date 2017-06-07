@@ -31,7 +31,7 @@ var TrumbowygSelectStylesPlugin = (function () {
         html.push('   </ul>');
         html.push('</div>');
         var selectedImageIndex = null;
-        var $modal = t.openModal(TrumbowygSelectStylesPlugin.editor.langs[TrumbowygSelectStylesPlugin.lang].attachedImages, html.join(''))
+        var $modal = t.openModal(TrumbowygSelectStylesPlugin.editor.langs[TrumbowygSelectStylesPlugin.lang].selectTemplatesStyle, html.join(''))
             .on('tbwconfirm', function () {
             var selected = jQuery('input:checked', $modal);
             if (selected.size() > 0) {

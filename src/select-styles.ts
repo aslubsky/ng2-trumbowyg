@@ -29,11 +29,11 @@ export class TrumbowygSelectStylesPlugin {
     private static selectStylesCb(params: any, t: any) {
 
         var pfx = t.o.prefix;
-        var html = [];
+        var html: string[] = [];
 
         html.push('<div class="modal-container styles-select">');
         html.push('   <ul class="styles-list template-gallery list-unstyled">');
-        TrumbowygSelectStylesPlugin.allStyles.forEach(style => {
+        TrumbowygSelectStylesPlugin.allStyles.forEach((style : any) => {
             html.push('   <li title="' + style.description + '" class="item style"><label>' +
                 '<img src="' + style.icon + '" class="select-template-icon"><input type="radio" value="' + style.id + '" name="template">' +
                 '<span class="title"> ' + style.title + '</span>' +
@@ -43,7 +43,7 @@ export class TrumbowygSelectStylesPlugin {
         html.push('</div>');
 
         var selectedImageIndex: number = null;
-        var $modal = t.openModal(TrumbowygSelectStylesPlugin.editor.langs[TrumbowygSelectStylesPlugin.lang].attachedImages, html.join(''))
+        var $modal = t.openModal(TrumbowygSelectStylesPlugin.editor.langs[TrumbowygSelectStylesPlugin.lang].selectTemplatesStyle, html.join(''))
             .on('tbwconfirm', function () {
                 var selected = jQuery('input:checked', $modal);
 
@@ -68,7 +68,7 @@ export class TrumbowygSelectStylesPlugin {
 
         $modal.addClass('big');
 
-        jQuery('.styles-list li label', $modal).off('click').on('click', function (e) {
+        jQuery('.styles-list li label', $modal).off('click').on('click', function (e:any) {
             jQuery('.styles-list li', $modal).removeClass('active');
             jQuery(this).parent().addClass('active');
         });
