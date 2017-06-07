@@ -49,7 +49,7 @@ export class TrumbowygSelectStylesPlugin {
 
                 if (selected.size() > 0) {
                     var styleId = parseInt(selected.val(), 10);
-                    console.log('styleId', styleId);
+                   // console.log('styleId', styleId);
                     var editor = $modal.parent().find('.trumbowyg-editor');
                     editor.find('.customStyle').remove();
                     editor.append('<style class="customStyle">@import url(https://ets.davintoo.com/uploads/css/' + styleId + '.css);</style>');
