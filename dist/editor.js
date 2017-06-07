@@ -15,13 +15,13 @@ require('rxjs/add/operator/toPromise');
 var tidy_1 = require('./tidy');
 var font_size_1 = require('./font-size');
 var fonts_1 = require('./fonts');
+var select_styles_1 = require('./select-styles');
 var insert_lead_1 = require('./insert-lead');
 var insert_media_embed_1 = require('./insert-media-embed');
 var insert_table_1 = require('./insert-table');
 var select_images_1 = require('./select-images');
 var select_resources_1 = require('./select-resources');
 var select_templates_1 = require('./select-templates');
-var select_styles_1 = require('./select-styles');
 var TrumbowygEditor = (function () {
     function TrumbowygEditor(el, http) {
         this.el = el;
@@ -200,17 +200,18 @@ var TrumbowygEditor = (function () {
         font_size_1.TrumbowygFontSizePlugin.init(jQuery.trumbowyg, lang);
         fonts_1.TrumbowygFontsPlugin.init(jQuery.trumbowyg, lang);
         insert_lead_1.TrumbowygInsertLeadPlugin.init(jQuery.trumbowyg, lang);
+        select_styles_1.TrumbowygSelectStylesPlugin.init(jQuery.trumbowyg, lang);
         insert_table_1.TrumbowygInsertTablePlugin.init(jQuery.trumbowyg, lang);
         insert_media_embed_1.TrumbowygInsertMediaEmbedPlugin.init(jQuery.trumbowyg, lang);
         select_images_1.TrumbowygSelectImagesPlugin.init(jQuery.trumbowyg, lang);
         select_resources_1.TrumbowygSelectResourcesPlugin.init(jQuery.trumbowyg, lang);
         select_templates_1.TrumbowygSelectTemplatesPlugin.init(jQuery.trumbowyg, lang);
-        select_styles_1.TrumbowygSelectStylesPlugin.init(jQuery.trumbowyg, lang);
         //console.trace();
         //console.log('init', jQuery.trumbowyg);
         TrumbowygEditor.modes = {
             inline: [
                 'removeformat',
+                'selectStyles',
                 '|',
                 btnsGrps.design, '|',
                 'fontName',
@@ -223,6 +224,7 @@ var TrumbowygEditor = (function () {
             ],
             simple: [
                 'removeformat',
+                'selectStyles',
                 '|',
                 btnsGrps.design, '|',
                 'fontName',
@@ -241,6 +243,7 @@ var TrumbowygEditor = (function () {
             extend: [
                 'viewHTML',
                 'removeformat',
+                'selectStyles',
                 '|',
                 btnsGrps.design,
                 '|',
@@ -265,6 +268,7 @@ var TrumbowygEditor = (function () {
             full: [
                 'viewHTML',
                 'removeformat',
+                'selectStyles',
                 '|',
                 btnsGrps.design,
                 '|',

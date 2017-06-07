@@ -18,13 +18,14 @@ import 'rxjs/add/operator/toPromise';
 import {TrumbowygTidyPlugin} from './tidy';
 import {TrumbowygFontSizePlugin} from './font-size';
 import {TrumbowygFontsPlugin} from './fonts';
+import {TrumbowygSelectStylesPlugin} from './select-styles';
 import {TrumbowygInsertLeadPlugin} from './insert-lead';
 import {TrumbowygInsertMediaEmbedPlugin} from './insert-media-embed';
 import {TrumbowygInsertTablePlugin} from './insert-table';
 import {TrumbowygSelectImagesPlugin} from './select-images';
 import {TrumbowygSelectResourcesPlugin} from './select-resources';
 import {TrumbowygSelectTemplatesPlugin} from './select-templates';
-import {TrumbowygSelectStylesPlugin} from './select-styles';
+
 
 declare var jQuery: any;
 
@@ -263,12 +264,12 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
         TrumbowygFontSizePlugin.init(jQuery.trumbowyg, lang);
         TrumbowygFontsPlugin.init(jQuery.trumbowyg, lang);
         TrumbowygInsertLeadPlugin.init(jQuery.trumbowyg, lang);
+        TrumbowygSelectStylesPlugin.init(jQuery.trumbowyg, lang);
         TrumbowygInsertTablePlugin.init(jQuery.trumbowyg, lang);
         TrumbowygInsertMediaEmbedPlugin.init(jQuery.trumbowyg, lang);
         TrumbowygSelectImagesPlugin.init(jQuery.trumbowyg, lang);
         TrumbowygSelectResourcesPlugin.init(jQuery.trumbowyg, lang);
         TrumbowygSelectTemplatesPlugin.init(jQuery.trumbowyg, lang);
-        TrumbowygSelectStylesPlugin.init(jQuery.trumbowyg, lang);
 
         //console.trace();
         //console.log('init', jQuery.trumbowyg);
@@ -277,6 +278,7 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
         TrumbowygEditor.modes = {
             inline: [
                 'removeformat',
+                'selectStyles',
                 '|',
                 btnsGrps.design, '|',
                 'fontName',
@@ -289,6 +291,7 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
             ],
             simple: [
                 'removeformat',
+                'selectStyles',
                 '|',
                 btnsGrps.design, '|',
                 'fontName',
@@ -307,6 +310,7 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
             extend: [
                 'viewHTML',
                 'removeformat',
+                'selectStyles',
                 '|',
                 btnsGrps.design,
                 '|',
@@ -331,6 +335,7 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
             full: [
                 'viewHTML',
                 'removeformat',
+                'selectStyles',
                 '|',
                 btnsGrps.design,
                 '|',

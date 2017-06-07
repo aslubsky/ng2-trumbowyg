@@ -25,6 +25,7 @@
     "files": [
         "./src/module.ts",
         "./src/select-templates.ts",
-        "./src/select-images.ts"
+        "./src/select-images.ts",
+        "./src/select-styles.ts"
     ]
 }
