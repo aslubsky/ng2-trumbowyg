@@ -278,7 +278,6 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
         TrumbowygEditor.modes = {
             inline: [
                 'removeformat',
-                'selectStyles',
                 '|',
                 btnsGrps.design, '|',
                 'fontName',
@@ -291,7 +290,6 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
             ],
             simple: [
                 'removeformat',
-                'selectStyles',
                 '|',
                 btnsGrps.design, '|',
                 'fontName',
@@ -307,10 +305,30 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
                 'horizontalRule',
                 'fullscreen'
             ],
+            noImage: [
+                'viewHTML',
+                'removeformat',
+                '|',
+                btnsGrps.design,
+                '|',
+                'formatting',
+                'fontName',
+                'fontSize',
+                'foreColor',
+                'backColor',
+                '|',
+                btnsGrps.justify,
+                '|',
+                btnsGrps.lists,
+                '|',
+                'link',
+                'insertMediaEmbed',
+                'horizontalRule',
+                'fullscreen'
+            ],
             extend: [
                 'viewHTML',
                 'removeformat',
-                'selectStyles',
                 '|',
                 btnsGrps.design,
                 '|',

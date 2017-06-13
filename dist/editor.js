@@ -211,7 +211,6 @@ var TrumbowygEditor = (function () {
         TrumbowygEditor.modes = {
             inline: [
                 'removeformat',
-                'selectStyles',
                 '|',
                 btnsGrps.design, '|',
                 'fontName',
@@ -224,7 +223,6 @@ var TrumbowygEditor = (function () {
             ],
             simple: [
                 'removeformat',
-                'selectStyles',
                 '|',
                 btnsGrps.design, '|',
                 'fontName',
@@ -240,10 +238,30 @@ var TrumbowygEditor = (function () {
                 'horizontalRule',
                 'fullscreen'
             ],
+            noImage: [
+                'viewHTML',
+                'removeformat',
+                '|',
+                btnsGrps.design,
+                '|',
+                'formatting',
+                'fontName',
+                'fontSize',
+                'foreColor',
+                'backColor',
+                '|',
+                btnsGrps.justify,
+                '|',
+                btnsGrps.lists,
+                '|',
+                'link',
+                'insertMediaEmbed',
+                'horizontalRule',
+                'fullscreen'
+            ],
             extend: [
                 'viewHTML',
                 'removeformat',
-                'selectStyles',
                 '|',
                 btnsGrps.design,
                 '|',
