@@ -191,7 +191,7 @@ var TrumbowygEditor = (function () {
             t.$c.trigger('tbwchange');
         };
         var btnsGrps = {
-            design: ['bold', 'italic', 'underline', 'strikethrough'],
+            design: ['bold', 'italic', 'underline', 'strikethrough', 'selectStyles'],
             semantic: ['strong', 'em', 'del'],
             justify: ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
             lists: ['unorderedList', 'orderedList']
@@ -211,7 +211,6 @@ var TrumbowygEditor = (function () {
         TrumbowygEditor.modes = {
             inline: [
                 'removeformat',
-                'selectStyles',
                 '|',
                 btnsGrps.design, '|',
                 'fontName',
@@ -224,7 +223,6 @@ var TrumbowygEditor = (function () {
             ],
             simple: [
                 'removeformat',
-                'selectStyles',
                 '|',
                 btnsGrps.design, '|',
                 'fontName',
@@ -243,7 +241,6 @@ var TrumbowygEditor = (function () {
             extend: [
                 'viewHTML',
                 'removeformat',
-                'selectStyles',
                 '|',
                 btnsGrps.design,
                 '|',
@@ -268,7 +265,6 @@ var TrumbowygEditor = (function () {
             full: [
                 'viewHTML',
                 'removeformat',
-                'selectStyles',
                 '|',
                 btnsGrps.design,
                 '|',

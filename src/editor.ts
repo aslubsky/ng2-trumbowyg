@@ -254,7 +254,7 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
         }
 
         var btnsGrps = {
-            design: ['bold', 'italic', 'underline', 'strikethrough'],
+            design: ['bold', 'italic', 'underline', 'strikethrough', 'selectStyles'],
             semantic: ['strong', 'em', 'del'],
             justify: ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
             lists: ['unorderedList', 'orderedList']
@@ -278,7 +278,6 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
         TrumbowygEditor.modes = {
             inline: [
                 'removeformat',
-                'selectStyles',
                 '|',
                 btnsGrps.design, '|',
                 'fontName',
@@ -291,7 +290,6 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
             ],
             simple: [
                 'removeformat',
-                'selectStyles',
                 '|',
                 btnsGrps.design, '|',
                 'fontName',
@@ -310,7 +308,6 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
             extend: [
                 'viewHTML',
                 'removeformat',
-                'selectStyles',
                 '|',
                 btnsGrps.design,
                 '|',
@@ -335,7 +332,6 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
             full: [
                 'viewHTML',
                 'removeformat',
-                'selectStyles',
                 '|',
                 btnsGrps.design,
                 '|',
