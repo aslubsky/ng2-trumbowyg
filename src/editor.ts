@@ -53,7 +53,7 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
     @Input('has-auto-save') hasAutoSave: boolean = false;
     @Input('auto-save-key') autoSaveKey: string = '';
     @Input('last-update') lastUpdate: number = 0;
-
+    @Input() addBtns: any = [];
     @Input() mode: string;
     @Input() lang: string;
     @Input() base64Image: any;
@@ -254,7 +254,7 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
         }
 
         var btnsGrps = {
-            design: ['bold', 'italic', 'underline', 'strikethrough', 'selectStyles'],
+            design: ['bold', 'italic', 'underline', 'strikethrough'],
             semantic: ['strong', 'em', 'del'],
             justify: ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
             lists: ['unorderedList', 'orderedList']
@@ -355,6 +355,7 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
                 'removeformat',
                 '|',
                 btnsGrps.design,
+                'selectStyles',
                 '|',
                 'formatting',
                 'fontName',
@@ -426,9 +427,30 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
         this.mode = this.mode || 'simple';
         this.element = jQuery(this.el.nativeElement);
 
+        var tmpBtns = TrumbowygEditor.modes[this.mode];
+        this.addBtns = this.addBtns || null;
+
+        let addElement = 0;
+        if (this.addBtns && this.mode == 'extend') {
+            this.addBtns.forEach((value: any) => {
+
+                if (value == 'selectStyles') {
+                    let elemIndex = TrumbowygEditor.modes['full'].indexOf(value);
+                    tmpBtns.splice(elemIndex, 0, value);
+                    addElement ++;
+                }
+
+                if (value == 'selectResources') {
+                    let elemIndex = TrumbowygEditor.modes['full'].indexOf(value);
+                    let countPreviousElements = 1;
+                    tmpBtns.splice(elemIndex - countPreviousElements + addElement, 0, value);
+                }
+            });
+        }
+
         this.element.trumbowyg('destroy');
         this.element.trumbowyg({
-            btns: TrumbowygEditor.modes[this.mode],
+            btns: tmpBtns,
             lang: this.lang,
             mobile: true,
             semantic: false,

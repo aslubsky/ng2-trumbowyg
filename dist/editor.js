@@ -29,6 +29,7 @@ var TrumbowygEditor = (function () {
         this.hasAutoSave = false;
         this.autoSaveKey = '';
         this.lastUpdate = 0;
+        this.addBtns = [];
         this._required = false;
         this.base64ImageInserted = new core_1.EventEmitter();
         this.onInit = new core_1.EventEmitter();
@@ -191,7 +192,7 @@ var TrumbowygEditor = (function () {
             t.$c.trigger('tbwchange');
         };
         var btnsGrps = {
-            design: ['bold', 'italic', 'underline', 'strikethrough', 'selectStyles'],
+            design: ['bold', 'italic', 'underline', 'strikethrough'],
             semantic: ['strong', 'em', 'del'],
             justify: ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
             lists: ['unorderedList', 'orderedList']
@@ -288,6 +289,7 @@ var TrumbowygEditor = (function () {
                 'removeformat',
                 '|',
                 btnsGrps.design,
+                'selectStyles',
                 '|',
                 'formatting',
                 'fontName',
@@ -354,9 +356,26 @@ var TrumbowygEditor = (function () {
         this.onInit.emit();
         this.mode = this.mode || 'simple';
         this.element = jQuery(this.el.nativeElement);
+        var tmpBtns = TrumbowygEditor.modes[this.mode];
+        this.addBtns = this.addBtns || null;
+        var addElement = 0;
+        if (this.addBtns && this.mode == 'extend') {
+            this.addBtns.forEach(function (value) {
+                if (value == 'selectStyles') {
+                    var elemIndex = TrumbowygEditor.modes['full'].indexOf(value);
+                    tmpBtns.splice(elemIndex, 0, value);
+                    addElement++;
+                }
+                if (value == 'selectResources') {
+                    var elemIndex = TrumbowygEditor.modes['full'].indexOf(value);
+                    var countPreviousElements = 1;
+                    tmpBtns.splice(elemIndex - countPreviousElements + addElement, 0, value);
+                }
+            });
+        }
         this.element.trumbowyg('destroy');
         this.element.trumbowyg({
-            btns: TrumbowygEditor.modes[this.mode],
+            btns: tmpBtns,
             lang: this.lang,
             mobile: true,
             semantic: false,
@@ -421,6 +440,10 @@ var TrumbowygEditor = (function () {
         core_1.Input('last-update'), 
         __metadata('design:type', Number)
     ], TrumbowygEditor.prototype, "lastUpdate", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], TrumbowygEditor.prototype, "addBtns", void 0);
     __decorate([
         core_1.Input(), 
         __metadata('design:type', String)

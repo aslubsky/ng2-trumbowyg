@@ -12,6 +12,7 @@ export declare class TrumbowygEditor implements ControlValueAccessor, OnInit, On
     hasAutoSave: boolean;
     autoSaveKey: string;
     lastUpdate: number;
+    addBtns: any;
     mode: string;
     lang: string;
     base64Image: any;
