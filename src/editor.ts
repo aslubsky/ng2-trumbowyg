@@ -432,8 +432,8 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
 
         let addElement = 0;
         if (this.addBtns && this.mode == 'extend') {
+            console.log('TrumbowygEditor addBtns', this.addBtns);
             this.addBtns.forEach((value: any) => {
-
                 if (value == 'selectStyles') {
                     let elemIndex = TrumbowygEditor.modes['full'].indexOf(value);
                     tmpBtns.splice(elemIndex, 0, value);

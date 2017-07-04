@@ -360,6 +360,7 @@ var TrumbowygEditor = (function () {
         this.addBtns = this.addBtns || null;
         var addElement = 0;
         if (this.addBtns && this.mode == 'extend') {
+            console.log('TrumbowygEditor addBtns', this.addBtns);
             this.addBtns.forEach(function (value) {
                 if (value == 'selectStyles') {
                     var elemIndex = TrumbowygEditor.modes['full'].indexOf(value);

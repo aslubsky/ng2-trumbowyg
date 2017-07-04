@@ -20,6 +20,7 @@ export class Wrapper_TrumbowygEditor {
   /*private*/ _expr_3:any;
   /*private*/ _expr_4:any;
   /*private*/ _expr_5:any;
+  /*private*/ _expr_6:any;
   subscription0:any;
   constructor(p0:any,p1:any) {
     this._changed = false;
@@ -31,6 +32,7 @@ export class Wrapper_TrumbowygEditor {
     this._expr_3 = import1.UNINITIALIZED;
     this._expr_4 = import1.UNINITIALIZED;
     this._expr_5 = import1.UNINITIALIZED;
+    this._expr_6 = import1.UNINITIALIZED;
   }
   ngOnDetach(view:import2.AppView<any>,componentView:import2.AppView<any>,el:any):void {
   }
@@ -62,28 +64,36 @@ export class Wrapper_TrumbowygEditor {
       this._expr_2 = currValue;
     }
   }
-  check_mode(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_addBtns(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_3,currValue))) {
       this._changed = true;
-      this.context.mode = currValue;
-      this._changes['mode'] = new import1.SimpleChange(this._expr_3,currValue);
+      this.context.addBtns = currValue;
+      this._changes['addBtns'] = new import1.SimpleChange(this._expr_3,currValue);
       this._expr_3 = currValue;
     }
   }
-  check_lang(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_mode(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_4,currValue))) {
       this._changed = true;
-      this.context.lang = currValue;
-      this._changes['lang'] = new import1.SimpleChange(this._expr_4,currValue);
+      this.context.mode = currValue;
+      this._changes['mode'] = new import1.SimpleChange(this._expr_4,currValue);
       this._expr_4 = currValue;
     }
   }
-  check_base64Image(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_lang(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_5,currValue))) {
       this._changed = true;
-      this.context.base64Image = currValue;
-      this._changes['base64Image'] = new import1.SimpleChange(this._expr_5,currValue);
+      this.context.lang = currValue;
+      this._changes['lang'] = new import1.SimpleChange(this._expr_5,currValue);
       this._expr_5 = currValue;
+    }
+  }
+  check_base64Image(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+    if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_6,currValue))) {
+      this._changed = true;
+      this.context.base64Image = currValue;
+      this._changes['base64Image'] = new import1.SimpleChange(this._expr_6,currValue);
+      this._expr_6 = currValue;
     }
   }
   ngDoCheck(view:import2.AppView<any>,el:any,throwOnChange:boolean):boolean {
