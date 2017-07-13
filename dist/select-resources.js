@@ -96,9 +96,12 @@ var TrumbowygSelectResourcesPlugin = (function () {
                             'src="/themes/default/assets/img/inline-gallery.png" />');
                         break;
                     case 'video':
-                        TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<img resource-in-resource-render ' +
-                            'data-item-id="' + val + '" data-type="video" data-ext="' + type + '" data-video-src="' + val + '"' +
-                            'src="/themes/default/assets/img/inline-video.png" />');
+                        // TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<img resource-in-resource-render ' +
+                        //     'data-item-id="' + val + '" data-type="video" data-ext="' + type + '" data-video-src="' + val + '"' +
+                        //     'src="/themes/default/assets/img/inline-video.png" />');
+                        TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<iframe width="100%" height="480px" frameborder="0"' +
+                            'src="/vendors/video-player/index.html?id=' + val + '" scrolling="no" marginheight="0" ' +
+                            'class="no-border embed-responsive-item"></iframe>');
                         break;
                     case 'audio':
                         TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<img resource-in-resource-render ' +
