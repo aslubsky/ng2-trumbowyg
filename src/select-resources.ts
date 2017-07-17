@@ -37,10 +37,12 @@ export class TrumbowygSelectResourcesPlugin {
 
     private static renderList(pfx: string, html: string[], items: any[]) {
         items.forEach((resource: any) => {
-            //console.log('resource', resource);
+            // console.log('resource', resource);
             html.push('<li class="item">');
             html.push('<label>');
-            html.push('<input type="radio" name="r' + pfx + '" data-id="' + resource.id + '" title="' + resource.title + '" data-type="' + resource.display_type + '" value="' + resource.id + '"/>');
+            var val = resource.display_type == 'html' ? resource.url : resource.id;
+            html.push('<input type="radio" name="r' + pfx + '" data-id="' + resource.id + '" ' +
+                'title="' + resource.title + '" data-type="' + resource.display_type + '" value="' + val + '"/>');
             html.push('<strong>' + resource.title + '</strong>');
             if (resource.description && resource.description.length > 0) {
                 html.push('<br/><i>' + resource.description + '</i>');
@@ -114,27 +116,36 @@ export class TrumbowygSelectResourcesPlugin {
 
                     switch (type) {
                         case 'gallery':
-                            TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<img resource-in-resource-render ' +
-                                'data-item-id="' + val + '" data-type="gallery" data-ext="' + type + '" data-gallery-src="' + val + '"' +
-                                'src="/themes/default/assets/img/inline-gallery.png" />');
+                            // TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<img resource-in-resource-render ' +
+                            //     'data-item-id="' + val + '" data-type="gallery" data-ext="' + type + '" data-gallery-src="' + val + '"' +
+                            //     'src="/themes/default/assets/img/inline-gallery.png" />');
+                            TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<iframe width="100%" height="640px" frameborder="0"' +
+                                'src="/vendors/gallery/index.html?id=' + val + '" scrolling="no" marginheight="0" ' +
+                                'class="no-border embed-responsive-item"></iframe>');
                             break;
                         case 'video':
                             // TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<img resource-in-resource-render ' +
                             //     'data-item-id="' + val + '" data-type="video" data-ext="' + type + '" data-video-src="' + val + '"' +
                             //     'src="/themes/default/assets/img/inline-video.png" />');
-                            TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<iframe width="100%" height="480px" frameborder="0"'+
+                            TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<iframe width="100%" height="480px" frameborder="0"' +
                                 'src="/vendors/video-player/index.html?id=' + val + '" scrolling="no" marginheight="0" ' +
                                 'class="no-border embed-responsive-item"></iframe>');
                             break;
                         case 'audio':
-                            TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<img resource-in-resource-render ' +
-                                'data-item-id="' + val + '" data-type="audio" data-ext="' + type + '" data-src="' + val + '"' +
-                                'src="/themes/default/assets/img/inline-audio.png" />');
+                            // TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<img resource-in-resource-render ' +
+                            //     'data-item-id="' + val + '" data-type="audio" data-ext="' + type + '" data-src="' + val + '"' +
+                            //     'src="/themes/default/assets/img/inline-audio.png" />');
+                            TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<iframe width="100%" height="37px" frameborder="0"' +
+                                'src="/vendors/audio-player/index.html?id=' + val + '" scrolling="no" marginheight="0" ' +
+                                'class="no-border embed-responsive-item"></iframe>');
+
                             break;
                         case 'html':
-                            TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<img resource-in-resource-render ' +
-                                'data-item-id="' + val + '" data-type="html" data-ext="' + type + '" data-src="' + val + '"' +
-                                'src="/themes/default/assets/img/inline-resource.png" />');
+                            // TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<img resource-in-resource-render ' +
+                            //     'data-item-id="' + val + '" data-type="html" data-ext="' + type + '" data-src="' + val + '"' +
+                            //     'src="/themes/default/assets/img/inline-resource.png" />');
+                            TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<iframe width="100%" height="640px" frameborder="0"' +
+                                'src="' + val + '" scrolling="no" marginheight="0" class="no-border embed-responsive-item"></iframe>');
                             break;
                     }
                 }
