@@ -118,7 +118,7 @@ export class TrumbowygSelectResourcesPlugin {
                             // TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<img resource-in-resource-render ' +
                             //     'data-item-id="' + val + '" data-type="gallery" data-ext="' + type + '" data-gallery-src="' + val + '"' +
                             //     'src="/themes/default/assets/img/inline-gallery.png" />');
-                            TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<iframe resource-in-resource-iframe width="100%" height="640px" frameborder="0" ' +
+                            TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<iframe resource-in-resource-iframe="" width="100%" height="640px" frameborder="0" ' +
                                 'src="/vendors/gallery/index.html?id=' + val + '" data-item-id="' + val + '" scrolling="no" marginheight="0" ' +
                                 'class="no-border embed-responsive-item"></iframe>');
                             break;
@@ -126,7 +126,7 @@ export class TrumbowygSelectResourcesPlugin {
                             // TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<img resource-in-resource-render ' +
                             //     'data-item-id="' + val + '" data-type="video" data-ext="' + type + '" data-video-src="' + val + '"' +
                             //     'src="/themes/default/assets/img/inline-video.png" />');
-                            TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<iframe resource-in-resource-iframe width="100%" height="480px" frameborder="0" ' +
+                            TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<iframe resource-in-resource-iframe="" width="100%" height="480px" frameborder="0" ' +
                                 'src="/vendors/video-player/index.html?id=' + val + '" data-item-id="' + val + '" scrolling="no" marginheight="0" ' +
                                 'class="no-border embed-responsive-item"></iframe>');
                             break;
@@ -134,7 +134,7 @@ export class TrumbowygSelectResourcesPlugin {
                             // TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<img resource-in-resource-render ' +
                             //     'data-item-id="' + val + '" data-type="audio" data-ext="' + type + '" data-src="' + val + '"' +
                             //     'src="/themes/default/assets/img/inline-audio.png" />');
-                            TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<iframe resource-in-resource-iframe width="100%" height="37px" frameborder="0" ' +
+                            TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<iframe resource-in-resource-iframe="" width="100%" height="37px" frameborder="0" ' +
                                 'src="/vendors/audio-player/index.html?id=' + val + '" data-item-id="' + val + '" scrolling="no" marginheight="0" ' +
                                 'class="no-border embed-responsive-item"></iframe>');
 
@@ -143,8 +143,8 @@ export class TrumbowygSelectResourcesPlugin {
                             // TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<img resource-in-resource-render ' +
                             //     'data-item-id="' + val + '" data-type="html" data-ext="' + type + '" data-src="' + val + '"' +
                             //     'src="/themes/default/assets/img/inline-resource.png" />');
-                            TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<iframe resource-in-resource-iframe width="100%" height="640px" frameborder="0" ' +
-                                'src="vendors/html-player/index.html?id=' + val + '" scrolling="no" marginheight="0" data-item-id="' + val + '" ' +
+                            TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<iframe resource-in-resource-iframe="" width="100%" height="640px" frameborder="0" ' +
+                                'src="/vendors/html-player/index.html?id=' + val + '" scrolling="no" marginheight="0" data-item-id="' + val + '" ' +
                                 'class="no-border embed-responsive-item"></iframe>');
                             break;
                     }
