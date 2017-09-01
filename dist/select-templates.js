@@ -96,8 +96,8 @@ var TrumbowygSelectTemplatesPlugin = (function () {
         TrumbowygSelectTemplatesPlugin.templates = templates;
         TrumbowygSelectTemplatesPlugin.allTemplates = allTemplates;
     };
-    TrumbowygSelectTemplatesPlugin.templates = [];
-    TrumbowygSelectTemplatesPlugin.allTemplates = {};
     return TrumbowygSelectTemplatesPlugin;
 }());
+TrumbowygSelectTemplatesPlugin.templates = [];
+TrumbowygSelectTemplatesPlugin.allTemplates = {};
 exports.TrumbowygSelectTemplatesPlugin = TrumbowygSelectTemplatesPlugin;

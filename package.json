@@ -14,19 +14,17 @@
   "author": "aslubsky@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "@types/codemirror": "0.0.35",
     "trumbowyg": "git://github.com/davintoo/Trumbowyg.git#master"
   },
   "devDependencies": {
-    "@angular/compiler": "2.4.8",
-    "@angular/compiler-cli": "2.4.8",
-    "@angular/core": "2.4.8",
-    "@angular/forms": "2.4.8",
-    "@angular/http": "2.4.8",
-    "@angular/platform-server": "2.4.8",
-    "rxjs": ">=5.0.0-beta.12",
-    "typescript": "2.0.3",
-    "typings": "^1.4.0",
-    "codemirror": "^5.16.0"
+    "@angular/compiler": "~4.3.3",
+    "@angular/compiler-cli": "~4.3.3",
+    "@angular/core": "~4.3.3",
+    "@angular/forms": "~4.3.3",
+    "@angular/http": "~4.3.3",
+    "@angular/platform-server": "~4.3.3",
+    "rxjs": "~5.1.1",
+    "typescript": "~2.1.5",
+    "typings": "^1.4.0"
   }
 }

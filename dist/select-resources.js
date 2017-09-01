@@ -1,5 +1,5 @@
 "use strict";
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
 var TrumbowygSelectResourcesPlugin = (function () {
     function TrumbowygSelectResourcesPlugin() {
     }
@@ -50,19 +50,19 @@ var TrumbowygSelectResourcesPlugin = (function () {
         html.push('</div>');
         html.push('<ul class="nav nav-tabs" role="tablist">');
         html.push('<li role="all" class="active">');
-        html.push('   <a href="#" data-type="all"  role="tab" data-toggle="tab">' + TrumbowygSelectResourcesPlugin.translate('selectResourcesAll') + '</a>');
+        html.push('   <a data-type="all"  role="tab">' + TrumbowygSelectResourcesPlugin.translate('selectResourcesAll') + '</a>');
         html.push('</li>');
         html.push('<li role="gallery">');
-        html.push('   <a href="#" data-type="gallery" role="tab" data-toggle="tab">' + TrumbowygSelectResourcesPlugin.translate('selectResourcesGallery') + '</a>');
+        html.push('   <a data-type="gallery" role="tab">' + TrumbowygSelectResourcesPlugin.translate('selectResourcesGallery') + '</a>');
         html.push('</li>');
         html.push('<li role="html">');
-        html.push('   <a href="#" data-type="html" role="tab" data-toggle="tab">' + TrumbowygSelectResourcesPlugin.translate('selectResourcesHtmlSite') + '</a>');
+        html.push('   <a data-type="html" role="tab">' + TrumbowygSelectResourcesPlugin.translate('selectResourcesHtmlSite') + '</a>');
         html.push('</li>');
         html.push('<li role="video">');
-        html.push('   <a href="#" data-type="video" role="tab" data-toggle="tab">' + TrumbowygSelectResourcesPlugin.translate('selectResourcesVideo') + '</a>');
+        html.push('   <a data-type="video" role="tab">' + TrumbowygSelectResourcesPlugin.translate('selectResourcesVideo') + '</a>');
         html.push('</li>');
         html.push('<li role="audio">');
-        html.push('   <a href="#" data-type="audio" role="tab" data-toggle="tab">' + TrumbowygSelectResourcesPlugin.translate('selectResourcesAudio') + '</a>');
+        html.push('   <a data-type="audio" role="tab">' + TrumbowygSelectResourcesPlugin.translate('selectResourcesAudio') + '</a>');
         html.push('</li>');
         html.push('</ul>');
         html.push('<div class="tab-content">');
@@ -159,8 +159,8 @@ var TrumbowygSelectResourcesPlugin = (function () {
         TrumbowygSelectResourcesPlugin.renderList(TrumbowygSelectResourcesPlugin.pfx, lhtml, editorResources);
         jQuery('.resources-list', TrumbowygSelectResourcesPlugin.$modal).append(lhtml.join(''));
     };
-    TrumbowygSelectResourcesPlugin.editorResources = [];
-    TrumbowygSelectResourcesPlugin.onSearch = new core_1.EventEmitter();
     return TrumbowygSelectResourcesPlugin;
 }());
+TrumbowygSelectResourcesPlugin.editorResources = [];
+TrumbowygSelectResourcesPlugin.onSearch = new core_1.EventEmitter();
 exports.TrumbowygSelectResourcesPlugin = TrumbowygSelectResourcesPlugin;

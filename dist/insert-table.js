@@ -103,7 +103,7 @@ var TrumbowygInsertTablePlugin = (function () {
         }
         return dropdown;
     };
-    TrumbowygInsertTablePlugin.elementsCache = {};
     return TrumbowygInsertTablePlugin;
 }());
+TrumbowygInsertTablePlugin.elementsCache = {};
 exports.TrumbowygInsertTablePlugin = TrumbowygInsertTablePlugin;

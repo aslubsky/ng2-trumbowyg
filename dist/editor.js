@@ -8,21 +8,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var http_1 = require('@angular/http');
-var forms_1 = require('@angular/forms');
-require('rxjs/add/operator/toPromise');
-var tidy_1 = require('./tidy');
-var font_size_1 = require('./font-size');
-var fonts_1 = require('./fonts');
-var select_styles_1 = require('./select-styles');
-var insert_lead_1 = require('./insert-lead');
-var insert_media_embed_1 = require('./insert-media-embed');
-var insert_table_1 = require('./insert-table');
-var select_images_1 = require('./select-images');
-var select_resources_1 = require('./select-resources');
-var select_templates_1 = require('./select-templates');
-var TrumbowygEditor = (function () {
+var core_1 = require("@angular/core");
+var http_1 = require("@angular/http");
+var forms_1 = require("@angular/forms");
+require("rxjs/add/operator/toPromise");
+var tidy_1 = require("./tidy");
+var font_size_1 = require("./font-size");
+var fonts_1 = require("./fonts");
+var select_styles_1 = require("./select-styles");
+var insert_lead_1 = require("./insert-lead");
+var insert_media_embed_1 = require("./insert-media-embed");
+var insert_table_1 = require("./insert-table");
+var select_images_1 = require("./select-images");
+var select_resources_1 = require("./select-resources");
+var select_templates_1 = require("./select-templates");
+var TrumbowygEditor = TrumbowygEditor_1 = (function () {
     function TrumbowygEditor(el, http) {
         this.el = el;
         this.http = http;
@@ -105,10 +105,10 @@ var TrumbowygEditor = (function () {
     TrumbowygEditor.prototype._buildAutoSaveToolbar = function () {
         var _this = this;
         this.element.data('trumbowyg').$box.append('<div class="trumbowyg-auto-save">' +
-            '<span class="title">' + TrumbowygEditor.langs[this.lang].hasAutoSavedMsg + '</span>' +
+            '<span class="title">' + TrumbowygEditor_1.langs[this.lang].hasAutoSavedMsg + '</span>' +
             '<span class="buttons">' +
-            '<button type="button" class="btn btn-sm btn-default">' + TrumbowygEditor.langs[this.lang].autoSaveCancel + '</button>' +
-            '<button type="button" class="btn btn-sm btn-success">' + TrumbowygEditor.langs[this.lang].autoSaveRestore + '</button>' +
+            '<button type="button" class="btn btn-sm btn-default">' + TrumbowygEditor_1.langs[this.lang].autoSaveCancel + '</button>' +
+            '<button type="button" class="btn btn-sm btn-success">' + TrumbowygEditor_1.langs[this.lang].autoSaveRestore + '</button>' +
             '</span>' +
             '</div>');
         setTimeout(function () {
@@ -156,11 +156,11 @@ var TrumbowygEditor = (function () {
         }
     };
     TrumbowygEditor.prototype.init = function (lang) {
-        TrumbowygEditor.inited = true;
+        TrumbowygEditor_1.inited = true;
         // console.log('init', lang);
         // console.log('TrumbowygEditor.langs', TrumbowygEditor.langs);
-        if (TrumbowygEditor.langs) {
-            jQuery.trumbowyg.langs = TrumbowygEditor.langs;
+        if (TrumbowygEditor_1.langs) {
+            jQuery.trumbowyg.langs = TrumbowygEditor_1.langs;
         }
         jQuery.trumbowyg.svgPath = '/bower_components/trumbowyg/dist/ui/icons.svg';
         jQuery.trumbowyg.tidyUrl = '/api/rest.php/trumbowyg?action=tidy';
@@ -209,7 +209,7 @@ var TrumbowygEditor = (function () {
         select_templates_1.TrumbowygSelectTemplatesPlugin.init(jQuery.trumbowyg, lang);
         //console.trace();
         //console.log('init', jQuery.trumbowyg);
-        TrumbowygEditor.modes = {
+        TrumbowygEditor_1.modes = {
             inline: [
                 'removeformat',
                 '|',
@@ -324,7 +324,7 @@ var TrumbowygEditor = (function () {
     TrumbowygEditor.prototype.detectBase64Insert = function (html) {
         var _this = this;
         //console.log('detectBase64Insert', html);
-        if (TrumbowygEditor.localImageRegexp.test(html)) {
+        if (TrumbowygEditor_1.localImageRegexp.test(html)) {
             var images = [];
             var el = jQuery('<div>' + html + '</div>');
             var uid;
@@ -356,19 +356,19 @@ var TrumbowygEditor = (function () {
         this.onInit.emit();
         this.mode = this.mode || 'simple';
         this.element = jQuery(this.el.nativeElement);
-        var tmpBtns = TrumbowygEditor.modes[this.mode];
+        var tmpBtns = TrumbowygEditor_1.modes[this.mode];
         this.addBtns = this.addBtns || null;
         var addElement = 0;
         if (this.addBtns && this.mode == 'extend') {
             console.log('TrumbowygEditor addBtns', this.addBtns);
             this.addBtns.forEach(function (value) {
                 if (value == 'selectStyles') {
-                    var elemIndex = TrumbowygEditor.modes['full'].indexOf(value);
+                    var elemIndex = TrumbowygEditor_1.modes['full'].indexOf(value);
                     tmpBtns.splice(elemIndex, 0, value);
                     addElement++;
                 }
                 if (value == 'selectResources') {
-                    var elemIndex = TrumbowygEditor.modes['full'].indexOf(value);
+                    var elemIndex = TrumbowygEditor_1.modes['full'].indexOf(value);
                     var countPreviousElements = 1;
                     tmpBtns.splice(elemIndex - countPreviousElements + addElement, 0, value);
                 }
@@ -425,60 +425,61 @@ var TrumbowygEditor = (function () {
     TrumbowygEditor.prototype.ngOnDestroy = function () {
         this.element.trumbowyg('destroy');
     };
-    TrumbowygEditor.modes = {};
-    TrumbowygEditor.langs = {};
-    TrumbowygEditor.inited = false;
-    TrumbowygEditor.localImageRegexp = /src\=\"data\:image\/(.*)\"/gi;
-    __decorate([
-        core_1.Input('has-auto-save'), 
-        __metadata('design:type', Boolean)
-    ], TrumbowygEditor.prototype, "hasAutoSave", void 0);
-    __decorate([
-        core_1.Input('auto-save-key'), 
-        __metadata('design:type', String)
-    ], TrumbowygEditor.prototype, "autoSaveKey", void 0);
-    __decorate([
-        core_1.Input('last-update'), 
-        __metadata('design:type', Number)
-    ], TrumbowygEditor.prototype, "lastUpdate", void 0);
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Object)
-    ], TrumbowygEditor.prototype, "addBtns", void 0);
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', String)
-    ], TrumbowygEditor.prototype, "mode", void 0);
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', String)
-    ], TrumbowygEditor.prototype, "lang", void 0);
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Object)
-    ], TrumbowygEditor.prototype, "base64Image", void 0);
-    __decorate([
-        core_1.Output(), 
-        __metadata('design:type', Object)
-    ], TrumbowygEditor.prototype, "base64ImageInserted", void 0);
-    TrumbowygEditor = __decorate([
-        core_1.Directive({
-            selector: '[trumbowyg-editor]',
-            providers: [
-                {
-                    provide: forms_1.NG_VALUE_ACCESSOR,
-                    useExisting: core_1.forwardRef(function () { return TrumbowygEditor; }),
-                    multi: true
-                },
-                {
-                    provide: forms_1.NG_VALIDATORS,
-                    useExisting: core_1.forwardRef(function () { return TrumbowygEditor; }),
-                    multi: true
-                }
-            ]
-        }), 
-        __metadata('design:paramtypes', [core_1.ElementRef, http_1.Http])
-    ], TrumbowygEditor);
     return TrumbowygEditor;
 }());
+TrumbowygEditor.modes = {};
+TrumbowygEditor.langs = {};
+TrumbowygEditor.inited = false;
+TrumbowygEditor.localImageRegexp = /src\=\"data\:image\/(.*)\"/gi;
+__decorate([
+    core_1.Input('has-auto-save'),
+    __metadata("design:type", Boolean)
+], TrumbowygEditor.prototype, "hasAutoSave", void 0);
+__decorate([
+    core_1.Input('auto-save-key'),
+    __metadata("design:type", String)
+], TrumbowygEditor.prototype, "autoSaveKey", void 0);
+__decorate([
+    core_1.Input('last-update'),
+    __metadata("design:type", Number)
+], TrumbowygEditor.prototype, "lastUpdate", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], TrumbowygEditor.prototype, "addBtns", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], TrumbowygEditor.prototype, "mode", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], TrumbowygEditor.prototype, "lang", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], TrumbowygEditor.prototype, "base64Image", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], TrumbowygEditor.prototype, "base64ImageInserted", void 0);
+TrumbowygEditor = TrumbowygEditor_1 = __decorate([
+    core_1.Directive({
+        selector: '[trumbowyg-editor]',
+        providers: [
+            {
+                provide: forms_1.NG_VALUE_ACCESSOR,
+                useExisting: core_1.forwardRef(function () { return TrumbowygEditor_1; }),
+                multi: true
+            },
+            {
+                provide: forms_1.NG_VALIDATORS,
+                useExisting: core_1.forwardRef(function () { return TrumbowygEditor_1; }),
+                multi: true
+            }
+        ]
+    }),
+    __metadata("design:paramtypes", [core_1.ElementRef, http_1.Http])
+], TrumbowygEditor);
 exports.TrumbowygEditor = TrumbowygEditor;
+var TrumbowygEditor_1;

@@ -1,5 +1,5 @@
 "use strict";
-require('rxjs/add/operator/toPromise');
+require("rxjs/add/operator/toPromise");
 var TrumbowygTidyPlugin = (function () {
     function TrumbowygTidyPlugin() {
     }

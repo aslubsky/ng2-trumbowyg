@@ -38,7 +38,7 @@ var TrumbowygFontSizePlugin = (function () {
         });
         return dropdown;
     };
-    TrumbowygFontSizePlugin.fontSizes = [];
     return TrumbowygFontSizePlugin;
 }());
+TrumbowygFontSizePlugin.fontSizes = [];
 exports.TrumbowygFontSizePlugin = TrumbowygFontSizePlugin;

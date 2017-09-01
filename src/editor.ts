@@ -69,7 +69,7 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
 
     private element: any;
 
-    private _autoSaveTimer: number = null;
+    private _autoSaveTimer: any = null;
     private _autoSaved: any = null;
 
     constructor(private el: ElementRef, private http: Http) {

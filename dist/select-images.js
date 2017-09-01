@@ -88,8 +88,8 @@ var TrumbowygSelectImagesPlugin = (function () {
             }
         });
     };
-    TrumbowygSelectImagesPlugin.editorImages = [];
-    TrumbowygSelectImagesPlugin.imagesExtensions = ['jpg', 'png', 'jpeg', 'bmp', 'gif', 'svg'];
     return TrumbowygSelectImagesPlugin;
 }());
+TrumbowygSelectImagesPlugin.editorImages = [];
+TrumbowygSelectImagesPlugin.imagesExtensions = ['jpg', 'png', 'jpeg', 'bmp', 'gif', 'svg'];
 exports.TrumbowygSelectImagesPlugin = TrumbowygSelectImagesPlugin;
