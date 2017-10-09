@@ -47,7 +47,7 @@ export class TrumbowygSelectStylesPlugin {
             .on('tbwconfirm', function () {
                 var selected = jQuery('input:checked', $modal);
 
-                if (selected.size() > 0) {
+                if (selected.length > 0) {
                     var styleId = parseInt(selected.val(), 10);
                    // console.log('styleId', styleId);
                     var editor = $modal.parent().find('.trumbowyg-editor');
