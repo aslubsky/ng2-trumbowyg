@@ -162,7 +162,7 @@ var TrumbowygEditor = TrumbowygEditor_1 = (function () {
         if (TrumbowygEditor_1.langs) {
             jQuery.trumbowyg.langs = TrumbowygEditor_1.langs;
         }
-        jQuery.trumbowyg.svgPath = '/bower_components/trumbowyg/dist/ui/icons.svg';
+        jQuery.trumbowyg.svgPath = '/node_modules/trumbowyg/dist/ui/icons.svg';
         jQuery.trumbowyg.tidyUrl = '/api/rest.php/trumbowyg?action=tidy';
         jQuery.trumbowyg.autoSaveUrl = '/api/rest.php/trumbowyg';
         jQuery.trumbowyg.insertHtml = function (t, html) {

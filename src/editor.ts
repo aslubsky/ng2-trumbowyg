@@ -222,7 +222,7 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
             jQuery.trumbowyg.langs = TrumbowygEditor.langs;
         }
 
-        jQuery.trumbowyg.svgPath = '/bower_components/trumbowyg/dist/ui/icons.svg';
+        jQuery.trumbowyg.svgPath = '/node_modules/trumbowyg/dist/ui/icons.svg';
         jQuery.trumbowyg.tidyUrl = '/api/rest.php/trumbowyg?action=tidy';
         jQuery.trumbowyg.autoSaveUrl = '/api/rest.php/trumbowyg';
 
