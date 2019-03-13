@@ -43,8 +43,8 @@ export class TrumbowygSelectImagesPlugin {
         html.push('<div class="modal-container">');
         html.push('<ul class="' + pfx + 'select-images gallery">');
         for (; i < l; i++) {
-            html.push('<li class="item"><label data-i="' + i + '">' +
-                '<img style="width: 50px" src="' + editorImages[i].url + '"/>' + //editorImages[i].name +
+            html.push('<li class="item" data-i="' + i + '"><label>' +
+                '<img width="50px" src="' + editorImages[i].url + '"/>' + //editorImages[i].name +
                 '</label></li>'
             );
         }
@@ -74,9 +74,9 @@ export class TrumbowygSelectImagesPlugin {
                 t.closeModal();
             });
 
-        jQuery('label', $modal).on('click', function () {
+        jQuery('li.item', $modal).on('click', function () {
             jQuery('li', $modal).removeClass('active');
-            jQuery(this).parent().addClass('active');
+            jQuery(this).addClass('active');
             selectedImageIndex = jQuery(this).data('i');
         });
     };
@@ -86,9 +86,9 @@ export class TrumbowygSelectImagesPlugin {
         files.forEach((img: any) => {
             img.extension = img.extension || img.url.split('.').pop();
             if (TrumbowygSelectImagesPlugin.imagesExtensions.indexOf(img.extension) != -1) {
-                if (img.url.substring(0, 8) != '/uploads') {
-                    img.url = '/uploads' + img.url;
-                }
+                // if (img.url.substring(0, 8) != '/uploads') {
+                    // img.url = '/uploads' + img.url;
+                // }
                 if (!img.width) {
                     var imgObj = new Image();
                     imgObj.setAttribute('data-i', TrumbowygSelectImagesPlugin.editorImages.length + '');

@@ -34,16 +34,16 @@ var TrumbowygSelectTemplatesPlugin = (function () {
         //console.log('editorResources', editorResources);
         var html = [];
         html.push('<div class="modal-container templates-select">');
-        html.push('<ul class="nav nav-tabs" role="tablist">');
+        html.push('<ul class="cbr-inline-tabs" role="tablist">');
         TrumbowygSelectTemplatesPlugin.templates.forEach(function (templateSet, i) {
-            html.push('<li role="' + templateSet.id + '" class="' + (i == 0 ? 'active' : '') + '">');
-            html.push('   <a href="#" data-tab="' + templateSet.id + '"  role="tab" data-toggle="tab">' + templateSet.label + '</a>');
+            html.push('<li role="' + templateSet.id + '" class="cbr-tabs-item ' + (i == 0 ? ' cbr-tabs-active' : '') + '">');
+            html.push('   <a data-tab="' + templateSet.id + '"  role="tab" data-toggle="tab">' + templateSet.label + '</a>');
             html.push('</li>');
         });
         html.push('</ul>');
-        html.push('<div class="tab-content">');
+        html.push('<div class="cbr-tab-content">');
         TrumbowygSelectTemplatesPlugin.templates.forEach(function (templateSet, i) {
-            html.push('   <div role="tabpanel" id="' + templateSet.id + '" class="tab-pane ' + (i == 0 ? 'active' : '') + '">');
+            html.push('   <div role="tabpanel" id="' + templateSet.id + '" class="cbr-tab-pane ' + (i == 0 ? 'active' : '') + '">');
             html.push('   <ul class="templates-list template-gallery list-unstyled">');
             templateSet.elements.forEach(function (template, j) {
                 template.icon = template.icon || DEFAULT_ICON;
@@ -79,12 +79,13 @@ var TrumbowygSelectTemplatesPlugin = (function () {
             t.closeModal();
         });
         $modal.addClass('big');
-        jQuery('.nav.nav-tabs a', $modal).off('click').on('click', function (e) {
+        jQuery('.cbr-inline-tabs a', $modal).off('click').on('click', function (e) {
             e.preventDefault();
+            jQuery('.cbr-tabs-item', $modal).removeClass('cbr-tabs-active');
+            jQuery(this).parent().addClass('cbr-tabs-active');
             //    console.log('O_O', $(this).attr('data-tab'));
-            jQuery('.tab-content .tab-pane', $modal).removeClass('active');
+            jQuery('.cbr-tab-content .cbr-tab-pane', $modal).removeClass('active');
             jQuery('#' + jQuery(this).attr('data-tab')).addClass('active');
-            jQuery(this).tab('show');
         });
         jQuery('.template-gallery li label', $modal).off('click').on('click', function (e) {
             //console.log('O_O', e, $(this));

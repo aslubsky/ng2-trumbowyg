@@ -1,10 +1,7 @@
-import {Directive, Input, Output, EventEmitter, ElementRef, OnInit, OnChanges}         from '@angular/core';
-
 declare var jQuery: any;
 
 export class TrumbowygSelectStylesPlugin {
-    public static editorImages: any[] = [];
-    public static allStyles: any = {};
+    public static allStyles: any[] = [];
 
     public static editor: any;
     public static lang: string;

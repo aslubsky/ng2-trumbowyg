@@ -63,6 +63,5 @@ var TrumbowygSelectStylesPlugin = (function () {
     };
     return TrumbowygSelectStylesPlugin;
 }());
-TrumbowygSelectStylesPlugin.editorImages = [];
-TrumbowygSelectStylesPlugin.allStyles = {};
+TrumbowygSelectStylesPlugin.allStyles = [];
 exports.TrumbowygSelectStylesPlugin = TrumbowygSelectStylesPlugin;
