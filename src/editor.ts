@@ -158,20 +158,20 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
         this.element.data('trumbowyg').$box.append('<div class="trumbowyg-auto-save">' +
             '<span class="title">' + TrumbowygEditor.langs[this.lang].hasAutoSavedMsg + '</span>' +
             '<span class="buttons">' +
-            '<button type="button" class="btn btn-sm btn-default">' + TrumbowygEditor.langs[this.lang].autoSaveCancel + '</button>' +
-            '<button type="button" class="btn btn-sm btn-success">' + TrumbowygEditor.langs[this.lang].autoSaveRestore + '</button>' +
+            '<button type="button" class="button-sm-default">' + TrumbowygEditor.langs[this.lang].autoSaveCancel + '</button>' +
+            '<button type="button" class="button-sm-success">' + TrumbowygEditor.langs[this.lang].autoSaveRestore + '</button>' +
             '</span>' +
             '</div>');
 
         setTimeout(()=> {
-            jQuery('.trumbowyg-auto-save .btn-default', this.element.data('trumbowyg').$box)
+            jQuery('.trumbowyg-auto-save .button-sm-default', this.element.data('trumbowyg').$box)
                 .on('click', (e: any) => {
                     // console.log('cancel');
                     e.target.innerHTML = '...';
                     this.clearAutoSaved();
                 });
 
-            jQuery('.trumbowyg-auto-save .btn-success', this.element.data('trumbowyg').$box)
+            jQuery('.trumbowyg-auto-save .button-sm-success', this.element.data('trumbowyg').$box)
                 .on('click', (e: any) => {
                     // console.log('restore');
                     e.target.innerHTML = '...';
