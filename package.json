@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Angular2 bind for trumbowyg",
   "scripts": {
-      "build": "ngc && tsc"
+    "build": "ngc && tsc"
   },
   "main": "ng2-trumbowyg.js",
   "typings": "ng2-trumbowyg.d.ts",
