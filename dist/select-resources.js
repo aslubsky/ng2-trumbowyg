@@ -121,7 +121,7 @@ var TrumbowygSelectResourcesPlugin = (function () {
                         // TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<img resource-in-resource-render ' +
                         //     'data-item-id="' + val + '" data-type="audio" data-ext="' + type + '" data-src="' + val + '"' +
                         //     'src="/themes/default/assets/img/inline-audio.png" />');
-                        TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<iframe resource-in-resource-iframe="" allowfullscreen width="100%" height="37px" frameborder="0" ' +
+                        TrumbowygSelectResourcesPlugin.editor.insertHtml(t, '<iframe resource-in-resource-iframe="" allowfullscreen width="100%" height="65px" frameborder="0" ' +
                             'src="/node_modules/collaborator-audio-player/dist/index.html?id=' + val + '" data-item-id="' + val + '" scrolling="no" marginheight="0" ' +
                             'class="no-border embed-responsive-item"></iframe>');
                         break;
