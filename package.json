@@ -1,30 +1,32 @@
 {
-  "name": "ng2-trumbowyg",
-  "version": "1.0.0",
-  "description": "Angular2 bind for trumbowyg",
-  "scripts": {
-    "build": "ngc && tsc"
-  },
-  "main": "ng2-trumbowyg.js",
-  "typings": "ng2-trumbowyg.d.ts",
-  "keywords": [
-    "angular2",
-    "trumbowyg"
-  ],
-  "author": "aslubsky@gmail.com",
-  "license": "MIT",
-  "dependencies": {
-    "trumbowyg": "git://github.com/davintoo/Trumbowyg.git#master"
-  },
-  "devDependencies": {
-    "@angular/compiler": "~4.3.3",
-    "@angular/compiler-cli": "~4.3.3",
-    "@angular/core": "~4.3.3",
-    "@angular/forms": "~4.3.3",
-    "@angular/http": "~4.3.3",
-    "@angular/platform-server": "~4.3.3",
-    "rxjs": "~5.1.1",
-    "typescript": "~2.1.5",
-    "typings": "^1.4.0"
-  }
+    "name": "ng2-trumbowyg",
+    "version": "1.0.0",
+    "description": "Angular2 bind for trumbowyg",
+    "scripts": {
+        "compile-bootstrap": "node-sass ./modified-bootstrap.scss ./assets/modified-bootstrap.css",
+        "build": "ngc && tsc"
+    },
+    "main": "ng2-trumbowyg.js",
+    "typings": "ng2-trumbowyg.d.ts",
+    "keywords": [
+        "angular2",
+        "trumbowyg"
+    ],
+    "author": "aslubsky@gmail.com",
+    "license": "MIT",
+    "dependencies": {
+        "trumbowyg": "git://github.com/davintoo/Trumbowyg.git#master"
+    },
+    "devDependencies": {
+        "@angular/compiler": "~4.3.3",
+        "@angular/compiler-cli": "~4.3.3",
+        "@angular/core": "~4.3.3",
+        "@angular/forms": "~4.3.3",
+        "@angular/http": "~4.3.3",
+        "@angular/platform-server": "~4.3.3",
+        "rxjs": "~5.1.1",
+        "typescript": "~2.1.5",
+        "node-sass": "^4.12.0",
+        "typings": "^1.4.0"
+    }
 }
