@@ -22,9 +22,11 @@ var insert_table_1 = require("./insert-table");
 var select_images_1 = require("./select-images");
 var select_resources_1 = require("./select-resources");
 var select_templates_1 = require("./select-templates");
+var LEGACY_BOOTSTRAP_ID = 'legacy-bootstrap-styles';
 var TrumbowygEditor = TrumbowygEditor_1 = (function () {
-    function TrumbowygEditor(el, http) {
+    function TrumbowygEditor(el, render, http) {
         this.el = el;
+        this.render = render;
         this.http = http;
         this.hasAutoSave = false;
         this.autoSaveKey = '';
@@ -359,6 +361,15 @@ var TrumbowygEditor = TrumbowygEditor_1 = (function () {
         var tmpBtns = TrumbowygEditor_1.modes[this.mode];
         this.addBtns = this.addBtns || null;
         var addElement = 0;
+        if (this.mode == 'extend' || this.mode == 'full') {
+            if (!document.getElementById(LEGACY_BOOTSTRAP_ID)) {
+                var linkContainer = document.createElement("LINK");
+                this.render.setAttribute(linkContainer, 'id', LEGACY_BOOTSTRAP_ID);
+                this.render.setAttribute(linkContainer, 'rel', 'stylesheet');
+                this.render.setAttribute(linkContainer, 'href', '/node_modules/ng2-trumbowyg/assets/modified-bootstrap.css');
+                document.body.appendChild(linkContainer);
+            }
+        }
         if (this.addBtns && this.mode == 'extend') {
             console.log('TrumbowygEditor addBtns', this.addBtns);
             this.addBtns.forEach(function (value) {
@@ -409,6 +420,7 @@ var TrumbowygEditor = TrumbowygEditor_1 = (function () {
             if (t) {
                 t.$box.addClass('trumbowyg-' + _this.mode);
                 t.$ed.addClass('page-container');
+                t.$ed.addClass('legacy-bootstrap');
                 // console.log('tbwinit', e, t, t.$ed, t.$box);
                 if (t.$box.width() >= 1200) {
                     t.$ed.addClass('bordered');
@@ -479,7 +491,9 @@ TrumbowygEditor = TrumbowygEditor_1 = __decorate([
             }
         ]
     }),
-    __metadata("design:paramtypes", [core_1.ElementRef, http_1.Http])
+    __metadata("design:paramtypes", [core_1.ElementRef,
+        core_1.Renderer2,
+        http_1.Http])
 ], TrumbowygEditor);
 exports.TrumbowygEditor = TrumbowygEditor;
 var TrumbowygEditor_1;

@@ -1,9 +1,10 @@
-import { ElementRef, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { ElementRef, OnInit, OnDestroy, OnChanges, SimpleChanges, Renderer2 } from '@angular/core';
 import { Http } from '@angular/http';
 import { ControlValueAccessor, FormControl } from '@angular/forms';
 import 'rxjs/add/operator/toPromise';
 export declare class TrumbowygEditor implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
     private el;
+    private render;
     private http;
     static modes: any;
     static langs: any;
@@ -24,7 +25,7 @@ export declare class TrumbowygEditor implements ControlValueAccessor, OnInit, On
     private element;
     private _autoSaveTimer;
     private _autoSaved;
-    constructor(el: ElementRef, http: Http);
+    constructor(el: ElementRef, render: Renderer2, http: Http);
     validate(c: FormControl): {
         required: boolean;
     };

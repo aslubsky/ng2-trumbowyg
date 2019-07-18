@@ -8,8 +8,8 @@ import {
     OnInit,
     OnDestroy,
     OnChanges,
-    SimpleChanges
-}         from '@angular/core';
+    SimpleChanges, Renderer2
+} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl} from '@angular/forms';
 
@@ -26,6 +26,7 @@ import {TrumbowygSelectImagesPlugin} from './select-images';
 import {TrumbowygSelectResourcesPlugin} from './select-resources';
 import {TrumbowygSelectTemplatesPlugin} from './select-templates';
 
+const LEGACY_BOOTSTRAP_ID = 'legacy-bootstrap-styles';
 
 declare var jQuery: any;
 
@@ -44,7 +45,7 @@ declare var jQuery: any;
         }
     ]
 })
-export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,OnDestroy {
+export class TrumbowygEditor implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
     public static modes: any = {};
     public static langs: any = {};
     public static inited: boolean = false;
@@ -72,14 +73,16 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
     private _autoSaveTimer: any = null;
     private _autoSaved: any = null;
 
-    constructor(private el: ElementRef, private http: Http) {
+    constructor(private el: ElementRef,
+                private render: Renderer2,
+                private http: Http) {
         this._required = this.el.nativeElement.hasAttribute('required');
         this._name = this.el.nativeElement.getAttribute('name');
         // console.log('el', this._name, this._required);
     }
 
     validate(c: FormControl) {
-        if(!this._required) {
+        if (!this._required) {
             return null;
         }
 
@@ -163,7 +166,7 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
             '</span>' +
             '</div>');
 
-        setTimeout(()=> {
+        setTimeout(() => {
             jQuery('.trumbowyg-auto-save .button-sm-default', this.element.data('trumbowyg').$box)
                 .on('click', (e: any) => {
                     // console.log('cancel');
@@ -209,7 +212,7 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
             // if (this._value.length == 0 && (/webkit/i).test(navigator.userAgent)) {
             //     this.element.trumbowyg('html', '<p></p>');
             // } else {
-                this.element.trumbowyg('html', this._value);
+            this.element.trumbowyg('html', this._value);
             // }
         }
     }
@@ -431,13 +434,22 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
         this.addBtns = this.addBtns || null;
 
         let addElement = 0;
+        if (this.mode == 'extend' || this.mode == 'full') {
+            if (!document.getElementById(LEGACY_BOOTSTRAP_ID)) {
+                let linkContainer = document.createElement("LINK");
+                this.render.setAttribute(linkContainer, 'id', LEGACY_BOOTSTRAP_ID);
+                this.render.setAttribute(linkContainer, 'rel', 'stylesheet');
+                this.render.setAttribute(linkContainer, 'href', '/node_modules/ng2-trumbowyg/assets/modified-bootstrap.css');
+                document.body.appendChild(linkContainer);
+            }
+        }
         if (this.addBtns && this.mode == 'extend') {
             console.log('TrumbowygEditor addBtns', this.addBtns);
             this.addBtns.forEach((value: any) => {
                 if (value == 'selectStyles') {
                     let elemIndex = TrumbowygEditor.modes['full'].indexOf(value);
                     tmpBtns.splice(elemIndex, 0, value);
-                    addElement ++;
+                    addElement++;
                 }
 
                 if (value == 'selectResources') {
@@ -480,9 +492,10 @@ export class TrumbowygEditor implements ControlValueAccessor,OnInit,OnChanges,On
             .on('tbwinit', (e: any) => {
                 let t: any = this.element.data('trumbowyg');
                 // console.log('tbwinit', e, t, this.element);
-                if(t) {
+                if (t) {
                     t.$box.addClass('trumbowyg-' + this.mode);
                     t.$ed.addClass('page-container');
+                    t.$ed.addClass('legacy-bootstrap');
                     // console.log('tbwinit', e, t, t.$ed, t.$box);
                     if (t.$box.width() >= 1200) {
                         t.$ed.addClass('bordered');
