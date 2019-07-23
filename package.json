@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "Angular2 bind for trumbowyg",
     "scripts": {
-        "compile-bootstrap": "node-sass ./modified-bootstrap.scss ./assets/modified-bootstrap.css",
+        "compile-bootstrap": "node-sass --output-style=compressed ./modified-bootstrap.scss ./assets/modified-bootstrap.css && cp -r ./node_modules/font-awesome/fonts ./assets/fonts",
         "build": "ngc && tsc"
     },
     "main": "ng2-trumbowyg.js",
@@ -15,6 +15,7 @@
     "author": "aslubsky@gmail.com",
     "license": "MIT",
     "dependencies": {
+        "font-awesome": "^4.7.0",
         "trumbowyg": "git://github.com/davintoo/Trumbowyg.git#master"
     },
     "devDependencies": {
