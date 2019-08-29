@@ -133,6 +133,11 @@ $fa-font-path: "fonts";
         margin: 0 0 10px;
     }
 
+    img {
+        max-width: 100%;
+        border: 0;
+    }
+
     .lead {
         margin-bottom: 20px;
         font-size: 16px;
