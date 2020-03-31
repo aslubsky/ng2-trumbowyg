@@ -81,8 +81,8 @@ var TrumbowygSelectTemplatesPlugin = (function () {
         $modal.addClass('big');
         jQuery('.cbr2-tabs a', $modal).off('click').on('click', function (e) {
             e.preventDefault();
-            jQuery('.cbr2-tabs-item', $modal).removeClass('cbr-tabs-active');
-            jQuery(this).parent().addClass('cbr-tabs-active');
+            jQuery('.cbr2-tabs-item', $modal).removeClass('active');
+            jQuery(this).parent().addClass('active');
             //    console.log('O_O', $(this).attr('data-tab'));
             jQuery('.cbr-tab-content .cbr-tab-pane', $modal).removeClass('active');
             jQuery('#' + jQuery(this).attr('data-tab')).addClass('active');
