@@ -59,7 +59,7 @@ var TrumbowygSelectResourcesPlugin = (function () {
         html.push('</span>');
         html.push('</div>');
         html.push('<ul class="cbr2-tabs" role="tablist">');
-        html.push('<li role="all" class="cbr2-tabs-itemactive">');
+        html.push('<li role="all" class="cbr2-tabs-item active">');
         html.push('   <a data-type="all"  role="tab">' + TrumbowygSelectResourcesPlugin.translate('selectResourcesAll') + '</a>');
         html.push('</li>');
         html.push('<li role="gallery" class="cbr2-tabs-item">');
@@ -145,8 +145,8 @@ var TrumbowygSelectResourcesPlugin = (function () {
         });
         jQuery('.cbr2-tabs a', $modal).off('click').on('click', function (e) {
             e.preventDefault();
-            jQuery('.cbr2-tabs-item', $modal).removeClass('cbr-tabs-active');
-            jQuery(this).parent().addClass('cbr-tabs-active');
+            jQuery('.cbr2-tabs-item', $modal).removeClass('active');
+            jQuery(this).parent().addClass('active');
             TrumbowygSelectResourcesPlugin.onSearch.emit({
                 type: jQuery(this).attr('data-type') || 'all',
                 title: jQuery('.cbr-input', $modal).val()
