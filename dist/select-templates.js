@@ -34,9 +34,9 @@ var TrumbowygSelectTemplatesPlugin = (function () {
         //console.log('editorResources', editorResources);
         var html = [];
         html.push('<div class="modal-container templates-select">');
-        html.push('<ul class="cbr-inline-tabs" role="tablist">');
+        html.push('<ul class="cbr2-tabs" role="tablist">');
         TrumbowygSelectTemplatesPlugin.templates.forEach(function (templateSet, i) {
-            html.push('<li role="' + templateSet.id + '" class="cbr-tabs-item ' + (i == 0 ? ' cbr-tabs-active' : '') + '">');
+            html.push('<li role="' + templateSet.id + '" class="cbr2-tabs-item ' + (i == 0 ? 'active' : '') + '">');
             html.push('   <a data-tab="' + templateSet.id + '"  role="tab" data-toggle="tab">' + templateSet.label + '</a>');
             html.push('</li>');
         });
@@ -79,9 +79,9 @@ var TrumbowygSelectTemplatesPlugin = (function () {
             t.closeModal();
         });
         $modal.addClass('big');
-        jQuery('.cbr-inline-tabs a', $modal).off('click').on('click', function (e) {
+        jQuery('.cbr2-tabs a', $modal).off('click').on('click', function (e) {
             e.preventDefault();
-            jQuery('.cbr-tabs-item', $modal).removeClass('cbr-tabs-active');
+            jQuery('.cbr2-tabs-item', $modal).removeClass('cbr-tabs-active');
             jQuery(this).parent().addClass('cbr-tabs-active');
             //    console.log('O_O', $(this).attr('data-tab'));
             jQuery('.cbr-tab-content .cbr-tab-pane', $modal).removeClass('active');

@@ -74,20 +74,20 @@ export class TrumbowygSelectResourcesPlugin {
         html.push('</svg>');
         html.push('</span>');
         html.push('</div>');
-        html.push('<ul class="cbr-inline-tabs" role="tablist">');
-        html.push('<li role="all" class="cbr-tabs-item cbr-tabs-active">');
+        html.push('<ul class="cbr2-tabs" role="tablist">');
+        html.push('<li role="all" class="cbr2-tabs-itemactive">');
         html.push('   <a data-type="all"  role="tab">' + TrumbowygSelectResourcesPlugin.translate('selectResourcesAll') + '</a>');
         html.push('</li>');
-        html.push('<li role="gallery" class="cbr-tabs-item">');
+        html.push('<li role="gallery" class="cbr2-tabs-item">');
         html.push('   <a data-type="gallery" role="tab">' + TrumbowygSelectResourcesPlugin.translate('selectResourcesGallery') + '</a>');
         html.push('</li>');
-        html.push('<li role="html" class="cbr-tabs-item">');
+        html.push('<li role="html" class="cbr2-tabs-item">');
         html.push('   <a data-type="html" role="tab">' + TrumbowygSelectResourcesPlugin.translate('selectResourcesHtmlSite') + '</a>');
         html.push('</li>');
-        html.push('<li role="video" class="cbr-tabs-item">');
+        html.push('<li role="video" class="cbr2-tabs-item">');
         html.push('   <a data-type="video" role="tab">' + TrumbowygSelectResourcesPlugin.translate('selectResourcesVideo') + '</a>');
         html.push('</li>');
-        html.push('<li role="audio" class="cbr-tabs-item">');
+        html.push('<li role="audio" class="cbr2-tabs-item">');
         html.push('   <a data-type="audio" role="tab">' + TrumbowygSelectResourcesPlugin.translate('selectResourcesAudio') + '</a>');
         html.push('</li>');
         html.push('</ul>');
@@ -169,10 +169,10 @@ export class TrumbowygSelectResourcesPlugin {
                 t.closeModal();
             });
 
-        jQuery('.cbr-inline-tabs a', $modal).off('click').on('click', function (e: any) {
+        jQuery('.cbr2-tabs a', $modal).off('click').on('click', function (e: any) {
             e.preventDefault();
 
-            jQuery('.cbr-tabs-item', $modal).removeClass('cbr-tabs-active');
+            jQuery('.cbr2-tabs-item', $modal).removeClass('cbr-tabs-active');
             jQuery(this).parent().addClass('cbr-tabs-active');
 
             TrumbowygSelectResourcesPlugin.onSearch.emit({
