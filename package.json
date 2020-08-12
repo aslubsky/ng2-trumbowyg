@@ -5,8 +5,7 @@
     "scripts": {
         "compile-bootstrap": "node-sass --output-style=compressed ./modified-bootstrap.scss ./assets/modified-bootstrap.css && cp -r ./node_modules/font-awesome/fonts ./assets/fonts",
         "ng": "ng",
-        "build": "ng build ng2-trumbowyg --prod",
-        "postinstall": "ngcc"
+        "build": "ng build ng2-trumbowyg --prod"
     },
     "main": "ng2-trumbowyg.js",
     "typings": "ng2-trumbowyg.d.ts",
