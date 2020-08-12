@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
-import {HttpModule} from '@angular/http';
+import {HttpClientModule} from '@angular/common/http';
 
 import {TrumbowygEditor} from './editor';
 
 @NgModule({
     imports: [
-        HttpModule
+        HttpClientModule
     ],
     declarations: [
         TrumbowygEditor

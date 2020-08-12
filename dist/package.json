@@ -1,0 +1,28 @@
+{
+  "name": "ng2-trumbowyg",
+  "version": "1.0.0",
+  "description": "Angular2 bind for trumbowyg",
+  "main": "bundles/ng2-trumbowyg.umd.js",
+  "typings": "ng2-trumbowyg.d.ts",
+  "keywords": [
+    "angular2",
+    "trumbowyg"
+  ],
+  "author": "aslubsky@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "peerDependencies": {
+    "font-awesome": "^4.7.0",
+    "trumbowyg": "git://github.com/davintoo/Trumbowyg.git#master"
+  },
+  "module": "fesm2015/ng2-trumbowyg.js",
+  "es2015": "fesm2015/ng2-trumbowyg.js",
+  "esm2015": "esm2015/ng2-trumbowyg.js",
+  "fesm2015": "fesm2015/ng2-trumbowyg.js",
+  "sideEffects": false,
+  "scripts": {
+    "prepublishOnly": "node --eval \"console.error('ERROR: Trying to publish a package that has been compiled by Ivy. This is not allowed.\\nPlease delete and rebuild the package, without compiling with Ivy, before attempting to publish.\\n')\" && exit 1"
+  }
+}

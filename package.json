@@ -4,7 +4,9 @@
     "description": "Angular2 bind for trumbowyg",
     "scripts": {
         "compile-bootstrap": "node-sass --output-style=compressed ./modified-bootstrap.scss ./assets/modified-bootstrap.css && cp -r ./node_modules/font-awesome/fonts ./assets/fonts",
-        "build": "ngc && tsc"
+        "ng": "ng",
+        "build": "ng build ng2-trumbowyg --prod",
+        "postinstall": "ngcc"
     },
     "main": "ng2-trumbowyg.js",
     "typings": "ng2-trumbowyg.d.ts",
@@ -14,19 +16,24 @@
     ],
     "author": "aslubsky@gmail.com",
     "license": "MIT",
-    "dependencies": {
+    "dependencies": {},
+    "peerDependencies": {
         "font-awesome": "^4.7.0",
         "trumbowyg": "git://github.com/davintoo/Trumbowyg.git#master"
     },
     "devDependencies": {
-        "@angular/compiler": "~4.3.3",
-        "@angular/compiler-cli": "~4.3.3",
-        "@angular/core": "~4.3.3",
-        "@angular/forms": "~4.3.3",
-        "@angular/http": "~4.3.3",
-        "@angular/platform-server": "~4.3.3",
-        "rxjs": "~5.1.1",
-        "typescript": "~2.1.5",
+        "@angular-devkit/build-angular": "~0.901.12",
+        "@angular-devkit/build-ng-packagr": "~0.901.12",
+        "@angular/compiler": "~10.0.8",
+        "@angular/compiler-cli": "~10.0.8",
+        "@angular/cli": "~10.0.5",
+        "@angular/core": "~10.0.8",
+        "@angular/common": "~10.0.8",
+        "@angular/forms": "~10.0.8",
+        "@angular/platform-server": "~10.0.8",
+        "ng-packagr": "^10.0.3",
+        "rxjs": "~6.6.2",
+        "typescript": "~3.9.7",
         "node-sass": "^4.12.0",
         "typings": "^1.4.0"
     }

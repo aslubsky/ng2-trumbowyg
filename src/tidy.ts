@@ -1,10 +1,10 @@
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 
 export class TrumbowygTidyPlugin {
     public static editor: any;
 
-    public static init(editor: any, lang: string, http: Http) {
+    public static init(editor: any, lang: string, http: HttpClient) {
         TrumbowygTidyPlugin.editor = editor;
 
         editor.plugins.tidy = {

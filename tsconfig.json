@@ -1,31 +1,28 @@
 {
+    "compileOnSave": false,
     "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "emitDecoratorMetadata": true,
+        "baseUrl": "./",
+        "outDir": "./dist/out-tsc",
+        "sourceMap": true,
+        "declaration": false,
+        "downlevelIteration": true,
         "experimentalDecorators": true,
-        "sourceMap": false,
-        "noEmitHelpers": false,
-        "noImplicitAny": true,
-        "declaration": true,
-        "skipLibCheck": true,
-        "stripInternal": true,
-        "outDir": "./dist",
-        "rootDir": "./src",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "importHelpers": true,
+        "target": "es2015",
         "lib": [
-            "dom",
-            "es6"
-        ]
+            "es2018",
+            "dom"
+        ],
+        "paths": {
+            "ng2-trumbowyg": [
+                "dist"
+            ]
+        }
     },
-    "exclude": [
-        "node_modules",
-        "dist"
-    ],
-    "files": [
-        "./src/module.ts",
-        "./src/select-templates.ts",
-        "./src/select-images.ts",
-        "./src/select-styles.ts"
-    ]
+    "angularCompilerOptions": {
+        "fullTemplateTypeCheck": true,
+        "strictInjectionParameters": true
+    }
 }

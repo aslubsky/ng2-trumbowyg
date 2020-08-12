@@ -4,6 +4,6 @@ export declare class TrumbowygSelectImagesPlugin {
     static lang: string;
     static imagesExtensions: string[];
     static init(editor: any, lang: string): void;
-    private static selectImageCb(params, t, editorImages);
+    private static selectImageCb;
     static updateImages(files: any[]): void;
 }

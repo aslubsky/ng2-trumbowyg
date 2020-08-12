@@ -10,7 +10,7 @@ import {
     OnChanges,
     SimpleChanges, Renderer2
 } from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import {HttpHeaders, HttpClient} from '@angular/common/http';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl} from '@angular/forms';
 
 import 'rxjs/add/operator/toPromise';
@@ -75,7 +75,7 @@ export class TrumbowygEditor implements ControlValueAccessor, OnInit, OnChanges,
 
     constructor(private el: ElementRef,
                 private render: Renderer2,
-                private http: Http) {
+                private http: HttpClient) {
         this._required = this.el.nativeElement.hasAttribute('required');
         this._name = this.el.nativeElement.getAttribute('name');
         // console.log('el', this._name, this._required);
@@ -125,7 +125,7 @@ export class TrumbowygEditor implements ControlValueAccessor, OnInit, OnChanges,
     }
 
     private _saveToServer() {
-        let headers = new Headers({
+        const headers = new HttpHeaders({
             'Content-Type': 'application/json',
             'If-Modified-Since': 'Mon, 26 Jul 1997 05:00:00 GMT',//no cache
             'Cache-Control': 'no-cache',//no cache

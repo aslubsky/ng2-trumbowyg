@@ -94,7 +94,7 @@ export class TrumbowygSelectImagesPlugin {
                     imgObj.setAttribute('data-i', TrumbowygSelectImagesPlugin.editorImages.length + '');
                     imgObj.onload = function (e) {
                         if (e.type !== 'error' && (<any>this).width) {
-                            var indx = parseInt(this.getAttribute('data-i'));
+                            var indx = parseInt((<any>this).getAttribute('data-i'));
                             TrumbowygSelectImagesPlugin.editorImages[indx].width = (<any>this).width;
                         }
                     }
