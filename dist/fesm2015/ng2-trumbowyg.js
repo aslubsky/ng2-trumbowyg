@@ -797,7 +797,7 @@ class TrumbowygEditor {
         this.http.get(TrumbowygTidyPlugin.editor.autoSaveUrl +
             '?action=check-auto-save&key=' + this.autoSaveKey).toPromise()
             .then((res) => {
-            this._autoSaved = res.json();
+            this._autoSaved = res;
             // console.log('_checkAutoSave res', this._autoSaved, this.lastUpdate);
             if (this._autoSaved && parseInt(this._autoSaved.date, 10) > this.lastUpdate) {
                 this._buildAutoSaveToolbar();
