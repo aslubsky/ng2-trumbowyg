@@ -17,23 +17,23 @@
     "license": "MIT",
     "dependencies": {},
     "peerDependencies": {
-        "font-awesome": "^4.7.0",
         "trumbowyg": "git://github.com/davintoo/Trumbowyg.git#master"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "~0.901.12",
         "@angular-devkit/build-ng-packagr": "~0.901.12",
-        "@angular/compiler": "~10.0.8",
-        "@angular/compiler-cli": "~10.0.8",
-        "@angular/cli": "~10.0.5",
-        "@angular/core": "~10.0.8",
-        "@angular/common": "~10.0.8",
-        "@angular/forms": "~10.0.8",
-        "@angular/platform-server": "~10.0.8",
-        "ng-packagr": "^10.0.3",
+        "@angular/cli": "^10.0.7",
+        "@angular/common": "^10.0.11",
+        "@angular/compiler": "^10.0.11",
+        "@angular/compiler-cli": "^10.0.11",
+        "@angular/core": "^10.0.11",
+        "@angular/forms": "^10.0.11",
+        "@angular/platform-server": "^10.0.11",
+        "font-awesome": "^4.7.0",
+        "ng-packagr": "^10.0.4",
+        "node-sass": "^4.12.0",
         "rxjs": "~6.6.2",
         "typescript": "~3.9.7",
-        "node-sass": "^4.12.0",
         "typings": "^1.4.0"
     }
 }

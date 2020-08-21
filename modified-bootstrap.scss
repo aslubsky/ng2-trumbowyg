@@ -131,6 +131,16 @@ $fa-font-path: "fonts";
         font-size: 12px;
     }
 
+    a {
+        text-decoration: none;
+        color: var(--active-primary-color, inherit)
+    }
+
+    a:hover {
+        color: var(--active-primary-color-darked, inherit);
+        text-decoration: none
+    }
+
     p {
         margin: 0 0 10px;
     }

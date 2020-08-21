@@ -14,7 +14,6 @@
     "tslib": "^2.0.0"
   },
   "peerDependencies": {
-    "font-awesome": "^4.7.0",
     "trumbowyg": "git://github.com/davintoo/Trumbowyg.git#master"
   },
   "module": "fesm2015/ng2-trumbowyg.js",
