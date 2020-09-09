@@ -26,10 +26,13 @@
                             else {
                                 if (TrumbowygTidyPlugin.editor.tidyUrl) {
                                     // console.log(t.$ed.html());
-                                    http.post(TrumbowygTidyPlugin.editor.tidyUrl, t.$ed.html()).toPromise()
+                                    http.post(TrumbowygTidyPlugin.editor.tidyUrl, t.$ed.html(), {
+                                        responseType: 'text'
+                                    })
+                                        .toPromise()
                                         .then(function (res) {
                                         // console.log('tidy res', res.text());
-                                        t.$ta.val(res.text());
+                                        t.$ta.val(res);
                                     });
                                 }
                                 t.$ta.removeAttr('tabindex');
