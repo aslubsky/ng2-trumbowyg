@@ -23,20 +23,22 @@
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-          }
+          "options": {}
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-            ],
+            "tsConfig": [],
             "exclude": [
               "**/node_modules/**"
             ]
           }
         }
       }
-    }},
-  "defaultProject": "ng2-trumbowyg"
+    }
+  },
+  "defaultProject": "ng2-trumbowyg",
+  "cli": {
+    "analytics": false
+  }
 }
