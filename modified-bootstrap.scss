@@ -1771,4 +1771,39 @@ $fa-font-path: "fonts";
     .hidden {
         display: none !important;
     }
+
+    .well {
+        box-shadow: none;
+        border-radius: 2px;
+        background-color: #fafafa;
+    }
+
+    .well-lg {
+        padding: 24px;
+        border-radius: 6px;
+    }
+
+    .nm,
+    .nm-c,
+    .nm-q {
+        background-color: #353634;
+        border-radius: 50%;
+        color: #fff;
+        display: inline-block;
+        font-size: 20px;
+        font-weight: 700;
+        height: 40px;
+        line-height: 40px;
+        margin: 2px 0;
+        padding: 0 8px;
+        position: relative;
+        text-align: center;
+        text-indent: 0;
+        vertical-align: middle;
+        width: 40px
+    }
+
+    .nm-q {
+        border-radius: 8px
+    }
 }
