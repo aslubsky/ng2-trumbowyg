@@ -692,7 +692,7 @@
             html.push('<div class="modal-container templates-select">');
             html.push('<ul class="cbr2-tabs" role="tablist">');
             TrumbowygSelectTemplatesPlugin.templates.forEach(function (templateSet, i) {
-                html.push('<li role="' + templateSet.id + '" class="cbr2-tabs-item ' + (i == 0 ? 'active' : '') + '">');
+                html.push('<li role="' + templateSet.id + '" class="cbr2-tabs-item ' + (i == 0 ? 'cbr-tabs-active' : '') + '">');
                 html.push('   <a data-tab="' + templateSet.id + '"  role="tab" data-toggle="tab">' + templateSet.label + '</a>');
                 html.push('</li>');
             });
