@@ -1,6 +1,6 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common/http'), require('@angular/forms'), require('rxjs/add/operator/toPromise')) :
-    typeof define === 'function' && define.amd ? define('ng2-trumbowyg', ['exports', '@angular/core', '@angular/common/http', '@angular/forms', 'rxjs/add/operator/toPromise'], factory) :
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common/http'), require('@angular/forms')) :
+    typeof define === 'function' && define.amd ? define('ng2-trumbowyg', ['exports', '@angular/core', '@angular/common/http', '@angular/forms'], factory) :
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global['ng2-trumbowyg'] = {}, global.ng.core, global.ng.common.http, global.ng.forms));
 }(this, (function (exports, i0, i1, forms) { 'use strict';
 

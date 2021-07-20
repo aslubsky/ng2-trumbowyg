@@ -1,5 +1,4 @@
 import {HttpClient} from '@angular/common/http';
-import 'rxjs/add/operator/toPromise';
 
 export class TrumbowygTidyPlugin {
     public static editor: any;

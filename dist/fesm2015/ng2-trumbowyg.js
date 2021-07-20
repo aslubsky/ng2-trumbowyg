@@ -3,7 +3,6 @@ import { EventEmitter, forwardRef, Directive, Input, Output, NgModule } from '@a
 import * as i1 from '@angular/common/http';
 import { HttpHeaders, HttpClientModule } from '@angular/common/http';
 import { NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
-import 'rxjs/add/operator/toPromise';
 
 class TrumbowygTidyPlugin {
     static init(editor, lang, http) {
