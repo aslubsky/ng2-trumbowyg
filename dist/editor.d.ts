@@ -46,6 +46,6 @@ export declare class TrumbowygEditor implements ControlValueAccessor, OnInit, On
     private detectBase64Insert;
     ngOnInit(): void;
     ngOnDestroy(): void;
-    static ɵfac: i0.ɵɵFactoryDef<TrumbowygEditor, never>;
-    static ɵdir: i0.ɵɵDirectiveDefWithMeta<TrumbowygEditor, "[trumbowyg-editor]", never, { "hasAutoSave": "has-auto-save"; "autoSaveKey": "auto-save-key"; "lastUpdate": "last-update"; "addBtns": "addBtns"; "mode": "mode"; "lang": "lang"; "base64Image": "base64Image"; }, { "base64ImageInserted": "base64ImageInserted"; }, never>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TrumbowygEditor, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<TrumbowygEditor, "[trumbowyg-editor]", never, { "hasAutoSave": "has-auto-save"; "autoSaveKey": "auto-save-key"; "lastUpdate": "last-update"; "addBtns": "addBtns"; "mode": "mode"; "lang": "lang"; "base64Image": "base64Image"; }, { "base64ImageInserted": "base64ImageInserted"; }, never>;
 }

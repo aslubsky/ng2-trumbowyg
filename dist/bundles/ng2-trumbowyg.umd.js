@@ -4,6 +4,29 @@
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global['ng2-trumbowyg'] = {}, global.ng.core, global.ng.common.http, global.ng.forms));
 }(this, (function (exports, i0, i1, forms) { 'use strict';
 
+    function _interopNamespace(e) {
+        if (e && e.__esModule) return e;
+        var n = Object.create(null);
+        if (e) {
+            Object.keys(e).forEach(function (k) {
+                if (k !== 'default') {
+                    var d = Object.getOwnPropertyDescriptor(e, k);
+                    Object.defineProperty(n, k, d.get ? d : {
+                        enumerable: true,
+                        get: function () {
+                            return e[k];
+                        }
+                    });
+                }
+            });
+        }
+        n['default'] = e;
+        return Object.freeze(n);
+    }
+
+    var i0__namespace = /*#__PURE__*/_interopNamespace(i0);
+    var i1__namespace = /*#__PURE__*/_interopNamespace(i1);
+
     var TrumbowygTidyPlugin = /** @class */ (function () {
         function TrumbowygTidyPlugin() {
         }
@@ -328,6 +351,7 @@
                         });
                     }, 1000);
                 },
+                //tagHandler: colorTagHandler
             };
         };
         TrumbowygInsertTablePlugin.buildTable = function (r, c) {
@@ -1181,8 +1205,8 @@
     TrumbowygEditor.langs = {};
     TrumbowygEditor.inited = false;
     TrumbowygEditor.localImageRegexp = /src\=\"data\:image\/(.*)\"/gi;
-    TrumbowygEditor.ɵfac = function TrumbowygEditor_Factory(t) { return new (t || TrumbowygEditor)(i0.ɵɵdirectiveInject(i0.ElementRef), i0.ɵɵdirectiveInject(i0.Renderer2), i0.ɵɵdirectiveInject(i1.HttpClient)); };
-    TrumbowygEditor.ɵdir = i0.ɵɵdefineDirective({ type: TrumbowygEditor, selectors: [["", "trumbowyg-editor", ""]], inputs: { hasAutoSave: ["has-auto-save", "hasAutoSave"], autoSaveKey: ["auto-save-key", "autoSaveKey"], lastUpdate: ["last-update", "lastUpdate"], addBtns: "addBtns", mode: "mode", lang: "lang", base64Image: "base64Image" }, outputs: { base64ImageInserted: "base64ImageInserted" }, features: [i0.ɵɵProvidersFeature([
+    TrumbowygEditor.ɵfac = function TrumbowygEditor_Factory(t) { return new (t || TrumbowygEditor)(i0__namespace.ɵɵdirectiveInject(i0__namespace.ElementRef), i0__namespace.ɵɵdirectiveInject(i0__namespace.Renderer2), i0__namespace.ɵɵdirectiveInject(i1__namespace.HttpClient)); };
+    TrumbowygEditor.ɵdir = /*@__PURE__*/ i0__namespace.ɵɵdefineDirective({ type: TrumbowygEditor, selectors: [["", "trumbowyg-editor", ""]], inputs: { hasAutoSave: ["has-auto-save", "hasAutoSave"], autoSaveKey: ["auto-save-key", "autoSaveKey"], lastUpdate: ["last-update", "lastUpdate"], addBtns: "addBtns", mode: "mode", lang: "lang", base64Image: "base64Image" }, outputs: { base64ImageInserted: "base64ImageInserted" }, features: [i0__namespace.ɵɵProvidersFeature([
                 {
                     provide: forms.NG_VALUE_ACCESSOR,
                     useExisting: i0.forwardRef(function () { return TrumbowygEditor; }),
@@ -1193,9 +1217,9 @@
                     useExisting: i0.forwardRef(function () { return TrumbowygEditor; }),
                     multi: true
                 }
-            ]), i0.ɵɵNgOnChangesFeature] });
-    /*@__PURE__*/ (function () {
-        i0.ɵsetClassMetadata(TrumbowygEditor, [{
+            ]), i0__namespace.ɵɵNgOnChangesFeature] });
+    (function () {
+        (typeof ngDevMode === "undefined" || ngDevMode) && i0__namespace.ɵsetClassMetadata(TrumbowygEditor, [{
                 type: i0.Directive,
                 args: [{
                         selector: '[trumbowyg-editor]',
@@ -1212,7 +1236,7 @@
                             }
                         ]
                     }]
-            }], function () { return [{ type: i0.ElementRef }, { type: i0.Renderer2 }, { type: i1.HttpClient }]; }, { hasAutoSave: [{
+            }], function () { return [{ type: i0__namespace.ElementRef }, { type: i0__namespace.Renderer2 }, { type: i1__namespace.HttpClient }]; }, { hasAutoSave: [{
                     type: i0.Input,
                     args: ['has-auto-save']
                 }], autoSaveKey: [{
@@ -1239,13 +1263,13 @@
         }
         return TrumbowygEditorModule;
     }());
-    TrumbowygEditorModule.ɵmod = i0.ɵɵdefineNgModule({ type: TrumbowygEditorModule });
-    TrumbowygEditorModule.ɵinj = i0.ɵɵdefineInjector({ factory: function TrumbowygEditorModule_Factory(t) { return new (t || TrumbowygEditorModule)(); }, imports: [[
+    TrumbowygEditorModule.ɵfac = function TrumbowygEditorModule_Factory(t) { return new (t || TrumbowygEditorModule)(); };
+    TrumbowygEditorModule.ɵmod = /*@__PURE__*/ i0__namespace.ɵɵdefineNgModule({ type: TrumbowygEditorModule });
+    TrumbowygEditorModule.ɵinj = /*@__PURE__*/ i0__namespace.ɵɵdefineInjector({ imports: [[
                 i1.HttpClientModule
             ]] });
-    (function () { (typeof ngJitMode === "undefined" || ngJitMode) && i0.ɵɵsetNgModuleScope(TrumbowygEditorModule, { declarations: [TrumbowygEditor], imports: [i1.HttpClientModule], exports: [TrumbowygEditor] }); })();
-    /*@__PURE__*/ (function () {
-        i0.ɵsetClassMetadata(TrumbowygEditorModule, [{
+    (function () {
+        (typeof ngDevMode === "undefined" || ngDevMode) && i0__namespace.ɵsetClassMetadata(TrumbowygEditorModule, [{
                 type: i0.NgModule,
                 args: [{
                         imports: [
@@ -1260,6 +1284,7 @@
                     }]
             }], null, null);
     })();
+    (function () { (typeof ngJitMode === "undefined" || ngJitMode) && i0__namespace.ɵɵsetNgModuleScope(TrumbowygEditorModule, { declarations: [TrumbowygEditor], imports: [i1.HttpClientModule], exports: [TrumbowygEditor] }); })();
 
     /**
      * Generated bundle index. Do not edit.
