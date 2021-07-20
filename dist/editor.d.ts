@@ -1,7 +1,6 @@
 import { ElementRef, OnInit, OnDestroy, OnChanges, SimpleChanges, Renderer2 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ControlValueAccessor, FormControl } from '@angular/forms';
-import 'rxjs/add/operator/toPromise';
 import * as i0 from "@angular/core";
 export declare class TrumbowygEditor implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
     private el;

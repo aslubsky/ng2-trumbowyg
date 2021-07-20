@@ -13,8 +13,6 @@ import {
 import {HttpHeaders, HttpClient} from '@angular/common/http';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl} from '@angular/forms';
 
-import 'rxjs/add/operator/toPromise';
-
 import {TrumbowygTidyPlugin} from './tidy';
 import {TrumbowygFontSizePlugin} from './font-size';
 import {TrumbowygFontsPlugin} from './fonts';
